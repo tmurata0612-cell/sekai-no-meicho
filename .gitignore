@@ -1,0 +1,6 @@
+# 肖像PD原本のバックアップ（トリミング前フル解像度）。配信不要
+assets/portraits/*.full
+
+# OS/エディタ
+.DS_Store
+Thumbs.db

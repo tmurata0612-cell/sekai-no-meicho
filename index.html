@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>世界の名著</title>
+<meta name="description" content="著者本人がゲストに来る対談ラジオ。世界の名著の思考フレームを、自分の言葉で使える状態に。">
+<meta name="theme-color" content="#0f1017">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <button class="brand" id="btnHome" aria-label="ホームへ">
+    <span class="brand-mark" aria-hidden="true">名</span>
+    <span class="brand-name">世界の名著</span>
+  </button>
+  <button class="iconbtn" id="btnSettings" aria-label="設定">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.6 1.6 0 0 0 .32 1.76l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.6 1.6 0 0 0-1.76-.32 1.6 1.6 0 0 0-.97 1.47V21a2 2 0 1 1-4 0v-.09a1.6 1.6 0 0 0-1.05-1.47 1.6 1.6 0 0 0-1.76.32l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.6 1.6 0 0 0 .32-1.76 1.6 1.6 0 0 0-1.47-.97H3a2 2 0 1 1 0-4h.09A1.6 1.6 0 0 0 4.56 9a1.6 1.6 0 0 0-.32-1.76l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.6 1.6 0 0 0 1.76.32H9a1.6 1.6 0 0 0 .97-1.47V3a2 2 0 1 1 4 0v.09a1.6 1.6 0 0 0 .97 1.47 1.6 1.6 0 0 0 1.76-.32l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.6 1.6 0 0 0-.32 1.76V9c.63.28 1.1.85 1.47.97H21a2 2 0 1 1 0 4h-.09a1.6 1.6 0 0 0-1.47.97z"/></svg>
+  </button>
+</header>
+
+<main class="view wrap" id="view" tabindex="-1"></main>
+
+<div class="miniplayer" id="miniPlayer" hidden>
+  <button class="mp-btn" id="mpPrev" aria-label="ひとつ戻る">⏮</button>
+  <button class="mp-btn mp-main" id="mpToggle" aria-label="再生/停止">▶</button>
+  <button class="mp-btn" id="mpNext" aria-label="ひとつ進む">⏭</button>
+  <button class="mp-title" id="mpTitle" aria-label="エピソードを開く">…</button>
+  <span class="mp-rate" role="group" aria-label="再生速度">
+    <button class="mp-rate-btn" id="mpRateDown" aria-label="遅く">◀</button>
+    <span class="mono mp-rate-val" id="mpRate">×1</span>
+    <button class="mp-rate-btn" id="mpRateUp" aria-label="速く">▶</button>
+  </span>
+</div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

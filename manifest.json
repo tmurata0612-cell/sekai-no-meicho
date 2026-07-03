@@ -1,0 +1,15 @@
+{
+  "name": "世界の名著",
+  "short_name": "名著",
+  "description": "著者本人がゲストに来る対談ラジオ。世界の名著の思考フレームを、自分の言葉で使える状態に。",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f1017",
+  "theme_color": "#0f1017",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

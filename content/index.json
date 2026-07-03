@@ -1,0 +1,352 @@
+{
+  "show": "世界の名著",
+  "series": [
+    {
+      "slug": "01-kunshuron",
+      "title": "君主論",
+      "author": "ニッコロ・マキャベリ",
+      "genre": "哲学・政治思想",
+      "genreKey": "philosophy",
+      "totalDays": 6,
+      "portrait": "assets/portraits/01-kunshuron.jpg",
+      "portraitCredit": "ニッコロ・マキャベリ肖像（サンティ・ディ・ティート画、〜1600年頃）Wikimedia Commons／パブリックドメイン（PD-Art, PD-old-100）",
+      "titleLines": [
+        "君主論"
+      ],
+      "days": [
+        {
+          "id": "01-kunshuron-day1",
+          "day": 1,
+          "title": "山を描くには平地へ",
+          "kind": [
+            "author-intro"
+          ],
+          "kindLabel": "著者登場回",
+          "frameName": "山を描くには平地へ——視点の交換",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "01-kunshuron-day2",
+          "day": 2,
+          "title": "『あるべき』ではなく『ある』から始める",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "「あるべき」ではなく「ある」から始める",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "01-kunshuron-day3",
+          "day": 3,
+          "title": "恐れられよ、ただし憎まれるな",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "恐れられよ、ただし憎まれるな",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "01-kunshuron-day4",
+          "day": 4,
+          "title": "運命は半分しか支配しない",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "運命は半分しか支配しない",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "01-kunshuron-day5",
+          "day": 5,
+          "title": "マキャベリズムは悪の教科書か",
+          "kind": [
+            "rebuttal"
+          ],
+          "kindLabel": "反論特集回",
+          "frameName": "狐とライオン",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "01-kunshuron-day6",
+          "day": 6,
+          "title": "炎上案件に着任した30日を、『君主論』だけで乗り切る",
+          "kind": [
+            "practice"
+          ],
+          "kindLabel": "実戦適用回・卒業回",
+          "frameName": "『君主論』使いどころマップ",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
+    },
+    {
+      "slug": "02-sonshi",
+      "title": "孫子",
+      "author": "孫武",
+      "genre": "歴史・戦略",
+      "genreKey": "strategy",
+      "totalDays": 4,
+      "portrait": "",
+      "portraitCredit": "",
+      "titleLines": [
+        "孫子"
+      ],
+      "days": [
+        {
+          "id": "02-sonshi-day1",
+          "day": 1,
+          "title": "兵は国の大事——戦う前に算する",
+          "kind": [
+            "author-intro"
+          ],
+          "kindLabel": "著者登場回",
+          "frameName": "兵は国の大事——戦う前に算する",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "02-sonshi-day2",
+          "day": 2,
+          "title": "戦わずして人の兵を屈する",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "戦わずして人の兵を屈する",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "02-sonshi-day3",
+          "day": 3,
+          "title": "彼を知り己を知れば百戦殆うからず",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "彼を知り己を知れば百戦殆うからず",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "02-sonshi-day4",
+          "day": 4,
+          "title": "先に勝て、そして孫子の使いどころ",
+          "kind": [
+            "rebuttal",
+            "practice"
+          ],
+          "kindLabel": "反論特集＋実戦適用回・卒業回",
+          "frameName": "勝兵は先ず勝ちて而る後に戦う",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
+    },
+    {
+      "slug": "03-uexkull",
+      "title": "生物から見た世界",
+      "author": "ヤーコプ・フォン・ユクスキュル",
+      "genre": "科学",
+      "genreKey": "science",
+      "totalDays": 3,
+      "portrait": "",
+      "portraitCredit": "",
+      "titleLines": [
+        "生物から見た",
+        "世界"
+      ],
+      "days": [
+        {
+          "id": "03-uexkull-day1",
+          "day": 1,
+          "title": "環世界——生き物の数だけ、世界がある",
+          "kind": [
+            "author-intro"
+          ],
+          "kindLabel": "著者登場回",
+          "frameName": "環世界——生き物の数だけ、世界がある",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "03-uexkull-day2",
+          "day": 2,
+          "title": "意味が対象を切り出す——機能環とトーン",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "意味が対象を切り出す——機能環とトーン",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "03-uexkull-day3",
+          "day": 3,
+          "title": "相手の環世界を推定する",
+          "kind": [
+            "rebuttal",
+            "practice"
+          ],
+          "kindLabel": "反論特集＋実戦適用＋卒業",
+          "frameName": "相手の環世界を推定する",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
+    },
+    {
+      "slug": "04-ivan-ilyich",
+      "title": "イワン・イリイチの死",
+      "author": "レフ・トルストイ",
+      "genre": "文学",
+      "genreKey": "literature",
+      "totalDays": 4,
+      "portrait": "assets/portraits/04-ivan-ilyich.jpg",
+      "portraitCredit": "レフ・トルストイ（セルゲイ・プロクジン゠ゴルスキー撮影、1908年）Wikimedia Commons／パブリックドメイン（PD-old, 1931年以前公表）",
+      "titleLines": [
+        "イワン・",
+        "イリイチの死"
+      ],
+      "days": [
+        {
+          "id": "04-ivan-ilyich-day1",
+          "day": 1,
+          "title": "最も単純で最も平凡で、それゆえ最も恐ろしい",
+          "kind": [
+            "author-intro"
+          ],
+          "kindLabel": "著者登場回",
+          "frameName": "最も単純で最も平凡で、それゆえ最も恐ろしい人生",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "04-ivan-ilyich-day2",
+          "day": 2,
+          "title": "世間の物差しで選ぶ——選好の外部委託（コム・イル・フォー）",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "選好の外部委託",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "04-ivan-ilyich-day3",
+          "day": 3,
+          "title": "ごまかしと直視——ゲラーシムだけが本当のことを言う",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "ごまかしと直視",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "04-ivan-ilyich-day4",
+          "day": 4,
+          "title": "死を想え——実務に降ろせるか、著者自身は答えられたか",
+          "kind": [
+            "rebuttal",
+            "practice"
+          ],
+          "kindLabel": "反論特集＋実戦適用＋卒業",
+          "frameName": "死を物差しにする——ただし著者自身も答えを生き切れてはいない",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
+    },
+    {
+      "slug": "05-novum-organum",
+      "title": "ノヴム・オルガヌム",
+      "author": "フランシス・ベーコン",
+      "genre": "科学哲学",
+      "genreKey": "sciphil",
+      "totalDays": 5,
+      "portrait": "assets/portraits/05-novum-organum.jpg",
+      "portraitCredit": "フランシス・ベーコン肖像（パウル・ファン・ソマー画、〜1617年）Wikimedia Commons／パブリックドメイン（PD-Art, PD-old-100）",
+      "titleLines": [
+        "ノヴム・",
+        "オルガヌム"
+      ],
+      "days": [
+        {
+          "id": "05-novum-organum-day1",
+          "day": 1,
+          "title": "知は力なり——ただし自然は『従う』ことでしか征服できない",
+          "kind": [
+            "author-intro"
+          ],
+          "kindLabel": "著者登場回",
+          "frameName": "知は力なり／観察は介入に先行する",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "05-novum-organum-day2",
+          "day": 2,
+          "title": "4つの偶像（イドラ）——認識を歪める4つの型",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "4つの偶像",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "05-novum-organum-day3",
+          "day": 3,
+          "title": "蟻と蜘蛛と蜜蜂——経験と理性の結婚",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "蟻と蜘蛛と蜜蜂",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "05-novum-organum-day4",
+          "day": 4,
+          "title": "否定事例の力——人は当たりだけを数える",
+          "kind": [
+            "frame",
+            "crossover"
+          ],
+          "kindLabel": "フレーム回＋再ゲスト乱入",
+          "frameName": "否定事例の力",
+          "hasAudio": true,
+          "crossover": true
+        },
+        {
+          "id": "05-novum-organum-day5",
+          "day": 5,
+          "title": "観察は理論に先立つか——科学哲学への扉",
+          "kind": [
+            "rebuttal",
+            "practice"
+          ],
+          "kindLabel": "反論特集＋実戦適用＋卒業",
+          "frameName": "観察は理論に先立つか——ベーコンの方法の限界と、その先の論争史",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
+    }
+  ]
+}

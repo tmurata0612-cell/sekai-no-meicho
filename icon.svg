@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#0f1017"/>
+  <rect x="34" y="34" width="444" height="444" rx="88" fill="none" stroke="#b9975b" stroke-width="8" opacity="0.55"/>
+  <!-- 開いた本 -->
+  <g>
+    <path d="M256 148c-40-30-96-34-142-22-8 2-14 10-14 18v192c0 10 10 18 20 15 42-11 92-8 128 18 36-26 86-29 128-18 10 3 20-5 20-15V162c0-8-6-16-14-18-46-12-102-8-142 22z" fill="#f2ead6"/>
+    <path d="M256 148v220" stroke="#0f1017" stroke-width="10" stroke-linecap="round" opacity="0.35"/>
+    <path d="M136 176c34-9 74-7 104 12M136 216c34-9 74-7 104 12M136 256c30-8 66-7 96 9" stroke="#b9975b" stroke-width="9" stroke-linecap="round" fill="none" opacity="0.75"/>
+    <path d="M376 176c-34-9-74-7-104 12M376 216c-34-9-74-7-104 12M376 256c-30-8-66-7-96 9" stroke="#b9975b" stroke-width="9" stroke-linecap="round" fill="none" opacity="0.75"/>
+  </g>
+  <!-- 金の帯（下） -->
+  <rect x="150" y="392" width="212" height="14" rx="7" fill="#c9a86a"/>
+</svg>
