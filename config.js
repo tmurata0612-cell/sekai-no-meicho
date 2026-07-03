@@ -7,7 +7,7 @@
 //                           http://localhost:PORT/audio_out/<id>.mp3 から読む。
 //   - AUDIO.mode="release": ep.audio.url（Releasesの絶対URL）をそのまま使う。公開後に切替。
 export const AUDIO = {
-  mode: "local",             // "local" | "release"
+  mode: "release",           // "local" | "release"
   localBase: "../audio_out/",
 };
 
