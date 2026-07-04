@@ -1,6 +1,6 @@
 // Service Worker: アプリシェルはキャッシュ優先、エピソードJSONはネットワーク優先。
 // MP3は別オリジン（Releases）or リポジトリ外（../audio_out）＝スコープ外で SW 非介在。
-const VERSION = "meicho-v3";
+const VERSION = "meicho-v4";
 const SHELL = [
   "./", "index.html", "manifest.json", "icon.svg", "config.js",
   "css/style.css",
