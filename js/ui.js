@@ -48,7 +48,7 @@ export function openBook(bookEl, onDone) {
   const overlay = document.createElement("div");
   overlay.className = "book-opening";
   // ①閉じた本が正面へ → ②表紙が開く＋見開き幅へ → ③中間ページをパラパラめくって真ん中へ着地 → ④本の世界へズームイン → ⑤遷移
-  const RIFFLE = 4; // パラパラめくる中間ページ枚数
+  const RIFFLE = 6; // パラパラめくる中間ページ枚数
   const rpHtml = Array.from({ length: RIFFLE },
     () => `<div class="bo-rp"><div class="rp-f"></div><div class="rp-b"></div></div>`).join("");
   overlay.innerHTML = `<div class="bo-book ${genre}">
@@ -74,10 +74,10 @@ export function openBook(bookEl, onDone) {
 
   requestAnimationFrame(() => {
     overlay.classList.add("in");                        // 閉じた本が正面へ
-    setTimeout(() => book.classList.add("open"), 360);  // 表紙が開く＋見開き幅へ（1枚目のめくり）
-    // パラパラ：中間ページを綴じ軸に順にめくる。めくり始めに最前面へ→左の束の一番上に着地
+    setTimeout(() => book.classList.add("open"), 320);  // 表紙が開く＋見開き幅へ（1枚目のめくり）
+    // パラパラ：中間ページを綴じ軸に素早く順にめくる。めくり始めに最前面へ→左の束の一番上に着地
     rps.forEach((rp, i) => {
-      setTimeout(() => { rp.style.zIndex = String(101 + i); rp.classList.add("turn"); }, 560 + i * 100);
+      setTimeout(() => { rp.style.zIndex = String(101 + i); rp.classList.add("turn"); }, 470 + i * 55);
     });
     setTimeout(() => book.classList.add("dive"), 1450); // 本の世界へズームイン（総尺は不変）
   });
