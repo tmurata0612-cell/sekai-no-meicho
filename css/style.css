@@ -247,17 +247,9 @@ button{font-family:inherit}
     linear-gradient(180deg,#f4ead0,#efe2c4 46%,#e8d9b6);
   box-shadow:inset 16px 0 30px -14px rgba(38,24,10,.6),inset -6px 0 14px -6px rgba(64,44,20,.3),inset 0 0 24px rgba(96,68,32,.10),var(--shadow-lg)}
 /* 手書きの写本テキスト：密なセピアの行を縦マスクで単語状に断ち・右端ラグド（インクは柔らかめ） */
-.bo-page-r::before{content:"";position:absolute;inset:15px 15px 17px 24px;border-radius:2px;pointer-events:none;
-  background:repeating-linear-gradient(0deg,transparent 0 5.2px,rgba(64,44,22,.66) 5.2px 6.2px,transparent 6.2px 7.9px);
-  -webkit-mask:
-    repeating-linear-gradient(90deg,#000 0 18px,transparent 18px 19.5px,#000 19.5px 35px,transparent 35px 36.5px,#000 36.5px 50px,transparent 50px 51.5px,#000 51.5px 70px,transparent 70px 71.5px),
-    linear-gradient(90deg,#000 84%,transparent);
-  -webkit-mask-composite:source-in;
-  mask:
-    repeating-linear-gradient(90deg,#000 0 18px,transparent 18px 19.5px,#000 19.5px 35px,transparent 35px 36.5px,#000 36.5px 50px,transparent 50px 51.5px,#000 51.5px 70px,transparent 70px 71.5px),
-    linear-gradient(90deg,#000 84%,transparent);
-  mask-composite:intersect;
-  opacity:.66;mix-blend-mode:multiply}
+.bo-page-r::before{content:"";position:absolute;inset:15px 15px 17px 24px;pointer-events:none;
+  background:url("../assets/paper-hand-r.svg") left top/100% 100% no-repeat;
+  opacity:.72;mix-blend-mode:multiply}
 /* 小口＝頁束の厚み（右端に細い葉の積層）＋辺の柔らかいかげり */
 .bo-page-r::after{content:"";position:absolute;inset:0;border-radius:0 6px 8px 0;pointer-events:none;
   background:repeating-linear-gradient(0deg,rgba(92,66,32,.28) 0 1.5px,rgba(226,204,164,.55) 1.5px 3.3px) right/5px 95% no-repeat;
@@ -308,17 +300,9 @@ button{font-family:inherit}
     linear-gradient(270deg,rgba(50,32,12,.5) 0%,rgba(72,50,22,.12) 6%,rgba(255,251,238,.18) 20%,rgba(255,251,238,.04) 46%,transparent 66%,rgba(110,80,40,.10) 90%,rgba(84,58,28,.22) 100%),
     linear-gradient(180deg,#f4ead0,#efe2c4 46%,#e8d9b6);
   box-shadow:inset -16px 0 30px -14px rgba(38,24,10,.6),inset 6px 0 14px -6px rgba(64,44,20,.3),inset 0 0 24px rgba(96,68,32,.10)}
-.bo-back::before{content:"";position:absolute;inset:15px 24px 17px 15px;border-radius:2px;pointer-events:none;
-  background:repeating-linear-gradient(0deg,transparent 0 5.2px,rgba(64,44,22,.66) 5.2px 6.2px,transparent 6.2px 7.9px);
-  -webkit-mask:
-    repeating-linear-gradient(90deg,#000 0 16px,transparent 16px 17.5px,#000 17.5px 33px,transparent 33px 34.5px,#000 34.5px 52px,transparent 52px 53.5px,#000 53.5px 68px,transparent 68px 69.5px),
-    linear-gradient(90deg,transparent,#000 16%);
-  -webkit-mask-composite:source-in;
-  mask:
-    repeating-linear-gradient(90deg,#000 0 16px,transparent 16px 17.5px,#000 17.5px 33px,transparent 33px 34.5px,#000 34.5px 52px,transparent 52px 53.5px,#000 53.5px 68px,transparent 68px 69.5px),
-    linear-gradient(90deg,transparent,#000 16%);
-  mask-composite:intersect;
-  opacity:.66;mix-blend-mode:multiply}
+.bo-back::before{content:"";position:absolute;inset:15px 24px 17px 15px;pointer-events:none;
+  background:url("../assets/paper-hand-l.svg") left top/100% 100% no-repeat;
+  opacity:.72;mix-blend-mode:multiply}
 .bo-back::after{content:"";position:absolute;inset:0;border-radius:8px 0 0 6px;pointer-events:none;
   background:repeating-linear-gradient(0deg,rgba(92,66,32,.28) 0 1.5px,rgba(226,204,164,.55) 1.5px 3.3px) left/5px 95% no-repeat;
   box-shadow:inset 6px 0 11px -5px rgba(70,48,22,.32),inset 0 -9px 16px -9px rgba(80,56,26,.26),inset 0 9px 16px -10px rgba(80,56,26,.18)}
@@ -329,6 +313,36 @@ button{font-family:inherit}
   filter:drop-shadow(0 1px 0 rgba(0,0,0,.45)) drop-shadow(0 0 3px rgba(212,178,110,.4));
   font-size:clamp(14px,4.4vw,20px);letter-spacing:.1em;line-height:1.28;
   writing-mode:vertical-rl;text-orientation:upright;white-space:nowrap;max-height:80%;overflow:hidden}
+/* パラパラめくる中間ページ（表紙が開いたあと数枚が綴じを軸に左へめくれ、最後に見開きへ着地） */
+.bo-rp{position:absolute;left:50%;top:0;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;
+  transform:rotateY(0deg);transition:transform .46s cubic-bezier(.42,.04,.22,1);will-change:transform}
+.bo-rp.turn{transform:rotateY(-180deg)}
+.bo-rp .rp-f,.bo-rp .rp-b{position:absolute;inset:0;backface-visibility:hidden;overflow:hidden}
+.bo-rp .rp-f{border-radius:0 6px 8px 0;
+  background:
+    linear-gradient(90deg,rgba(50,32,12,.34) 0%,rgba(72,50,22,.1) 6%,rgba(255,251,238,.14) 20%,transparent 60%,rgba(84,58,28,.2) 100%),
+    linear-gradient(180deg,#f4ead0,#efe2c4 46%,#e8d9b6);
+  box-shadow:inset 12px 0 22px -12px rgba(38,24,10,.5),var(--shadow-lg)}
+.bo-rp .rp-b{transform:rotateY(180deg);border-radius:8px 0 0 6px;
+  background:
+    linear-gradient(270deg,rgba(50,32,12,.34) 0%,rgba(72,50,22,.1) 6%,rgba(255,251,238,.14) 20%,transparent 60%,rgba(84,58,28,.2) 100%),
+    linear-gradient(180deg,#f4ead0,#efe2c4 46%,#e8d9b6);
+  box-shadow:inset -12px 0 22px -12px rgba(38,24,10,.5)}
+.bo-rp .rp-f::before{content:"";position:absolute;inset:14px 14px 16px 20px;pointer-events:none;
+  background:url("../assets/paper-hand-r.svg") left top/100% 100% no-repeat;opacity:.58;mix-blend-mode:multiply}
+.bo-rp .rp-b::before{content:"";position:absolute;inset:14px 20px 16px 14px;pointer-events:none;
+  background:url("../assets/paper-hand-l.svg") left top/100% 100% no-repeat;opacity:.58;mix-blend-mode:multiply}
+/* めくり中の紙面のかげり（軸=綴じ側が沈み、立ち上がりで明暗が動く） */
+.bo-rp .rp-f::after,.bo-rp .rp-b::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(30,18,6,.28),transparent 32%);opacity:0;transition:opacity .46s ease}
+.bo-rp.turn .rp-f::after,.bo-rp.turn .rp-b::after{opacity:1}
+/* 写実性：背後の暖かなスポット光と、机に落ちる本の影 */
+.book-opening::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(58% 42% at 50% 45%,rgba(74,52,26,.34),transparent 72%)}
+.book-opening::after{content:"";position:absolute;left:50%;top:65%;width:min(80vw,336px);height:64px;
+  transform:translateX(-50%);border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at center,rgba(0,0,0,.5),rgba(0,0,0,.28) 42%,transparent 72%);filter:blur(9px)}
+.book-opening .bo-book{z-index:1}
 
 /* ============ SERIES ============ */
 .masthead{position:relative;overflow:hidden;border-radius:18px;margin:6px 0 18px;padding:24px 20px 20px;

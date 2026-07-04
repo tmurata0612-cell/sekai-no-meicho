@@ -1,12 +1,13 @@
 // Service Worker: アプリシェルはキャッシュ優先、エピソードJSONはネットワーク優先。
 // MP3は別オリジン（Releases）or リポジトリ外（../audio_out）＝スコープ外で SW 非介在。
-const VERSION = "meicho-v7";
+const VERSION = "meicho-v8";
 const SHELL = [
   "./", "index.html", "manifest.json", "icon.svg", "config.js",
   "css/style.css",
   "js/app.js", "js/store.js", "js/player.js", "js/ui.js", "js/avatars.js",
   "js/home.js", "js/series.js", "js/episode.js", "js/settings.js",
   "content/index.json",
+  "assets/paper-hand-r.svg", "assets/paper-hand-l.svg",
 ];
 
 self.addEventListener("install", (e) => {

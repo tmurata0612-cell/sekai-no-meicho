@@ -47,9 +47,13 @@ export function openBook(bookEl, onDone) {
 
   const overlay = document.createElement("div");
   overlay.className = "book-opening";
-  // ①正面の表紙 → ②見開き（左右のページ）に開く → ③本の世界へ飛び込む（ズームイン）→ ④遷移
+  // ①閉じた本が正面へ → ②表紙が開く＋見開き幅へ → ③中間ページをパラパラめくって真ん中へ着地 → ④本の世界へズームイン → ⑤遷移
+  const RIFFLE = 4; // パラパラめくる中間ページ枚数
+  const rpHtml = Array.from({ length: RIFFLE },
+    () => `<div class="bo-rp"><div class="rp-f"></div><div class="rp-b"></div></div>`).join("");
   overlay.innerHTML = `<div class="bo-book ${genre}">
     <div class="bo-page-r" aria-hidden="true"></div>
+    ${rpHtml}
     <div class="bo-leaf">
       <div class="bo-face bo-front"><span class="bo-cover-title">${esc(title)}</span></div>
       <div class="bo-face bo-back" aria-hidden="true"></div>
@@ -58,15 +62,24 @@ export function openBook(bookEl, onDone) {
   document.body.appendChild(overlay);
 
   const book = overlay.querySelector(".bo-book");
+  const rps = Array.from(overlay.querySelectorAll(".bo-rp"));
+  // 初期の重なり（右側で上から：表紙→中間ページ→…→最終右ページ）
+  overlay.querySelector(".bo-page-r").style.zIndex = "1";
+  rps.forEach((rp, i) => { rp.style.zIndex = String(20 - i); });
+  overlay.querySelector(".bo-leaf").style.zIndex = "30";
 
   let done = false;
   const finish = () => { if (done) return; done = true; overlay.remove(); onDone(); };
   overlay.addEventListener("click", finish); // 途中タップでスキップ
 
   requestAnimationFrame(() => {
-    overlay.classList.add("in");                        // 暗転＋表紙が正面へ立ち上がる（ここは従来速度）
-    setTimeout(() => book.classList.add("open"), 560);  // 見開きに開く（以降1.5倍速）
-    setTimeout(() => book.classList.add("dive"), 1450); // 本の世界へズームイン
+    overlay.classList.add("in");                        // 閉じた本が正面へ
+    setTimeout(() => book.classList.add("open"), 360);  // 表紙が開く＋見開き幅へ（1枚目のめくり）
+    // パラパラ：中間ページを綴じ軸に順にめくる。めくり始めに最前面へ→左の束の一番上に着地
+    rps.forEach((rp, i) => {
+      setTimeout(() => { rp.style.zIndex = String(101 + i); rp.classList.add("turn"); }, 560 + i * 100);
+    });
+    setTimeout(() => book.classList.add("dive"), 1450); // 本の世界へズームイン（総尺は不変）
   });
   book.addEventListener("transitionend", (e) => {
     if (e.propertyName === "transform" && book.classList.contains("dive")) finish();
