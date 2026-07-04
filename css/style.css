@@ -237,15 +237,39 @@ button{font-family:inherit}
   transition:transform .63s cubic-bezier(.4,.02,.16,1)}
 .bo-book.dive{transform:translateX(0) scale(3.3) rotateX(0)!important;opacity:0;
   transition:transform .42s ease-in,opacity .38s ease-in .04s}
-/* 右ページ（見開きの右半分）：飴色の古紙。綴じ側は影、小口は焼けて濃い */
-.bo-page-r{position:absolute;left:50%;top:0;width:50%;height:100%;border-radius:0 9px 9px 0;
+/* 右ページ（見開きの右半分）：シミ・焼け・ムラのある飴色の羊皮紙。綴じ側=左は影、小口=右は焦げ */
+.bo-page-r{position:absolute;left:50%;top:0;width:50%;height:100%;border-radius:0 8px 10px 0;
   background:
-    radial-gradient(120% 130% at 100% 50%,rgba(74,48,16,.28),transparent 42%),
-    radial-gradient(140% 120% at 6% 50%,rgba(52,34,12,.30),transparent 34%),
-    linear-gradient(90deg,#e9d9b4,#f4e8cb 34%,#eaddbb);
-  box-shadow:inset 9px 0 18px -8px rgba(40,26,8,.5),inset 0 0 28px rgba(74,48,16,.20),var(--shadow-lg)}
-.bo-page-r::before{content:"";position:absolute;inset:15px 17px;border-radius:2px;
-  background:repeating-linear-gradient(180deg,transparent 0 12px,rgba(88,58,22,.11) 12px 13px);opacity:.85}
+    radial-gradient(28% 20% at 72% 20%,rgba(96,58,20,.24),transparent 62%),
+    radial-gradient(24% 18% at 32% 70%,rgba(112,72,30,.22),transparent 60%),
+    radial-gradient(15% 32% at 90% 58%,rgba(70,42,14,.28),transparent 56%),
+    radial-gradient(34% 16% at 22% 14%,rgba(120,84,40,.16),transparent 60%),
+    radial-gradient(20% 24% at 60% 88%,rgba(86,54,22,.20),transparent 64%),
+    repeating-linear-gradient(0deg,rgba(64,42,16,.05) 0 10px,rgba(255,248,226,.045) 10px 21px),
+    radial-gradient(96% 86% at 48% 42%,transparent 46%,rgba(56,36,14,.16) 100%),
+    radial-gradient(130% 130% at 100% 50%,rgba(52,32,10,.46),transparent 40%),
+    radial-gradient(150% 120% at 2% 50%,rgba(48,30,10,.32),transparent 30%),
+    linear-gradient(177deg,#dcc697,#e8d4ac 30%,#dfcca0 70%,#d3bd8c);
+  box-shadow:inset 10px 0 20px -8px rgba(38,24,8,.5),inset -7px 0 16px -5px rgba(38,24,8,.44),inset 0 0 30px rgba(70,44,16,.22),var(--shadow-lg)}
+/* 手書きの写本テキスト：セピアの密な行を縦マスクで単語状に断ち切り、右端をラグドに */
+.bo-page-r::before{content:"";position:absolute;inset:14px 17px 16px 22px;border-radius:2px;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent 0 5.4px,rgba(52,32,14,.66) 5.4px 6.4px,transparent 6.4px 8.2px);
+  -webkit-mask:
+    repeating-linear-gradient(90deg,#000 0 15px,transparent 15px 17px,#000 17px 31px,transparent 31px 32.5px,#000 32.5px 45px,transparent 45px 47px,#000 47px 66px,transparent 66px 67.5px),
+    linear-gradient(90deg,#000 80%,transparent);
+  -webkit-mask-composite:source-in;
+  mask:
+    repeating-linear-gradient(90deg,#000 0 15px,transparent 15px 17px,#000 17px 31px,transparent 31px 32.5px,#000 32.5px 45px,transparent 45px 47px,#000 47px 66px,transparent 66px 67.5px),
+    linear-gradient(90deg,#000 80%,transparent);
+  mask-composite:intersect;
+  opacity:.74;mix-blend-mode:multiply}
+/* 焼けた小口・破れの陰・赤い装飾記号（rubrication） */
+.bo-page-r::after{content:"";position:absolute;inset:0;border-radius:0 8px 10px 0;pointer-events:none;
+  background:
+    radial-gradient(16px 26px at 96% 28%,rgba(38,22,8,.5),transparent 72%),
+    radial-gradient(22px 15px at 92% 80%,rgba(46,26,10,.42),transparent 72%),
+    radial-gradient(3px 13px at 26% 42%,rgba(132,36,22,.5),transparent 72%);
+  box-shadow:inset -8px 0 18px -4px rgba(38,22,8,.5),inset 0 -8px 18px -6px rgba(38,22,8,.38),inset 0 8px 16px -7px rgba(38,22,8,.28)}
 /* 表紙リーフ：右ページの上に閉じ、綴じ（中央）を軸に開く。表＝表紙／裏＝左ページ */
 .bo-leaf{position:absolute;left:50%;top:0;width:50%;height:100%;transform-origin:left center;
   transform:rotateY(0deg);transform-style:preserve-3d;transition:transform .63s cubic-bezier(.4,.02,.16,1)}
@@ -279,14 +303,37 @@ button{font-family:inherit}
     radial-gradient(circle at calc(100% - 18px) 16px,color-mix(in srgb,var(--gold) 92%,#000) 0 2.5px,color-mix(in srgb,var(--gold) 55%,transparent) 2.5px 4.5px,transparent 5.5px),
     radial-gradient(circle at 18px calc(100% - 16px),color-mix(in srgb,var(--gold) 92%,#000) 0 2.5px,color-mix(in srgb,var(--gold) 55%,transparent) 2.5px 4.5px,transparent 5.5px),
     radial-gradient(circle at calc(100% - 18px) calc(100% - 16px),color-mix(in srgb,var(--gold) 92%,#000) 0 2.5px,color-mix(in srgb,var(--gold) 55%,transparent) 2.5px 4.5px,transparent 5.5px)}
-/* 裏＝左ページ（開いた時の左半分） */
-.bo-back{transform:rotateY(180deg);border-radius:9px 0 0 9px;
+/* 裏＝左ページ（開いた時の左半分）：右ページと対称の羊皮紙。rotateY(180)で要素右=画面左=小口 */
+.bo-back{transform:rotateY(180deg);border-radius:9px 0 0 8px;
   background:
-    radial-gradient(120% 130% at 0% 50%,rgba(74,48,16,.28),transparent 42%),
-    linear-gradient(90deg,#eaddbb,#f4e8cb 66%,#e9d9b4);
-  box-shadow:inset -9px 0 18px -8px rgba(40,26,8,.5),inset 0 0 28px rgba(74,48,16,.20)}
-.bo-back::before{content:"";position:absolute;inset:15px 17px;border-radius:2px;
-  background:repeating-linear-gradient(180deg,transparent 0 12px,rgba(88,58,22,.11) 12px 13px);opacity:.85}
+    radial-gradient(28% 20% at 28% 22%,rgba(96,58,20,.24),transparent 62%),
+    radial-gradient(24% 18% at 68% 68%,rgba(112,72,30,.22),transparent 60%),
+    radial-gradient(15% 32% at 10% 56%,rgba(70,42,14,.28),transparent 56%),
+    radial-gradient(34% 16% at 78% 14%,rgba(120,84,40,.16),transparent 60%),
+    radial-gradient(20% 24% at 40% 88%,rgba(86,54,22,.20),transparent 64%),
+    repeating-linear-gradient(0deg,rgba(64,42,16,.05) 0 10px,rgba(255,248,226,.045) 10px 21px),
+    radial-gradient(96% 86% at 52% 42%,transparent 46%,rgba(56,36,14,.16) 100%),
+    radial-gradient(130% 130% at 100% 50%,rgba(52,32,10,.46),transparent 40%),
+    radial-gradient(150% 120% at 0% 50%,rgba(48,30,10,.32),transparent 30%),
+    linear-gradient(177deg,#dcc697,#e8d4ac 30%,#dfcca0 70%,#d3bd8c);
+  box-shadow:inset -7px 0 16px -5px rgba(38,24,8,.44),inset 10px 0 20px -8px rgba(38,24,8,.5),inset 0 0 30px rgba(70,44,16,.22)}
+.bo-back::before{content:"";position:absolute;inset:14px 22px 16px 17px;border-radius:2px;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent 0 5.4px,rgba(52,32,14,.66) 5.4px 6.4px,transparent 6.4px 8.2px);
+  -webkit-mask:
+    repeating-linear-gradient(90deg,#000 0 13px,transparent 13px 15px,#000 15px 29px,transparent 29px 30.5px,#000 30.5px 47px,transparent 47px 49px,#000 49px 63px,transparent 63px 64.5px),
+    linear-gradient(90deg,transparent,#000 20%);
+  -webkit-mask-composite:source-in;
+  mask:
+    repeating-linear-gradient(90deg,#000 0 13px,transparent 13px 15px,#000 15px 29px,transparent 29px 30.5px,#000 30.5px 47px,transparent 47px 49px,#000 49px 63px,transparent 63px 64.5px),
+    linear-gradient(90deg,transparent,#000 20%);
+  mask-composite:intersect;
+  opacity:.74;mix-blend-mode:multiply}
+.bo-back::after{content:"";position:absolute;inset:0;border-radius:9px 0 0 8px;pointer-events:none;
+  background:
+    radial-gradient(16px 26px at 96% 72%,rgba(38,22,8,.5),transparent 72%),
+    radial-gradient(20px 14px at 90% 22%,rgba(46,26,10,.4),transparent 72%),
+    radial-gradient(3px 13px at 74% 50%,rgba(132,36,22,.5),transparent 72%);
+  box-shadow:inset -8px 0 18px -4px rgba(38,22,8,.5),inset 0 -8px 18px -6px rgba(38,22,8,.38),inset 0 8px 16px -7px rgba(38,22,8,.28)}
 /* 表紙の題字：金の箔押し（グラデ＋刻印の陰影） */
 .bo-cover-title{font-family:var(--serif);font-weight:700;
   background:linear-gradient(180deg,#f6e0a4,#d8b878 42%,#a9843f);
