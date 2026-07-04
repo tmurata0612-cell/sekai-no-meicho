@@ -159,7 +159,7 @@ export function renderHome(el, app) {
 
     ${last && lastId !== (rec && rec.id) ? `<section class="resume">
       <p class="section-label">続きから</p>
-      <button class="resume-card" data-open="${esc(last.id)}">
+      <button class="resume-card g-${esc(last.series.genreKey)}" data-open="${esc(last.id)}">
         <span class="resume-title">『${esc(last.series.title)}』</span>
         <span class="resume-sub">${esc(last.title)}${lastResume > 5 ? `　·　${fmtTime(lastResume)}から` : ""}</span>
       </button>

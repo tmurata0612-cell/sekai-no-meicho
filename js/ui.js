@@ -37,9 +37,13 @@ export function openBook(bookEl, onDone) {
   if (reduce || !bookEl) { onDone(); return; }
 
   const genre = [...(bookEl.classList || [])].find(c => c.startsWith("g-")) || "g-philosophy";
-  const title = bookEl.querySelector(".book-title")?.textContent
+  // 開く演出の表紙に載せるタイトル。本棚＝.book-title、おすすめ＝.rec-book-title、
+  // 続きから＝.resume-title（『』つき）。装丁名として『』は外す。
+  const rawTitle = bookEl.querySelector(".book-title")?.textContent
     || bookEl.querySelector(".rec-book-title")?.textContent
+    || bookEl.querySelector(".resume-title")?.textContent
     || bookEl.querySelector(".rec-series")?.textContent || "";
+  const title = rawTitle.replace(/[『』]/g, "");
 
   const overlay = document.createElement("div");
   overlay.className = "book-opening";
