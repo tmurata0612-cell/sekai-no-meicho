@@ -41,10 +41,10 @@ const STUDY_POOL = [
   'Some books are to be tasted, others to be swallowed, and some few to be chewed and digested; that is, some books are to be read only in parts.',
   'Reading maketh a full man; conference a ready man; and writing an exact man. <s>Histories</s> Histories make men wise; poets witty; the mathematics subtile.',
 ];
-// 面ごとに連続する数スニペットを結合して埋める（overflow hidden で自然にラグド）。信頼済み文字列のみ。
+// 面ごとに全スニペットを結合してページをびっしり埋める（overflow hidden で余りは自然に切れる）。信頼済み文字列のみ。
 function scrHTML(i) {
   const n = STUDY_POOL.length;
-  return [0, 1, 2].map(k => STUDY_POOL[(i + k) % n]).join(" ");
+  return Array.from({ length: n }, (_, k) => STUDY_POOL[(i + k) % n]).join(" ");
 }
 
 // 本を開く演出（「本が開く」＝正面の本が3Dで立ち上がり、表紙がゆっくり開いて中身が現れる）。
@@ -64,17 +64,15 @@ export function openBook(bookEl, onDone) {
 
   const overlay = document.createElement("div");
   overlay.className = "book-opening";
-  // ①閉じた本が正面へ → ②表紙がゆっくり開く＋見開き幅へ → ③中間ページが浮きながらふんわり舞う → ④本の世界へダイブ → ⑤遷移
-  // （本全体は .bo-float でゆっくり浮遊。紙面は Pinyon Script の連綿カーシブ＝PD文章）
-  const RIFFLE = 5; // ふんわり舞う中間ページ枚数
+  // ①閉じた本が正面へ → ②表紙がゆっくり開く＋見開き幅へ → ③中間ページが綴じを軸にきれいにめくれる → ④本の世界へダイブ（光エフェクトなし） → ⑤遷移
+  // （本全体は .bo-float でゆっくり浮遊。紙面は Pinyon Script の連綿カーシブ＝PD文章をびっしり）
+  const RIFFLE = 4; // めくる中間ページ枚数
   const rpHtml = Array.from({ length: RIFFLE }, (_, i) =>
     `<div class="bo-rp"><div class="rp-f"><div class="bo-scr">${scrHTML(i)}</div></div>` +
     `<div class="rp-b"><div class="bo-scr l">${scrHTML(i + 3)}</div></div></div>`).join("");
   overlay.innerHTML = `<div class="bo-float"><div class="bo-book ${genre}">
-    <div class="bo-rays" aria-hidden="true"></div>
     <div class="bo-page-r" aria-hidden="true"><div class="bo-scr">${scrHTML(1)}</div></div>
     ${rpHtml}
-    <div class="bo-glow" aria-hidden="true"></div>
     <div class="bo-leaf">
       <div class="bo-face bo-front"><span class="bo-cover-title">${esc(title)}</span></div>
       <div class="bo-face bo-back" aria-hidden="true"><div class="bo-scr l">${scrHTML(4)}</div></div>
@@ -84,11 +82,9 @@ export function openBook(bookEl, onDone) {
 
   const book = overlay.querySelector(".bo-book");
   const rps = Array.from(overlay.querySelectorAll(".bo-rp"));
-  // 初期の重なり（右側で上から：表紙→中間ページ→…→最終右ページ。光条は最背面、光は紙面の上） */
-  overlay.querySelector(".bo-rays").style.zIndex = "0";
+  // 初期の重なり（右側で上から：表紙→中間ページ→…→最終右ページ）
   overlay.querySelector(".bo-page-r").style.zIndex = "1";
   rps.forEach((rp, i) => { rp.style.zIndex = String(20 - i); });
-  overlay.querySelector(".bo-glow").style.zIndex = "2";
   overlay.querySelector(".bo-leaf").style.zIndex = "30";
 
   let done = false;
@@ -98,15 +94,15 @@ export function openBook(bookEl, onDone) {
   requestAnimationFrame(() => {
     overlay.classList.add("in");                        // 閉じた本が正面へ
     setTimeout(() => book.classList.add("open"), 380);  // 表紙がゆっくり開く＋見開き幅へ
-    // ふんわり：中間ページを綴じ軸に、重なりの深い不均一な間で浮かせながら舞わせる（最後ほど間を詰めて収束）
-    const delays = [600, 820, 1010, 1170, 1300];
+    // 中間ページを綴じ軸に順にめくる。適度な間隔で重なりすぎず、綴じで束の一番上へ着地＝きれいなリフル
+    const delays = [520, 800, 1080, 1340];
     rps.forEach((rp, i) => {
-      setTimeout(() => { rp.style.zIndex = String(101 + i); rp.classList.add("turn"); }, delays[i] ?? (1300 + i * 90));
+      setTimeout(() => { rp.style.zIndex = String(101 + i); rp.classList.add("turn"); }, delays[i] ?? (1340 + i * 280));
     });
-    setTimeout(() => book.classList.add("dive"), 1780); // 本の世界へダイブ
+    setTimeout(() => book.classList.add("dive"), 1900); // 本の世界へダイブ（光エフェクトなし）
   });
   book.addEventListener("transitionend", (e) => {
     if (e.propertyName === "transform" && book.classList.contains("dive")) finish();
   });
-  setTimeout(finish, 2450); // 保険
+  setTimeout(finish, 2600); // 保険
 }
