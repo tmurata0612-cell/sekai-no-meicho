@@ -1,6 +1,7 @@
 // Service Worker: アプリシェルはキャッシュ優先、エピソードJSONはネットワーク優先。
-// MP3は別オリジン（Releases）or リポジトリ外（../audio_out）＝スコープ外で SW 非介在。
-const VERSION = "meicho-v9";
+// MP3（audio/*.mp3）は同一オリジン配信だが SW 非介在にする＝ブラウザ標準の Range/ストリーミング
+// をそのまま使わせ、iOS の <audio> がシーク・部分取得できるようにする（206をCacheに入れない）。
+const VERSION = "meicho-v10";
 const SHELL = [
   "./", "index.html", "manifest.json", "icon.svg", "config.js",
   "css/style.css",
@@ -24,6 +25,8 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   const url = new URL(e.request.url);
   if (e.request.method !== "GET" || url.origin !== location.origin) return;
+  // 音声MP3は SW を通さずネットワーク直＝Range/シーク（iOS必須）とストリーミングを損なわない
+  if (url.pathname.endsWith(".mp3")) return;
 
   // エピソードJSONは新鮮さ優先（更新されうる）。初回取得後はキャッシュにも積みオフライン再訪可
   const networkFirst = url.pathname.includes("/content/");

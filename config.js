@@ -1,18 +1,22 @@
 // アプリ全体の設定と、音声URLの解決。
 //
-// 音声(MP3)は容量の都合でリポジトリには入れず GitHub Releases に置く（公開後）。
-// 公開前のローカル検証中は、リポジトリ外の ../audio_out/ から直接鳴らす。
-//   - AUDIO.mode="local"  : `世界の名著/` をルートにローカルサーバを立て、
-//                           http://localhost:PORT/app/ でアプリを開く。音声は
-//                           http://localhost:PORT/audio_out/<id>.mp3 から読む。
-//   - AUDIO.mode="release": ep.audio.url（Releasesの絶対URL）をそのまま使う。公開後に切替。
+// 音声(MP3)の配信元。
+//   - AUDIO.mode="pages"  : 同一オリジン（GitHub Pages）の audio/<id>.mp3 から鳴らす【本番】。
+//                           Releases配信は Content-Type=application/octet-stream＋
+//                           Content-Disposition=attachment となり iOS Safari が
+//                           インライン再生を拒否する（＝iPhoneで聞けない）ため同一オリジンに移行。
+//                           Pages は audio/mpeg・インライン・Range 対応で iOS でも再生できる。
+//   - AUDIO.mode="release": ep.audio.url（Releasesの絶対URL）。※iOS非対応。旧方式・緊急退避用。
+//   - AUDIO.mode="local"  : ローカル検証。`世界の名著/` をルートにサーバを立て http://localhost:PORT/app/。
+//                           音声は http://localhost:PORT/audio_out/<id>.mp3。
 export const AUDIO = {
-  mode: "release",           // "local" | "release"
+  mode: "pages",             // "pages" | "release" | "local"
   localBase: "../audio_out/",
 };
 
 export function audioUrlFor(ep) {
   if (!ep || !ep.audio) return null;
+  if (AUDIO.mode === "pages") return `audio/${ep.id}.mp3`;
   if (AUDIO.mode === "release") return ep.audio.url || null;
   return `${AUDIO.localBase}${ep.id}.mp3`;
 }
