@@ -114,16 +114,16 @@ export function openBook(bookEl, onDone) {
 
   requestAnimationFrame(() => {
     overlay.classList.add("in");                        // 閉じた本が正面へ
-    setTimeout(() => book.classList.add("open"), 380);  // 表紙がゆっくり開く＋見開き幅へ
-    // 中間ページ2枚を綴じ軸に順にめくる（きれいなリフル）
-    const delays = [560, 900];
+    setTimeout(() => book.classList.add("open"), 360);  // 表紙が開く＋見開き幅へ
+    // 中間ページ2枚を短間隔で連続して勢いよくめくる＝パラパラっとしたリフル
+    const delays = [620, 740];
     rps.forEach((rp, i) => {
-      setTimeout(() => { rp.style.zIndex = String(101 + i); rp.classList.add("turn"); }, delays[i] ?? (900 + i * 340));
+      setTimeout(() => { rp.style.zIndex = String(101 + i); rp.classList.add("turn"); }, delays[i] ?? (740 + i * 120));
     });
-    setTimeout(() => book.classList.add("dive"), 1650); // 見開きへズームして本の世界に入り込む（光なし）
+    setTimeout(() => book.classList.add("dive"), 1300); // 見開きへ深くズームして本の世界に入り込む（光なし）
   });
   book.addEventListener("transitionend", (e) => {
     if (e.propertyName === "transform" && book.classList.contains("dive")) finish();
   });
-  setTimeout(finish, 2650); // 保険
+  setTimeout(finish, 2450); // 保険
 }

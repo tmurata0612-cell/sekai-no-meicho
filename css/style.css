@@ -242,10 +242,10 @@ button{font-family:inherit}
 .book-opening.in .bo-book{opacity:1;transform:translateX(-25%) scale(1) rotateX(22deg) rotateY(-2deg)}
 .bo-book.open{transform:translateX(0) scale(1) rotateX(22deg) rotateY(-2deg)!important;
   transition:transform .78s cubic-bezier(.2,.74,.22,1)}
-/* ダイブ＝見開きへズームして本の世界に入り込む。光エフェクトなし。
-   奥へ加速しながら大きく拡大＋視点をまっすぐに（rotateX→6）。本体はしばらく見えたまま、最後に素早くフェード＝紙面へ吸い込まれる感覚 */
-.bo-book.dive{transform:translateX(0) scale(4.6) rotateX(6deg) rotateY(-2deg)!important;opacity:0;
-  transition:transform .82s cubic-bezier(.5,0,.75,.4),opacity .32s ease-in .52s}
+/* ダイブ＝見開きへ深くズームして本の世界に入り込む。光エフェクトなし。
+   奥へ加速しながら大きく拡大（scale 7.5）＋視点をまっすぐに（rotateX→5）。本体は深部まで見えたまま、最後に素早くフェード＝紙面へ吸い込まれる感覚 */
+.bo-book.dive{transform:translateX(0) scale(7.5) rotateX(5deg) rotateY(-2deg)!important;opacity:0;
+  transition:transform .92s cubic-bezier(.5,0,.72,.45),opacity .34s ease-in .62s}
 /* 右ページ：暖かいクリームの古紙。控えめなエイジング＋頁の湾曲（綴じ=左の谷→ハイライト→小口=右のかげり） */
 .bo-page-r{position:absolute;left:50%;top:0;width:50%;height:100%;border-radius:0 6px 8px 0;
   background:
@@ -268,7 +268,7 @@ button{font-family:inherit}
   box-shadow:inset -6px 0 11px -5px rgba(70,48,22,.32),inset 0 -9px 16px -9px rgba(80,56,26,.26),inset 0 9px 16px -10px rgba(80,56,26,.18)}
 /* 表紙リーフ：右ページの上に閉じ、綴じ（中央）を軸に開く。表＝表紙／裏＝左ページ */
 .bo-leaf{position:absolute;left:50%;top:0;width:50%;height:100%;transform-origin:left center;
-  transform:rotateY(0deg);transform-style:preserve-3d;transition:transform .78s cubic-bezier(.32,.66,.28,1)}
+  transform:rotateY(0deg);transform-style:preserve-3d;transition:transform .55s cubic-bezier(.2,.72,.24,1)}
 .bo-book.open .bo-leaf{transform:rotateY(-178deg)}
 .bo-face{position:absolute;inset:0;backface-visibility:hidden;overflow:hidden}
 /* 表紙＝革装丁：装丁色を深く沈め、革のグレイン＋摩耗の陰影。左＝背の段差、右＝小口の頁束 */
@@ -323,9 +323,9 @@ button{font-family:inherit}
   filter:drop-shadow(0 1px 0 rgba(0,0,0,.45)) drop-shadow(0 0 3px rgba(212,178,110,.4));
   font-size:clamp(14px,4.4vw,20px);letter-spacing:.1em;line-height:1.28;
   writing-mode:vertical-rl;text-orientation:upright;white-space:nowrap;max-height:80%;overflow:hidden}
-/* 中間ページ：綴じ（左端）を軸に、紙を飛ばさず素直に180°めくる。柔らかいイージングでふんわり＝きれいにめくれる */
+/* 中間ページ：綴じ（左端）を軸に180°めくる。フリックしたように速く始まり減速する“勢い”のイージング＝パラパラっとめくれる */
 .bo-rp{position:absolute;left:50%;top:0;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;
-  transform:rotateY(0deg);transition:transform .9s cubic-bezier(.37,.03,.24,1);will-change:transform}
+  transform:rotateY(0deg);transition:transform .5s cubic-bezier(.12,.8,.28,1);will-change:transform}
 .bo-rp.turn{transform:rotateY(-180deg)}
 .bo-rp .rp-f,.bo-rp .rp-b{position:absolute;inset:0;backface-visibility:hidden;overflow:hidden}
 .bo-rp .rp-f{border-radius:0 6px 8px 0;
