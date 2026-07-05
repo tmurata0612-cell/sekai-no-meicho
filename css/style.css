@@ -242,9 +242,10 @@ button{font-family:inherit}
 .book-opening.in .bo-book{opacity:1;transform:translateX(-25%) scale(1) rotateX(22deg) rotateY(-2deg)}
 .bo-book.open{transform:translateX(0) scale(1) rotateX(22deg) rotateY(-2deg)!important;
   transition:transform .78s cubic-bezier(.2,.74,.22,1)}
-/* ダイブ＝本の世界へ吸い込まれる。光エフェクトは付けない（拡大＋フェードのみ＝素直なズームイン） */
-.bo-book.dive{transform:translateX(0) scale(3.1) rotateX(12deg) rotateY(-2deg)!important;opacity:0;
-  transition:transform .6s ease-in,opacity .5s ease-in .04s}
+/* ダイブ＝見開きへズームして本の世界に入り込む。光エフェクトなし。
+   奥へ加速しながら大きく拡大＋視点をまっすぐに（rotateX→6）。本体はしばらく見えたまま、最後に素早くフェード＝紙面へ吸い込まれる感覚 */
+.bo-book.dive{transform:translateX(0) scale(4.6) rotateX(6deg) rotateY(-2deg)!important;opacity:0;
+  transition:transform .82s cubic-bezier(.5,0,.75,.4),opacity .32s ease-in .52s}
 /* 右ページ：暖かいクリームの古紙。控えめなエイジング＋頁の湾曲（綴じ=左の谷→ハイライト→小口=右のかげり） */
 .bo-page-r{position:absolute;left:50%;top:0;width:50%;height:100%;border-radius:0 6px 8px 0;
   background:
