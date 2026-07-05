@@ -223,20 +223,37 @@ button{font-family:inherit}
 .app-foot{text-align:center;color:var(--ink-faint);font-size:11.5px;margin-top:36px;line-height:1.9}
 .link{background:none;border:none;color:var(--accent);cursor:pointer;font-size:inherit;text-decoration:underline;padding:0}
 
-/* ============ 本を開く演出（①表紙 → ②見開きに開く → ③本の世界へズームイン → ④遷移） ============ */
+/* ============ 本を開く演出（正面×斜め・ふんわり・連綿カーシブ紙面 → 本の世界へダイブ） ============ */
+/* 紙面の手書き文字＝SIL OFL の筆記体 Pinyon Script（assets/fonts、OFL.txt同梱）。実在PD文章を敷く装飾 */
+@font-face{font-family:"PinyonScript";font-style:normal;font-weight:400;font-display:swap;
+  src:url("../assets/fonts/PinyonScript-Regular.ttf") format("truetype")}
+
 .book-opening{position:fixed;inset:0;z-index:80;display:grid;place-items:center;
   background:color-mix(in srgb,var(--bg) 16%,rgba(0,0,0,.66));backdrop-filter:blur(3px);
-  opacity:0;transition:opacity .42s ease;perspective:1150px;perspective-origin:50% 30%}
+  opacity:0;transition:opacity .5s ease;perspective:1200px;perspective-origin:50% 32%}
 .book-opening.in{opacity:1}
-/* 本体は見開き2ページ分の幅。閉じている時は右半分だけ見える（左25%ぶん寄せて中央に）。やや斜め上から見下ろす視点（rotateX＋わずかにrotateY） */
+/* 外側：本全体がゆっくり浮遊（ふんわり） */
+.bo-float{transform-style:preserve-3d;animation:bo-bob 4.2s ease-in-out infinite}
+@keyframes bo-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+/* 本体は見開き2ページ分の幅。閉じ時は右半分だけ中央に見える。正面から見て、やや見下ろす視点（rotateY≈0＝正面×斜め） */
 .bo-book{position:relative;width:min(86vw,344px);height:min(62vw,248px);transform-style:preserve-3d;
-  opacity:.4;transform:translateX(-25%) scale(.66) rotateX(22deg) rotateY(-6deg);
-  transition:transform .6s cubic-bezier(.2,.7,.2,1),opacity .5s ease}
-.book-opening.in .bo-book{opacity:1;transform:translateX(-25%) scale(1) rotateX(23deg) rotateY(-6deg)}
-.bo-book.open{transform:translateX(0) scale(1) rotateX(24deg) rotateY(-7deg)!important;
-  transition:transform .44s cubic-bezier(.4,.02,.16,1)}
-.bo-book.dive{transform:translateX(0) scale(3.2) rotateX(12deg) rotateY(-3deg)!important;opacity:0;
-  transition:transform .42s ease-in,opacity .38s ease-in .04s}
+  opacity:.4;transform:translateX(-25%) scale(.7) rotateX(20deg) rotateY(-2deg);
+  transition:transform .7s cubic-bezier(.2,.75,.22,1),opacity .55s ease}
+.book-opening.in .bo-book{opacity:1;transform:translateX(-25%) scale(1) rotateX(22deg) rotateY(-2deg)}
+.bo-book.open{transform:translateX(0) scale(1) rotateX(22deg) rotateY(-2deg)!important;
+  transition:transform .78s cubic-bezier(.2,.74,.22,1)}
+.bo-book.dive{transform:translateX(0) scale(3.1) rotateX(12deg) rotateY(-2deg)!important;opacity:0;
+  transition:transform .6s ease-in,opacity .5s ease-in .04s}
+/* 内側からの暖かい光（開くと灯る）／ダイブ時の光条 */
+.bo-glow{position:absolute;left:50%;top:50%;width:88%;height:88%;transform:translate(-50%,-50%);border-radius:50%;
+  pointer-events:none;opacity:0;mix-blend-mode:screen;
+  background:radial-gradient(closest-side,rgba(255,226,162,.5),rgba(255,212,142,.12) 58%,transparent 74%);
+  transition:opacity .75s ease}
+.bo-book.open .bo-glow{opacity:.8}
+.bo-rays{position:absolute;inset:-40% -40%;pointer-events:none;opacity:0;mix-blend-mode:screen;
+  background:repeating-conic-gradient(from 0deg at 50% 50%,rgba(255,232,180,.14) 0deg 4deg,transparent 4deg 15deg);
+  transition:opacity .4s ease;transform:scale(.6)}
+.bo-book.dive .bo-rays{opacity:1;transform:scale(1.25)}
 /* 右ページ：暖かいクリームの古紙。控えめなエイジング＋頁の湾曲（綴じ=左の谷→ハイライト→小口=右のかげり） */
 .bo-page-r{position:absolute;left:50%;top:0;width:50%;height:100%;border-radius:0 6px 8px 0;
   background:
@@ -246,18 +263,21 @@ button{font-family:inherit}
     linear-gradient(90deg,rgba(50,32,12,.5) 0%,rgba(72,50,22,.12) 6%,rgba(255,251,238,.18) 20%,rgba(255,251,238,.04) 46%,transparent 66%,rgba(110,80,40,.10) 90%,rgba(84,58,28,.22) 100%),
     linear-gradient(180deg,#f4ead0,#efe2c4 46%,#e8d9b6);
   box-shadow:inset 16px 0 30px -14px rgba(38,24,10,.6),inset -6px 0 14px -6px rgba(64,44,20,.3),inset 0 0 24px rgba(96,68,32,.10),var(--shadow-lg)}
-/* 手書きの写本テキスト：密なセピアの行を縦マスクで単語状に断ち・右端ラグド（インクは柔らかめ） */
-.bo-page-r::before{content:"";position:absolute;inset:15px 15px 17px 24px;pointer-events:none;
-  background:url("../assets/paper-hand-r.svg") left top/100% 100% no-repeat;
-  opacity:.72;mix-blend-mode:multiply}
+/* 手書きの写本テキスト＝連綿カーシブ（Pinyon Script）。実在PD文章をJSで各ページ面に挿入。
+   淡インク・justify・overflow hidden で自然に右端ラグド。左ページは .bo-scr.l で内寄せを反転 */
+.bo-scr{position:absolute;inset:16px 16px 18px 24px;overflow:hidden;pointer-events:none;
+  font-family:"PinyonScript",cursive;color:rgba(46,30,12,.5);
+  font-size:9.5px;line-height:1.55;text-align:justify;word-spacing:1px;mix-blend-mode:multiply}
+.bo-scr.l{inset:16px 24px 18px 16px}
+.bo-scr s{text-decoration-thickness:.6px;text-decoration-color:rgba(46,30,12,.45)}
 /* 小口＝頁束の厚み（右端に細い葉の積層）＋辺の柔らかいかげり */
 .bo-page-r::after{content:"";position:absolute;inset:0;border-radius:0 6px 8px 0;pointer-events:none;
   background:repeating-linear-gradient(0deg,rgba(92,66,32,.28) 0 1.5px,rgba(226,204,164,.55) 1.5px 3.3px) right/5px 95% no-repeat;
   box-shadow:inset -6px 0 11px -5px rgba(70,48,22,.32),inset 0 -9px 16px -9px rgba(80,56,26,.26),inset 0 9px 16px -10px rgba(80,56,26,.18)}
 /* 表紙リーフ：右ページの上に閉じ、綴じ（中央）を軸に開く。表＝表紙／裏＝左ページ */
 .bo-leaf{position:absolute;left:50%;top:0;width:50%;height:100%;transform-origin:left center;
-  transform:rotateY(0deg);transform-style:preserve-3d;transition:transform .34s cubic-bezier(.4,.02,.16,1)}
-.bo-book.open .bo-leaf{transform:rotateY(-176deg)}
+  transform:rotateY(0deg);transform-style:preserve-3d;transition:transform .78s cubic-bezier(.32,.66,.28,1)}
+.bo-book.open .bo-leaf{transform:rotateY(-178deg)}
 .bo-face{position:absolute;inset:0;backface-visibility:hidden;overflow:hidden}
 /* 表紙＝革装丁：装丁色を深く沈め、革のグレイン＋摩耗の陰影。左＝背の段差、右＝小口の頁束 */
 .bo-front{border-radius:2px 10px 10px 2px;display:grid;place-items:center;padding:20px;
@@ -300,9 +320,7 @@ button{font-family:inherit}
     linear-gradient(270deg,rgba(50,32,12,.5) 0%,rgba(72,50,22,.12) 6%,rgba(255,251,238,.18) 20%,rgba(255,251,238,.04) 46%,transparent 66%,rgba(110,80,40,.10) 90%,rgba(84,58,28,.22) 100%),
     linear-gradient(180deg,#f4ead0,#efe2c4 46%,#e8d9b6);
   box-shadow:inset -16px 0 30px -14px rgba(38,24,10,.6),inset 6px 0 14px -6px rgba(64,44,20,.3),inset 0 0 24px rgba(96,68,32,.10)}
-.bo-back::before{content:"";position:absolute;inset:15px 24px 17px 15px;pointer-events:none;
-  background:url("../assets/paper-hand-l.svg") left top/100% 100% no-repeat;
-  opacity:.72;mix-blend-mode:multiply}
+/* 左ページ（表紙の裏）の写本テキストは .bo-scr.l をJSで挿入 */
 .bo-back::after{content:"";position:absolute;inset:0;border-radius:8px 0 0 6px;pointer-events:none;
   background:repeating-linear-gradient(0deg,rgba(92,66,32,.28) 0 1.5px,rgba(226,204,164,.55) 1.5px 3.3px) left/5px 95% no-repeat;
   box-shadow:inset 6px 0 11px -5px rgba(70,48,22,.32),inset 0 -9px 16px -9px rgba(80,56,26,.26),inset 0 9px 16px -10px rgba(80,56,26,.18)}
@@ -313,10 +331,13 @@ button{font-family:inherit}
   filter:drop-shadow(0 1px 0 rgba(0,0,0,.45)) drop-shadow(0 0 3px rgba(212,178,110,.4));
   font-size:clamp(14px,4.4vw,20px);letter-spacing:.1em;line-height:1.28;
   writing-mode:vertical-rl;text-orientation:upright;white-space:nowrap;max-height:80%;overflow:hidden}
-/* パラパラめくる中間ページ（表紙が開いたあと数枚が綴じを軸に左へめくれ、最後に見開きへ着地） */
+/* 中間ページ（ふんわり）：綴じを軸に、めくり途中でわずかに浮き上がりながら（translateZ）ゆっくり舞う */
 .bo-rp{position:absolute;left:50%;top:0;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;
-  transform:rotateY(0deg);transition:transform .24s cubic-bezier(.45,.05,.25,1);will-change:transform}
-.bo-rp.turn{transform:rotateY(-180deg)}
+  transform:rotateY(0deg);will-change:transform}
+.bo-rp.turn{animation:bo-loft .92s cubic-bezier(.3,.68,.2,1) forwards}
+@keyframes bo-loft{0%{transform:rotateY(0deg) translateZ(0)}
+  55%{transform:rotateY(-104deg) translateZ(20px)}
+  100%{transform:rotateY(-180deg) translateZ(0)}}
 .bo-rp .rp-f,.bo-rp .rp-b{position:absolute;inset:0;backface-visibility:hidden;overflow:hidden}
 .bo-rp .rp-f{border-radius:0 6px 8px 0;
   background:
@@ -328,10 +349,7 @@ button{font-family:inherit}
     linear-gradient(270deg,rgba(50,32,12,.34) 0%,rgba(72,50,22,.1) 6%,rgba(255,251,238,.14) 20%,transparent 60%,rgba(84,58,28,.2) 100%),
     linear-gradient(180deg,#f4ead0,#efe2c4 46%,#e8d9b6);
   box-shadow:inset -12px 0 22px -12px rgba(38,24,10,.5)}
-.bo-rp .rp-f::before{content:"";position:absolute;inset:14px 14px 16px 20px;pointer-events:none;
-  background:url("../assets/paper-hand-r.svg") left top/100% 100% no-repeat;opacity:.58;mix-blend-mode:multiply}
-.bo-rp .rp-b::before{content:"";position:absolute;inset:14px 20px 16px 14px;pointer-events:none;
-  background:url("../assets/paper-hand-l.svg") left top/100% 100% no-repeat;opacity:.58;mix-blend-mode:multiply}
+/* 中間ページ面の写本テキストは .bo-scr（右）/.bo-scr.l（左）をJSで挿入 */
 /* めくり中の紙面のかげり（軸=綴じ側が沈み、立ち上がりで明暗が動く） */
 .bo-rp .rp-f::after,.bo-rp .rp-b::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(90deg,rgba(30,18,6,.28),transparent 32%);opacity:0;transition:opacity .24s ease}

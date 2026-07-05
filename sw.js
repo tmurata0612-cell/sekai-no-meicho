@@ -1,14 +1,14 @@
 // Service Worker: アプリシェルはキャッシュ優先、エピソードJSONはネットワーク優先。
 // MP3（audio/*.mp3）は同一オリジン配信だが SW 非介在にする＝ブラウザ標準の Range/ストリーミング
 // をそのまま使わせ、iOS の <audio> がシーク・部分取得できるようにする（206をCacheに入れない）。
-const VERSION = "meicho-v10";
+const VERSION = "meicho-v11";
 const SHELL = [
   "./", "index.html", "manifest.json", "icon.svg", "config.js",
   "css/style.css",
   "js/app.js", "js/store.js", "js/player.js", "js/ui.js", "js/avatars.js",
   "js/home.js", "js/series.js", "js/episode.js", "js/settings.js",
   "content/index.json",
-  "assets/paper-hand-r.svg", "assets/paper-hand-l.svg",
+  "assets/fonts/PinyonScript-Regular.ttf", // 本を開く演出の紙面＝連綿カーシブ（SIL OFL）
 ];
 
 self.addEventListener("install", (e) => {
