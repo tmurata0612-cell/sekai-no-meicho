@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 ユクスキュルDay2 — 機能環</title>
+<style>
+  :root{
+    --ground:#E6E2D2; --panel:#F1EEDF; --panel-2:#E8E4D1;
+    --ink:#1E201A; --muted:#63685A; --faint:#888C79; --line:#C6C4A8; --line-soft:#D8D5BE;
+    --seal:#4E6A3B; --calm:#3C6E78; --heat:#A9762F;
+    --seal-soft:#DFE6D3; --calm-soft:#D6E4E6; --heat-soft:#EEE3CD;
+    --shadow:0 1px 2px rgba(30,32,26,.06), 0 8px 24px -12px rgba(30,32,26,.18);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --ground:#12140F; --panel:#1C1F17; --panel-2:#22261C;
+      --ink:#E7E6D3; --muted:#A0A48C; --faint:#868A72; --line:#363A2C; --line-soft:#2A2E22;
+      --seal:#8DB06A; --calm:#78ABB3; --heat:#D3A35D;
+      --seal-soft:#1E2618; --calm-soft:#18262A; --heat-soft:#2A2417;
+      --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#12140F; --panel:#1C1F17; --panel-2:#22261C;
+    --ink:#E7E6D3; --muted:#A0A48C; --faint:#868A72; --line:#363A2C; --line-soft:#2A2E22;
+    --seal:#8DB06A; --calm:#78ABB3; --heat:#D3A35D;
+    --seal-soft:#1E2618; --calm-soft:#18262A; --heat-soft:#2A2417;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);
+  }
+  :root[data-theme="light"]{
+    --ground:#E6E2D2; --panel:#F1EEDF; --panel-2:#E8E4D1;
+    --ink:#1E201A; --muted:#63685A; --faint:#888C79; --line:#C6C4A8; --line-soft:#D8D5BE;
+    --seal:#4E6A3B; --calm:#3C6E78; --heat:#A9762F;
+    --seal-soft:#DFE6D3; --calm-soft:#D6E4E6; --heat-soft:#EEE3CD;
+    --shadow:0 1px 2px rgba(30,32,26,.06), 0 8px 24px -12px rgba(30,32,26,.18);
+  }
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans);
+    min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(30px,6vw,52px); line-height:1.14; margin:.42em 0 .1em;}
+  h1 .ruby{font-size:.5em; color:var(--faint); font-weight:500;}
+  .dek{color:var(--muted); font-size:15px; max-width:62ch;}
+  .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:#fff; background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.06em;}
+
+  .diagram{margin-top:clamp(28px,5vw,44px);}
+
+  /* ---- 機能環 ring (SVG) ---- */
+  .cycle{border:1px solid var(--line); border-radius:18px; background:var(--panel); box-shadow:var(--shadow); overflow:hidden;}
+  .cyc-cap{text-align:center; font-family:var(--serif); font-weight:600; font-size:15px; padding:12px; border-bottom:1px solid var(--line-soft); background:var(--panel-2);}
+  .cyc-cap span{color:var(--faint); font-family:var(--sans); font-weight:500; font-size:12px; letter-spacing:.04em;}
+  .cyc-body{padding:clamp(12px,2.6vw,22px);}
+  .ring{display:block; width:100%; height:auto; max-width:600px; margin:0 auto;}
+  .ring .arc{fill:none; stroke-width:3.5; stroke-linecap:round;}
+  .ring .arc.perc{stroke:var(--calm);}
+  .ring .arc.act{stroke:var(--heat);}
+  .ring .head.perc{fill:var(--calm);}
+  .ring .head.act{fill:var(--heat);}
+  .ring .half-perc{fill:var(--calm-soft); opacity:.75;}
+  .ring .half-act{fill:var(--heat-soft); opacity:.75;}
+  .ring .node{fill:none; stroke-width:2.5;}
+  .ring .node-subj{stroke:var(--seal);}
+  .ring .node-obj{stroke:var(--heat); fill:var(--panel-2);}
+  .ring text{font-family:var(--serif); fill:var(--ink); text-anchor:middle;}
+  .ring .t-node{font-size:19px; font-weight:600;}
+  .ring .t-nodesub{font-size:10.5px; font-family:var(--sans); fill:var(--muted);}
+  .ring .t-arc{font-size:16px; font-weight:600;}
+  .ring .t-arc.perc{fill:var(--calm);} .ring .t-arc.act{fill:var(--heat);}
+  .ring .t-arc .de{font-size:10.5px; font-family:var(--sans); fill:var(--faint); font-weight:500;}
+  .ring .t-center{font-size:21px; font-weight:600; fill:var(--seal);}
+  .ring .t-centersub{font-size:10px; font-family:var(--sans); fill:var(--faint);}
+  .cyc-legend{display:flex; gap:8px 22px; flex-wrap:wrap; justify-content:center; margin-top:12px; font-size:12.5px; color:var(--muted);}
+  .cyc-legend .li{display:flex; gap:7px; align-items:baseline;}
+  .cyc-legend .mk{font-family:var(--serif); font-weight:600; flex:none;}
+  .cyc-legend .mk.perc{color:var(--calm);} .cyc-legend .mk.act{color:var(--heat);}
+  .closeloop{text-align:center; font-family:var(--serif); color:var(--seal); font-size:13px; margin-top:12px;}
+
+  /* ---- scorecard: マダニの3信号 ---- */
+  .scorecard{margin-top:22px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--heat); font-weight:700; margin:0 2px 10px; display:flex; justify-content:space-between; align-items:baseline; gap:8px; flex-wrap:wrap;}
+  .scorecard .cap b{font-family:var(--serif); font-size:15px; letter-spacing:0; text-transform:none; color:var(--ink);}
+  .wu{display:flex; align-items:center; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);}
+  .wu:first-of-type{border-top:0;}
+  .wu .gi{width:38px; height:38px; flex:none; border-radius:10px; background:var(--heat-soft); color:var(--heat); display:grid; place-items:center; font-size:20px;}
+  .wu .txt .nm{font-family:var(--serif); font-size:14.5px; font-weight:600;}
+  .wu .txt .nm span{font-family:var(--sans); font-size:11px; color:var(--faint); font-weight:500; margin-left:5px;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;}
+  .scorecard .kick{margin:10px 2px 4px; font-size:13px; color:var(--ink);}
+  .scorecard .kick b{color:var(--heat);}
+
+  /* ---- band: key insight ---- */
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px);
+    background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 9%, var(--panel)), var(--panel));
+    border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(19px,3.3vw,25px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .asym{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .asym .col{flex:1; min-width:190px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .asym .col .h{font-size:12.5px; font-weight:700; letter-spacing:.04em; display:flex; align-items:center; gap:7px;}
+  .asym .col.human .h{color:var(--calm);} .asym .col.tick .h{color:var(--heat);}
+  .asym .col p{margin:5px 0 0; font-size:13px; color:var(--muted);}
+  .asym-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  /* ---- fact + application ---- */
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:180px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(24px,4.4vw,34px); font-weight:600; font-variant-numeric:tabular-nums; line-height:1.05;}
+  .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;}
+  .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);}
+  .apply .now{color:var(--ink); font-weight:600;}
+
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(2){animation-delay:.06s}
+    .diagram>*:nth-child(3){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>相手が見ている世界は、<br>あなたと違う。</h1>
+      <p class="dek">どの生き物も、<b>意味を持つ信号だけ</b>で組み立てた自分専用の世界（<b>環世界</b>）に住む。知覚と作用が閉じた輪をなす——それが<b>機能環</b>。同じ森でも、住む世界はまるで別物だ。</p>
+      <div class="source">
+        <span class="seal">生物から見た世界</span>
+        <span>ユクスキュル ・ Day2「環世界と機能環」</span>
+      </div>
+    </header>
+
+    <div class="diagram">
+
+      <!-- 機能環 ring -->
+      <div class="cycle">
+        <div class="cyc-cap">機能環（Funktionskreis）<br><span>知覚と作用が、主体と客体をめぐって閉じる輪</span></div>
+        <div class="cyc-body">
+          <svg class="ring" viewBox="0 0 640 384" role="img" aria-label="機能環の図：主体と客体を、上を知覚・下を作用がめぐる閉じた輪">
+            <path class="arc perc" d="M 548 192 A 228 128 0 0 0 92 192"/>
+            <path class="arc act"  d="M 92 192 A 228 128 0 0 0 548 192"/>
+            <polygon class="head perc" points="308,64 330,54 330,74"/>
+            <polygon class="head act"  points="332,320 310,310 310,330"/>
+            <text class="t-arc perc" x="320" y="40">知覚<tspan class="de"> ／ Merken</tspan></text>
+            <text class="t-arc act"  x="320" y="360">作用<tspan class="de"> ／ Wirken</tspan></text>
+            <path class="half-perc" d="M 154 192 A 62 62 0 0 0 30 192 Z"/>
+            <path class="half-act"  d="M 30 192 A 62 62 0 0 0 154 192 Z"/>
+            <circle class="node node-subj" cx="92" cy="192" r="62"/>
+            <text class="t-node" x="92" y="188">主体</text>
+            <text class="t-nodesub" x="92" y="206">動物</text>
+            <circle class="node node-obj" cx="548" cy="192" r="62"/>
+            <text class="t-node" x="548" y="188">客体</text>
+            <text class="t-nodesub" x="548" y="206">もの</text>
+            <text class="t-center" x="320" y="186">機能環</text>
+            <text class="t-centersub" x="320" y="206">知覚と作用が閉じる輪</text>
+          </svg>
+
+          <div class="cyc-legend">
+            <span class="li"><span class="mk perc">▲ 知覚</span> 客体の〈知覚標識〉を主体が受け取る（客体→主体）</span>
+            <span class="li"><span class="mk act">▼ 作用</span> 主体が〈作用標識〉を返し客体を変える（主体→客体）</span>
+          </div>
+          <div class="closeloop">↻ 変えられた客体が、また知覚される。輪は閉じ、環世界が成り立つ。</div>
+        </div>
+      </div>
+
+      <!-- マダニの3信号 -->
+      <div class="scorecard">
+        <div class="cap"><b>マダニの環世界を組み立てる、たった3つの信号（トーン）</b><span>光・色・音は、マダニには「無い」</span></div>
+        <div class="wu"><div class="gi">◍</div><div class="txt"><div class="nm">酪酸の匂い<span>哺乳類の汗</span></div><div class="ex">「獲物が下を通った」——木の枝から身を落とす合図</div></div></div>
+        <div class="wu"><div class="gi">✳</div><div class="txt"><div class="nm">37℃の温もり<span>体温</span></div><div class="ex">「血のある体だ」——うまく着地できたかの合図</div></div></div>
+        <div class="wu"><div class="gi">◎</div><div class="txt"><div class="nm">毛のない肌<span>触覚</span></div><div class="ex">「ここを刺せ」——吸血を始める合図</div></div></div>
+        <div class="kick">この<b>3つだけ</b>が、マダニにとっての世界の全て。あとは何も「存在しない」。</div>
+      </div>
+
+      <!-- key insight band -->
+      <div class="band">
+        <div class="tag">環世界の核心</div>
+        <div class="q">環世界は、ひとつの現実を小さく切り取ったものではない。その生き物にとって〈意味〉を持つ信号だけで組み立てた、閉じた世界だ。</div>
+        <div class="cite">— フレームの核（『生物から見た世界』ユクスキュル・番組の趣意）</div>
+        <div class="asym">
+          <div class="col human">
+            <div class="h">🜁 人間の環世界（同じ草むら）</div>
+            <p>色、香り、木漏れ日、鳥の声、風の音、緑の陰影……豊かな景色が広がる。</p>
+          </div>
+          <div class="col tick">
+            <div class="h">🜂 マダニの環世界（同じ草むら）</div>
+            <p>酪酸・体温・肌ざわりの3信号だけ。色も音も光も、初めから無い。</p>
+          </div>
+        </div>
+        <div class="asym-foot">同じ場所。だが二つの世界は、決して交わらない。</div>
+      </div>
+
+      <!-- fact + modern application -->
+      <div class="strip">
+        <div class="fact">
+          <div class="big">信号 3つ</div>
+          <div class="lb">マダニの世界を作る全て。豊かに見える森も、生き物ごとに“意味の地図”は桁違いに別物。</div>
+        </div>
+        <div class="apply">
+          <div class="h">いま、あなたと相手の<em>環世界</em></div>
+          <p>あなたに意味を持つ信号（データ・ロジック・正しさ）と、相手に意味を持つ信号（安心・体面・手ざわり）は違う。<span class="now">伝わらないのは、相手の環世界に無い信号を送っているから。</span>UX・営業・マネジメントは、相手のトーンで設計する。</p>
+        </div>
+      </div>
+
+    </div><!-- /diagram -->
+
+    <p class="foot">図解 v2 ・ 概念を直感で — 知覚標識↔作用標識の閉じた輪で、「対象は機能環が切り出す」を一目で。</p>
+
+  </div>
+</div>
+
+</body>
+</html>

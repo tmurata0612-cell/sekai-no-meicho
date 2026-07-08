@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 孫子Day3 — 二つの知の2×2</title>
+<style>
+  :root{
+    --ground:#E7DECB; --panel:#F2EBDA; --panel-2:#ECE3CF;
+    --ink:#211E16; --muted:#6C6450; --faint:#8A8069; --line:#CBBE9F; --line-soft:#DAD0B6;
+    --seal:#B2382A; --calm:#3E7560; --heat:#9A5236;
+    --seal-soft:#F0DED4; --calm-soft:#DCE7DF; --heat-soft:#EFE0D3;
+    --earth:#C3B48F; --earth-d:#948663; --sky-top:#EFE9DA; --sky-bot:#E7E2D0;
+    --shadow:0 1px 2px rgba(33,29,22,.06), 0 8px 24px -12px rgba(33,29,22,.18);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#15140E; --panel:#201E16; --panel-2:#24221A; --ink:#E8E0CE; --muted:#A79D84; --faint:#8B8269; --line:#3A362A; --line-soft:#2E2B21;
+      --seal:#E0604F; --calm:#7FA88F; --heat:#C07A5F; --seal-soft:#2C1E1A; --calm-soft:#1B2721; --heat-soft:#2A2015;
+      --earth:#5A5140; --earth-d:#3E382B; --sky-top:#1A1913; --sky-bot:#171610;
+      --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);}
+  }
+  :root[data-theme="dark"]{ --ground:#15140E; --panel:#201E16; --panel-2:#24221A; --ink:#E8E0CE; --muted:#A79D84; --faint:#8B8269; --line:#3A362A; --line-soft:#2E2B21;
+    --seal:#E0604F; --calm:#7FA88F; --heat:#C07A5F; --seal-soft:#2C1E1A; --calm-soft:#1B2721; --heat-soft:#2A2015;
+    --earth:#5A5140; --earth-d:#3E382B; --sky-top:#1A1913; --sky-bot:#171610;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);}
+  :root[data-theme="light"]{ --ground:#E7DECB; --panel:#F2EBDA; --panel-2:#ECE3CF; --ink:#211E16; --muted:#6C6450; --faint:#8A8069; --line:#CBBE9F; --line-soft:#DAD0B6;
+    --seal:#B2382A; --calm:#3E7560; --heat:#9A5236; --seal-soft:#F0DED4; --calm-soft:#DCE7DF; --heat-soft:#EFE0D3;
+    --earth:#C3B48F; --earth-d:#948663; --sky-top:#EFE9DA; --sky-bot:#E7E2D0;
+    --shadow:0 1px 2px rgba(33,29,22,.06), 0 8px 24px -12px rgba(33,29,22,.18);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(30px,6vw,52px); line-height:1.14; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:64ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:#fff; background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.08em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--calm);} .lead .em2{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--sky-top),var(--sky-bot)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:520px; margin:0 auto;}
+  .art .cell{stroke-width:1.7;}
+  .art .cell-safe{fill:var(--calm-soft); stroke:var(--calm);}
+  .art .cell-mid{fill:var(--heat-soft); stroke:var(--heat);}
+  .art .cell-bad{fill:var(--seal-soft); stroke:var(--seal);}
+  .art .cell-skip{fill:none; stroke:var(--seal); stroke-width:1.6; stroke-dasharray:5 5;}
+  .art .verdict{font-family:var(--serif); font-weight:700; font-size:23px; text-anchor:middle;}
+  .art .v-safe{fill:var(--calm);} .art .v-mid{fill:var(--heat);} .art .v-bad{fill:var(--seal);}
+  .art .vtag{font-family:var(--sans); font-size:12.5px; text-anchor:middle; fill:var(--muted);}
+  .art .axh{fill:var(--ink); font-family:var(--serif); font-weight:600; font-size:16px; text-anchor:middle;}
+  .art .axv{fill:var(--ink); font-family:var(--serif); font-weight:600; font-size:16px; writing-mode:vertical-rl; text-orientation:upright; text-anchor:middle;}
+  .art .ox{fill:var(--faint); font-family:var(--sans); font-weight:700; font-size:16px; text-anchor:middle;}
+  .art .skiplab{fill:var(--seal); font-family:var(--sans); font-weight:700; font-size:11.5px; text-anchor:middle;}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  /* checklist scorecard */
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--calm); font-weight:700; margin:0 2px 8px; display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:30px;height:30px;flex:none;border-radius:8px;background:var(--calm-soft);color:var(--calm);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  /* band */
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 8%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .asym{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .asym .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .asym .col .h{font-size:12.5px; font-weight:700; display:flex; gap:8px; align-items:center;}
+  .asym .col.buy .h{color:var(--calm);} .asym .col.hide .h{color:var(--seal);}
+  .asym .col .ic{font-size:17px;}
+  .asym .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .asym .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  /* fact + apply */
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(22px,4.2vw,32px); font-weight:600; line-height:1.08;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--calm); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--calm);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>勝ち目は、二つの知で決まる。</h1>
+      <p class="dek">勝敗の予測は「<b>彼を知る</b>」×「<b>己を知る</b>」の2軸。両方揃えば危うくない、片方だけなら五分、両方欠けば必敗。しかも人は、<b>己を知るほうを系統的にサボる</b>——味方の弱みは、聞きたくないから上がってこない。</p>
+      <div class="source"><span class="seal">孫子</span><span>孫武 ・ Day3「彼を知り己を知れば百戦殆うからず」謀攻篇</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">縦に<span class="em">彼を知る</span>、横に<span class="em">己を知る</span>。自分の計画は、どのマスにいる？</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 500 400" role="img" aria-label="2×2マトリクス。縦軸=彼を知る、横軸=己を知る。両方○は殆うからず、片方は一勝一負、両方×は毎戦必殆。己を知る×の列が系統的にサボられる">
+          <!-- column axis: 己を知る -->
+          <text class="axh" x="290" y="26">己を知る</text>
+          <text class="ox" x="200" y="58">○</text>
+          <text class="ox" x="380" y="58">×</text>
+          <!-- row axis: 彼を知る (true vertical) -->
+          <text class="axv" x="24" y="235">彼を知る</text>
+          <text class="ox" x="66" y="150">○</text>
+          <text class="ox" x="66" y="316">×</text>
+
+          <!-- skip-column marker over 己を知る=× -->
+          <rect class="cell-skip" x="294" y="74" width="188" height="292" rx="14"/>
+          <text class="skiplab" x="388" y="388">この列が、系統的にサボられる</text>
+
+          <!-- cells -->
+          <!-- TL 彼○己○ -->
+          <rect class="cell cell-safe" x="98" y="76" width="182" height="132" rx="12"/>
+          <text class="verdict v-safe" x="189" y="140">殆うからず</text>
+          <text class="vtag" x="189" y="164">危うくない（両方を知る）</text>
+          <!-- TR 彼○己× -->
+          <rect class="cell cell-mid" x="296" y="76" width="182" height="132" rx="12"/>
+          <text class="verdict v-mid" x="387" y="140">一勝一負</text>
+          <text class="vtag" x="387" y="164">五分（己を知らず）</text>
+          <!-- BL 彼×己○ -->
+          <rect class="cell cell-mid" x="98" y="232" width="182" height="132" rx="12"/>
+          <text class="verdict v-mid" x="189" y="296">一勝一負</text>
+          <text class="vtag" x="189" y="320">五分（彼を知らず）</text>
+          <!-- BR 彼×己× -->
+          <rect class="cell cell-bad" x="296" y="232" width="182" height="132" rx="12"/>
+          <text class="verdict v-bad" x="387" y="296">毎戦必殆</text>
+          <text class="vtag" x="387" y="320">必敗（両方知らず）</text>
+        </svg>
+        <div class="cap"><b>「勝つ」ではなく「殆（あや）うからず＝危うくない」</b>と書いてある。知は勝ちの保証ではなく、賭けの分（ぶ）を知ること。<span class="r">右の『己を知らず』列に、多くの計画が落ちる。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap"><span>右下（毎戦必殆）に落ちないための「己を知る」三項目</span><span>自陣を採点する物差し</span></div>
+        <div class="wu"><div class="gi">一</div><div class="txt"><div class="nm">戦うべき時を知る</div><div class="ex">戦っていい時・いけない時を見分けられるか。<b>Day1の廟算</b>と地続き。「今やるべきか」を数える。</div></div></div>
+        <div class="wu"><div class="gi">二</div><div class="txt"><div class="nm">上下の欲が揃う</div><div class="ex">上と下で、望むものが揃っているか。<b>Day1の「道」</b>の再登場。人心の一致を自己点検の項目に使う。</div></div></div>
+        <div class="wu"><div class="gi">三</div><div class="txt"><div class="nm">将が有能で、君が介入しない</div><div class="ex">現場に力量があり、上が遠くから口を出して曇らせていないか。<b>過干渉は敗因</b>。任せられているか。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">なぜ「己を知る」だけ、金でも買えないのか</div>
+        <div class="q">敵情は、金を払えば人から買える。だが味方の実情は、皆が隠すから、金でも買えない。</div>
+        <div class="cite">「爵禄百金を愛（おし）みて敵の情を知らざる者は、不仁の至りなり」— 用間篇（番組訳）</div>
+        <div class="asym">
+          <div class="col buy"><div class="h"><span class="ic">🪙</span>彼を知る（買える）</div><p>情報は占いでは取れない。<b>人に金を払って取る</b>もの。ここでケチるのは「不仁」——惜しんだ百金を、あとで兵が命で払う。</p></div>
+          <div class="col hide"><div class="h"><span class="ic">🙈</span>己を知る（買えない）</div><p>味方の弱み・士気の低さは<b>聞きたくない情報</b>。悪い報告をした者が罰される組織では、下から上へ上がってこない。近いほど、見えない。</p></div>
+        </div>
+        <div class="band-foot">情報の非対称は、遠い敵ではなく、近い味方で起きる。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">情報は<br>一番安い保険</div><div class="lb">目先の百金を惜しめば、結果として千金を失う。調べる金を惜しんだ分は、あとでもっと大きく払う。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>二つの知</em></div>
+          <p>難関資格の勉強。参考書は丁寧に読むが、<span class="now">過去問（敵情）も模試（現在地）も後回し</span>——これは「彼も己も知らず」＝右下の毎戦必殆。勉強法の精度を上げる前に、まず敵（試験の傾向）と己（今の実力）を見にいく。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 二つの知を格子にして、自分の計画がどのマスにいるかを一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

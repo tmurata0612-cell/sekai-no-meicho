@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 イワンDay3 — ごまかしと直視</title>
+<style>
+  :root{
+    --ground:#E3E1D8; --panel:#EEEDE4; --panel-2:#E6E5DA;
+    --ink:#20211E; --muted:#5F625A; --faint:#83867C; --line:#C3C3B4; --line-soft:#D5D5C8;
+    --seal:#7A4A3E; --calm:#495A62; --heat:#8E7A3C;
+    --seal-soft:#EADFD9; --calm-soft:#DBE1E2; --heat-soft:#E9E3CF;
+    --earth:#B7AE9A; --earth-d:#8E856F; --sky-top:#E7E5DC; --sky-bot:#DEDDD3;
+    --shadow:0 1px 2px rgba(32,33,30,.06), 0 8px 24px -12px rgba(32,33,30,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#111210; --panel:#1B1C18; --panel-2:#212219; --ink:#E6E4D6; --muted:#9EA090; --faint:#83867A; --line:#34352C; --line-soft:#282922;
+      --seal:#C08A5E; --calm:#84979F; --heat:#BBA366; --seal-soft:#241A15; --calm-soft:#1A2326; --heat-soft:#262214;
+      --earth:#4E4A3E; --earth-d:#37342A; --sky-top:#141510; --sky-bot:#111210;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#111210; --panel:#1B1C18; --panel-2:#212219; --ink:#E6E4D6; --muted:#9EA090; --faint:#83867A; --line:#34352C; --line-soft:#282922;
+    --seal:#C08A5E; --calm:#84979F; --heat:#BBA366; --seal-soft:#241A15; --calm-soft:#1A2326; --heat-soft:#262214;
+    --earth:#4E4A3E; --earth-d:#37342A; --sky-top:#141510; --sky-bot:#111210;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E3E1D8; --panel:#EEEDE4; --panel-2:#E6E5DA; --ink:#20211E; --muted:#5F625A; --faint:#83867C; --line:#C3C3B4; --line-soft:#D5D5C8;
+    --seal:#7A4A3E; --calm:#495A62; --heat:#8E7A3C; --seal-soft:#EADFD9; --calm-soft:#DBE1E2; --heat-soft:#E9E3CF;
+    --earth:#B7AE9A; --earth-d:#8E856F; --sky-top:#E7E5DC; --sky-bot:#DEDDD3;
+    --shadow:0 1px 2px rgba(32,33,30,.06), 0 8px 24px -12px rgba(32,33,30,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .ng{color:var(--seal);} .lead .ok{color:var(--calm);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--sky-top),var(--sky-bot)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .p-lie{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.7;}
+  .art .p-see{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.7;}
+  .art .ph{font-family:var(--serif); font-weight:700; font-size:15px; text-anchor:middle;}
+  .art .ph-lie{fill:var(--seal);} .art .ph-see{fill:var(--calm);}
+  .art .lt{font-family:var(--sans); font-size:11.5px; text-anchor:middle; fill:var(--muted);}
+  .art .verd{font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle;}
+  .art .verd-lie{fill:var(--seal);} .art .verd-see{fill:var(--calm);}
+  .art .fig{fill:var(--ink);}
+  .art .figlbl{font-family:var(--sans); font-weight:700; font-size:11.5px; text-anchor:middle; fill:var(--ink);}
+  .art .figsub{font-family:var(--sans); font-size:10.5px; text-anchor:middle; fill:var(--faint);}
+  .art .arr-lie{stroke:var(--seal); stroke-width:1.8; fill:none; stroke-dasharray:4 3;} .art .arrh-lie{fill:var(--seal);}
+  .art .arr-see{stroke:var(--calm); stroke-width:2; fill:none;} .art .arrh-see{fill:var(--calm);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--calm); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:34px;height:34px;flex:none;border-radius:9px;background:var(--calm-soft);color:var(--calm);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 9%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .halves{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .halves .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .halves .col .h{font-size:12.5px; font-weight:700; display:flex; gap:7px; align-items:center;}
+  .halves .col.viol .h{color:var(--seal);} .halves .col.stay .h{color:var(--calm);}
+  .halves .col .ic{font-size:17px;}
+  .halves .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .halves .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--calm); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--calm);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>ごまかしは、優しさに見えて、<br>相手を一人にする。</h1>
+      <p class="dek">死につつある人を、家族も医者も「ただの病気、治るよ」という<b>嘘</b>で囲む。だが本人はいちばん分かっている。その嘘が、彼を<b>孤独</b>にする。ただ一人、下男ゲラーシムだけが事実を<b>直視</b>し、隠さず、そばにいた。直視は冷たさに見えて、優しさになりうる。</p>
+      <div class="source"><span class="seal">イワン・イリイチの死</span><span>トルストイ ・ Day3「ごまかしと直視」第7章</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead"><span class="ng">嘘の明るさ</span>は、本人を一人にする。<span class="ok">逃げずにそばにいる</span>ことが、楽にする。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 232" role="img" aria-label="中央に死につつある本人。左＝周囲のごまかし（治るよ）で一人にする。右＝ゲラーシムの直視（隠さず逃げずそばにいる）で楽にする">
+          <!-- center: 本人 -->
+          <circle class="fig" cx="260" cy="78" r="12"/>
+          <path class="fig" d="M251 90 L269 90 L273 120 L247 120 Z"/>
+          <text class="figlbl" x="260" y="142">本人</text>
+          <text class="figsub" x="260" y="158">いちばん分かっている</text>
+
+          <!-- left panel: ごまかし -->
+          <rect class="p-lie" x="16" y="36" width="196" height="120" rx="12"/>
+          <text class="ph ph-lie" x="114" y="66">周囲 ＝ ごまかし</text>
+          <text class="lt" x="114" y="90">「ただの病気、治るよ」</text>
+          <text class="lt" x="114" y="110">（優しさのつもり）</text>
+          <text class="verd verd-lie" x="114" y="138">→ 本人を “一人” にする（孤独）</text>
+          <!-- arrow bouncing off center -->
+          <path class="arr-lie" d="M214 96 L236 92"/><path class="arrh-lie" d="M240 91 l-11 -2 l4 8 Z"/>
+
+          <!-- right panel: 直視 -->
+          <rect class="p-see" x="308" y="36" width="196" height="120" rx="12"/>
+          <text class="ph ph-see" x="406" y="66">ゲラーシム ＝ 直視</text>
+          <text class="lt" x="406" y="90">認める・隠さない</text>
+          <text class="lt" x="406" y="110">逃げない・そばにいる</text>
+          <text class="verd verd-see" x="406" y="138">→ 本人が、楽になる</text>
+          <path class="arr-see" d="M306 92 L284 96"/><path class="arrh-see" d="M280 97 l11 -3 l-3 8 Z"/>
+
+          <!-- bottom note -->
+          <text class="figsub" x="260" y="196" style="fill:var(--seal)">直視 ＝ 事実を浴びせることではない</text>
+          <text class="figsub" x="260" y="212">「嘘で相手を一人にしない ＝ 逃げない」こと</text>
+        </svg>
+        <div class="cap"><b>「大丈夫よ」は、「あなたの本当の苦しみを、私は見ません」と同義になる。</b><span class="r">見分けの問い＝その明るさは、相手のためか、自分が気まずさ・悲しみを避けるためか。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">ゲラーシムがしたこと ＝ 直視の中身</div>
+        <div class="wu"><div class="gi">認</div><div class="txt"><div class="nm">事実を認め、隠さない</div><div class="ex">死を「隠すべき恥」と思わない。<b>明るい嘘も、大げさな悲壮もなく</b>、淡々と接する。「みんな、いつかは死ぬんです」。</div></div></div>
+        <div class="wu"><div class="gi">添</div><div class="txt"><div class="nm">逃げず、そばにいる</div><div class="ex">下の世話をし、汚れをいやがらず片づけ、夜、<b>痛む足を自分の肩に抱えあげて朝まで支える</b>。臭いも汚れも、いやがらずに。</div></div></div>
+        <div class="wu"><div class="gi">聞</div><div class="txt"><div class="nm">何を言うかより、どう同席するか</div><div class="ex">余命を突きつけるのではない。相手が分かっていることを、<b>こちらも分かっていないふりをしない</b>。それだけで、人は一人でなくなる。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">危険な誤読を避ける — 直視 ≠ 事実を浴びせる</div>
+        <div class="q">「あなたは、あと三ヶ月です」と突きつけるのは、直視ではなく、暴力になりうる。</div>
+        <div class="cite">ゲラーシムは余命を告げたのではなく、態度で逃げなかった（第7章・番組の趣意）</div>
+        <div class="halves">
+          <div class="col viol"><div class="h"><span class="ic">⚡</span>事実を浴びせる（暴力）</div><p>残酷な事実を無理に言い立てる。<b>「正直さ」の誇示</b>や、相手を追い詰める道具になりうる。これは直視ではない。</p></div>
+          <div class="col stay"><div class="h"><span class="ic">🤝</span>逃げない（直視）</div><p>事実を認めたうえで、隠さず・ごまかさず・そばにいる。<b>無理に言い立てなくても足りる</b>。芯は「相手を一人にしない」。</p></div>
+        </div>
+        <div class="band-foot">体裁の嘘に囲まれた男を、体裁を知らない下男が、たった一人、本当のことを持って救った。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">嘘で、相手を<br>一人にしない</div><div class="lb">本人が分かっているのに分かっていないふりをされる孤独は、事実そのものより苦しいことがある。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>ゲラーシム</em></div>
+          <p>重い病の親に「大丈夫、すぐ良くなるよ」と明るく振る舞い続けている——。<span class="now">その明るさは、親のためか、自分が現実を見るのを避けるためか</span>を分ける。事実を無理に言わなくていい。隠さず・逃げず・気持ちを聞いて、そばにいるに切り替える。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 本人を挟む「嘘の明るさ」と「そばにいる」の対比で、ごまかしと直視を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<style>
+  :root{
+    --ground:#E7DECB; --panel:#F2EBDA; --panel-2:#ECE3CF;
+    --ink:#211E16; --muted:#6C6450; --faint:#8A8069; --line:#CBBE9F; --line-soft:#DAD0B6;
+    --seal:#B2382A; --calm:#3E7560; --heat:#9A5236;
+    --seal-soft:#F0DED4; --calm-soft:#DCE7DF; --heat-soft:#EFE0D3;
+    --earth:#C3B48F; --earth-d:#948663; --sky-top:#EFE9DA; --sky-bot:#E7E2D0;
+    --shadow:0 1px 2px rgba(33,29,22,.06), 0 8px 24px -12px rgba(33,29,22,.18);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#15140E; --panel:#201E16; --panel-2:#24221A; --ink:#E8E0CE; --muted:#A79D84; --faint:#8B8269; --line:#3A362A; --line-soft:#2E2B21;
+      --seal:#E0604F; --calm:#7FA88F; --heat:#C07A5F; --seal-soft:#2C1E1A; --calm-soft:#1B2721; --heat-soft:#2A2015;
+      --earth:#5A5140; --earth-d:#3E382B; --sky-top:#1A1913; --sky-bot:#171610;
+      --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);}
+  }
+  :root[data-theme="dark"]{ --ground:#15140E; --panel:#201E16; --panel-2:#24221A; --ink:#E8E0CE; --muted:#A79D84; --faint:#8B8269; --line:#3A362A; --line-soft:#2E2B21;
+    --seal:#E0604F; --calm:#7FA88F; --heat:#C07A5F; --seal-soft:#2C1E1A; --calm-soft:#1B2721; --heat-soft:#2A2015;
+    --earth:#5A5140; --earth-d:#3E382B; --sky-top:#1A1913; --sky-bot:#171610;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);}
+  :root[data-theme="light"]{ --ground:#E7DECB; --panel:#F2EBDA; --panel-2:#ECE3CF; --ink:#211E16; --muted:#6C6450; --faint:#8A8069; --line:#CBBE9F; --line-soft:#DAD0B6;
+    --seal:#B2382A; --calm:#3E7560; --heat:#9A5236; --seal-soft:#F0DED4; --calm-soft:#DCE7DF; --heat-soft:#EFE0D3;
+    --earth:#C3B48F; --earth-d:#948663; --sky-top:#EFE9DA; --sky-bot:#E7E2D0;
+    --shadow:0 1px 2px rgba(33,29,22,.06), 0 8px 24px -12px rgba(33,29,22,.18);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(30px,6vw,52px); line-height:1.14; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:62ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:#fff; background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.08em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--calm);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--sky-top),var(--sky-bot)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:520px; margin:0 auto;}
+  .art .earth{fill:var(--earth);} .art .earth-s{stroke:var(--earth-d); stroke-width:1.5; fill:none;}
+  .art .beam{stroke:var(--ink); stroke-width:7; stroke-linecap:round; opacity:.9;}
+  .art .str{stroke:var(--earth-d); stroke-width:1.6;}
+  .art .pan{fill:var(--panel); stroke:var(--earth-d); stroke-width:1.6;}
+  .art .coin-us{fill:var(--calm); stroke:color-mix(in srgb,var(--calm) 60%,#000); stroke-width:.5;}
+  .art .coin-th{fill:var(--faint); stroke:color-mix(in srgb,var(--faint) 60%,#000); stroke-width:.5;}
+  .art .chip{fill:var(--panel); stroke:var(--calm); stroke-width:1.4;}
+  .art .chip-t{fill:var(--calm); font-family:var(--serif); font-weight:600; font-size:17px; text-anchor:middle;}
+  .art .pan-t{fill:var(--ink); font-family:var(--serif); font-weight:700; font-size:18px; text-anchor:middle;}
+  .art .plaque{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.2;}
+  .art .plaque-t{fill:var(--seal); font-family:var(--serif); font-weight:700; font-size:14px; text-anchor:middle;}
+  .art .win{fill:var(--calm); font-family:var(--serif); font-weight:700; font-size:15px;}
+  .art .lose{fill:var(--faint); font-family:var(--serif); font-weight:600; font-size:12.5px; text-anchor:end;}
+  .art .guide{fill:var(--faint); font-family:var(--sans); font-size:11px; text-anchor:middle;}
+  .art .arw{stroke:var(--faint); stroke-width:1.6; fill:none;} .art .arwh{fill:var(--faint);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:10px 12px 4px;} .stage .cap b{color:var(--ink);}
+
+  /* 五事 scorecard (information density) */
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--calm); font-weight:700; margin:0 2px 8px; display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap;}
+  .wu{display:flex; align-items:center; gap:13px; padding:8px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:34px;height:34px;flex:none;border-radius:9px;background:var(--calm-soft);color:var(--calm);display:grid;place-items:center;font-family:var(--serif);font-size:19px;}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;} .wu .txt .nm span{font-family:var(--sans); font-size:11px; color:var(--faint); font-weight:500; margin-left:5px;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;}
+
+  /* verdict branch */
+  .branch{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px;}
+  @media (max-width:520px){ .branch{grid-template-columns:1fr;} }
+  .br{border:1px solid var(--line); border-radius:12px; padding:13px 15px; box-shadow:var(--shadow);}
+  .br.go{background:var(--calm-soft);} .br.stop{background:var(--panel);}
+  .br .h{font-family:var(--serif); font-weight:600; font-size:15px;} .br.go .h{color:var(--calm);}
+  .br p{margin:4px 0 0; font-size:12.5px; color:var(--muted);}
+
+  /* band */
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 8%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .asym{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .asym .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .asym .col .h{font-size:12.5px; font-weight:700; display:flex; gap:8px; align-items:center;}
+  .asym .col.melt .h{color:var(--faint);} .asym .col.gone .h{color:var(--seal);}
+  .asym .col .ic{font-size:17px;}
+  .asym .col p{margin:5px 0 0; font-size:13px; color:var(--muted);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  /* fact + apply */
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:180px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(24px,4.4vw,34px); font-weight:600; line-height:1.05;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--calm); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--calm);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>戦う前に、秤にかける。</h1>
+      <p class="dek">孫子は「勝ち方」より先に「やるか否か」を言う。<b>五事（道・天・地・将・法）で彼我を量り</b>、算（勝算）が多ければ動き、少なければ止まる。これが<b>廟算</b>——会議室で勝負を決める計算だ。</p>
+      <div class="source"><span class="seal">孫子</span><span>孫武 ・ Day1「兵は国の大事」計篇</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">感情で動く前に、<span class="em">五事を秤にかけて</span>、重い方に従う。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 440 320" role="img" aria-label="天秤。五事の重りを載せ、我の皿が下がり『算多し→動く』を示す">
+          <!-- 五事 chips feeding in -->
+          <g>
+            <rect class="chip" x="60"  y="16" width="40" height="34" rx="8"/><text class="chip-t" x="80"  y="40">道</text>
+            <rect class="chip" x="122" y="16" width="40" height="34" rx="8"/><text class="chip-t" x="142" y="40">天</text>
+            <rect class="chip" x="184" y="16" width="40" height="34" rx="8"/><text class="chip-t" x="204" y="40">地</text>
+            <rect class="chip" x="246" y="16" width="40" height="34" rx="8"/><text class="chip-t" x="266" y="40">将</text>
+            <rect class="chip" x="308" y="16" width="40" height="34" rx="8"/><text class="chip-t" x="328" y="40">法</text>
+            <text class="guide" x="204" y="66">五事 ＝ 量る5項目（彼我を採点する）</text>
+            <path class="arw" d="M150 74 L120 96"/><path class="arwh" d="M116 90 L112 100 L124 99 Z"/>
+            <path class="arw" d="M270 74 L318 96"/><path class="arwh" d="M322 90 L324 101 L313 98 Z"/>
+          </g>
+
+          <!-- stand & pillar -->
+          <path class="earth" d="M196 300 L244 300 L232 276 L208 276 Z"/>
+          <rect class="earth" x="215" y="150" width="10" height="128"/>
+          <path class="earth" d="M206 156 L220 138 L234 156 Z"/>
+          <rect class="plaque" x="196" y="282" width="48" height="20" rx="4"/><text class="plaque-t" x="220" y="296">廟算</text>
+
+          <!-- beam (tilted: 我 left down) -->
+          <line class="beam" x1="104" y1="158" x2="336" y2="118"/>
+          <circle cx="220" cy="138" r="4" fill="var(--earth-d)"/>
+
+          <!-- left pan 我 (down / heavier) -->
+          <line class="str" x1="104" y1="158" x2="104" y2="206"/>
+          <path class="pan" d="M70 206 Q104 238 138 206 Z"/>
+          <ellipse class="coin-us" cx="104" cy="204" rx="26" ry="7"/>
+          <ellipse class="coin-us" cx="104" cy="196" rx="24" ry="6.5"/>
+          <ellipse class="coin-us" cx="104" cy="188" rx="21" ry="6"/>
+          <ellipse class="coin-us" cx="104" cy="181" rx="17" ry="5.5"/>
+          <text class="pan-t" x="104" y="262">我</text>
+
+          <!-- right pan 敵 (up / lighter) -->
+          <line class="str" x1="336" y1="118" x2="336" y2="166"/>
+          <path class="pan" d="M304 166 Q336 196 368 166 Z"/>
+          <ellipse class="coin-th" cx="336" cy="164" rx="24" ry="6.5"/>
+          <ellipse class="coin-th" cx="336" cy="157" rx="19" ry="5.5"/>
+          <text class="pan-t" x="336" y="222">敵</text>
+
+          <!-- verdicts -->
+          <text class="win" x="24" y="292">算 多し → 動く</text>
+          <text class="lose" x="416" y="150">算 少なし</text>
+          <text class="lose" x="416" y="166">→ 止まる</text>
+        </svg>
+        <div class="cap"><b>廟算</b>＝戦う前に、五事で彼我を秤にかける。<b>算（勝算）が多い方に従い、軽ければ止まる。</b></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap"><span>五事 ＝ 秤にかける5項目（彼我で採点）</span><span>我 ⟷ 敵 を一つずつ比べる</span></div>
+        <div class="wu"><div class="gi">道</div><div class="txt"><div class="nm">道<span>どう / 人の心</span></div><div class="ex">上下の気持ちが揃っているか（現場と経営が同じ方を向くか）。武器や兵数より先に問う、五事の筆頭。揃わぬ軍は数で勝っても内から崩れる。</div></div></div>
+        <div class="wu"><div class="gi">天</div><div class="txt"><div class="nm">天<span>てん / 時</span></div><div class="ex">時節・天候・勢い（追い風か、逆風か）。動くべき「時」かを読む。</div></div></div>
+        <div class="wu"><div class="gi">地</div><div class="txt"><div class="nm">地<span>ち / 地の利</span></div><div class="ex">地形・距離・コスト（ホームか、アウェイか）。戦う「場所」の損得。</div></div></div>
+        <div class="wu"><div class="gi">将</div><div class="txt"><div class="nm">将<span>しょう / 将</span></div><div class="ex">指揮官の力量（決める人は有能か）。智・信・仁・勇・厳を備えるか。</div></div></div>
+        <div class="wu"><div class="gi">法</div><div class="txt"><div class="nm">法<span>ほう / 仕組み</span></div><div class="ex">組織・規律・兵站（回る仕組み・補給があるか）。個人技でなく“系”の強さ。</div></div></div>
+      </div>
+
+      <div class="branch">
+        <div class="br go"><div class="h">算 多し → 動く</div><p>秤が我に傾けば、進む。</p></div>
+        <div class="br stop"><div class="h">算 少なし → 止まる</div><p>傾かなければ、退く。<b>止まる判断も「勝ち」に数える。</b></p></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">感情ルートが「必ず負ける」理由 — 非対称</div>
+        <div class="q">怒りは消える。だが、亡（ほろ）んだ国と、死んだ者は、二度と戻らない。</div>
+        <div class="cite">「主は怒りを以て師を興すべからず……亡国は復（ま）た存すべからず、死者は復た生くべからず」— 火攻篇（番組訳）</div>
+        <div class="asym">
+          <div class="col melt"><div class="h"><span class="ic">🔥</span>怒り・面子（消えるもの）</div><p>時間が経てば冷める。秤にかけず戦端を開けば、その戦いは“算ゼロ”＝構造的にもう負け。</p></div>
+          <div class="col gone"><div class="h"><span class="ic">🏺</span>亡国・戦死（戻らないもの）</div><p>割れた壺は戻らない。消える感情のために、消せぬものを賭ける——それが最大の愚。</p></div>
+        </div>
+        <div class="band-foot">消えるもののために、戻らないものを賭けるな。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">日に千金</div><div class="lb">十万の師を動かせば、一日でこれが飛ぶ。だから「勝ち方」より先に「やるか否か」を秤にかける。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>廟算</em></div>
+          <p>SNSの的外れな引用リプにカッとなり、長文の反論を書き始めた——。まず<span class="now">指を止める</span>。そして秤にかける：この戦いの勝利条件は？　勝って得るものは？　相手の土俵（注目）に乗ること自体が、敗着では？</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 「算＝量る」を天秤の画にして、計算してから動く思考を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

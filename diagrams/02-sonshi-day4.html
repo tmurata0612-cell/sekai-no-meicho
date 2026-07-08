@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 孫子Day4 — 勝敗の二領域</title>
+<style>
+  :root{
+    --ground:#E7DECB; --panel:#F2EBDA; --panel-2:#ECE3CF;
+    --ink:#211E16; --muted:#6C6450; --faint:#8A8069; --line:#CBBE9F; --line-soft:#DAD0B6;
+    --seal:#B2382A; --calm:#3E7560; --heat:#9A5236;
+    --seal-soft:#F0DED4; --calm-soft:#DCE7DF; --heat-soft:#EFE0D3;
+    --earth:#C3B48F; --earth-d:#948663; --sky-top:#EFE9DA; --sky-bot:#E7E2D0;
+    --shadow:0 1px 2px rgba(33,29,22,.06), 0 8px 24px -12px rgba(33,29,22,.18);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#15140E; --panel:#201E16; --panel-2:#24221A; --ink:#E8E0CE; --muted:#A79D84; --faint:#8B8269; --line:#3A362A; --line-soft:#2E2B21;
+      --seal:#E0604F; --calm:#7FA88F; --heat:#C07A5F; --seal-soft:#2C1E1A; --calm-soft:#1B2721; --heat-soft:#2A2015;
+      --earth:#5A5140; --earth-d:#3E382B; --sky-top:#1A1913; --sky-bot:#171610;
+      --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);}
+  }
+  :root[data-theme="dark"]{ --ground:#15140E; --panel:#201E16; --panel-2:#24221A; --ink:#E8E0CE; --muted:#A79D84; --faint:#8B8269; --line:#3A362A; --line-soft:#2E2B21;
+    --seal:#E0604F; --calm:#7FA88F; --heat:#C07A5F; --seal-soft:#2C1E1A; --calm-soft:#1B2721; --heat-soft:#2A2015;
+    --earth:#5A5140; --earth-d:#3E382B; --sky-top:#1A1913; --sky-bot:#171610;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);}
+  :root[data-theme="light"]{ --ground:#E7DECB; --panel:#F2EBDA; --panel-2:#ECE3CF; --ink:#211E16; --muted:#6C6450; --faint:#8A8069; --line:#CBBE9F; --line-soft:#DAD0B6;
+    --seal:#B2382A; --calm:#3E7560; --heat:#9A5236; --seal-soft:#F0DED4; --calm-soft:#DCE7DF; --heat-soft:#EFE0D3;
+    --earth:#C3B48F; --earth-d:#948663; --sky-top:#EFE9DA; --sky-bot:#E7E2D0;
+    --shadow:0 1px 2px rgba(33,29,22,.06), 0 8px 24px -12px rgba(33,29,22,.18);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(28px,5.4vw,48px); line-height:1.16; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:64ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:#fff; background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.08em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--calm);} .lead .em2{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--sky-top),var(--sky-bot)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:540px; margin:0 auto;}
+  .art .pnl{stroke-width:1.8;}
+  .art .pnl-ctrl{fill:var(--calm-soft); stroke:var(--calm);}
+  .art .pnl-unc{fill:var(--panel-2); stroke:var(--faint);}
+  .art .pnl-h{font-family:var(--serif); font-weight:700; font-size:23px; text-anchor:middle;}
+  .art .ctrl{fill:var(--calm);} .art .unc{fill:var(--muted);}
+  .art .pnl-sub{font-family:var(--sans); font-size:12.5px; text-anchor:middle; fill:var(--muted);}
+  .art .chip2{stroke-width:1.3;} .art .chip2-ctrl{fill:var(--calm-soft); stroke:var(--calm);} .art .chip2-unc{fill:var(--panel); stroke:var(--faint);}
+  .art .chip2-t{font-family:var(--sans); font-weight:700; font-size:12.5px; text-anchor:middle;} .art .chip2-t-ctrl{fill:var(--calm);} .art .chip2-t-unc{fill:var(--faint);}
+  .art .verb{font-family:var(--serif); font-weight:700; font-size:15px; text-anchor:middle; fill:var(--ink);}
+  .art .side{font-family:var(--sans); font-weight:700; font-size:12px; letter-spacing:.16em; text-anchor:middle; fill:var(--faint);}
+  .art .flowarr{stroke:var(--ink); stroke-width:2; fill:none;} .art .flowarrh{fill:var(--ink);}
+  .art .flowlab{font-family:var(--serif); font-weight:600; font-size:13px; text-anchor:middle; fill:var(--ink);}
+  .art .water{font-family:var(--sans); font-size:12px; text-anchor:middle; fill:var(--calm);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);}
+
+  /* 4-day roadmap */
+  .roadmap{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 14px 12px; background:var(--panel);}
+  .roadmap .cap{font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--calm); font-weight:700; margin:0 2px 12px;}
+  .rm{display:grid; grid-template-columns:repeat(4,1fr); gap:8px;}
+  @media (max-width:600px){ .rm{grid-template-columns:1fr 1fr;} }
+  .rm .step{background:var(--panel-2); border:1px solid var(--line-soft); border-radius:11px; padding:11px 12px; position:relative;}
+  .rm .step .d{font-family:var(--sans); font-size:10.5px; font-weight:700; letter-spacing:.08em; color:var(--seal);}
+  .rm .step .fr{font-family:var(--serif); font-size:14px; font-weight:600; margin:3px 0 5px; line-height:1.3;}
+  .rm .step .ac{font-size:12px; color:var(--muted); line-height:1.45;}
+  .rm .step .ph{font-size:10.5px; color:var(--faint); margin-top:7px; border-top:1px dashed var(--line); padding-top:6px;}
+
+  /* band */
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 8%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .asym{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .asym .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .asym .col .h{font-size:12.5px; font-weight:700; display:flex; gap:8px; align-items:center;}
+  .asym .col.win .h{color:var(--calm);} .asym .col.lose .h{color:var(--seal);}
+  .asym .col .ic{font-size:17px;}
+  .asym .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .asym .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  /* fact + apply */
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(20px,3.8vw,28px); font-weight:600; line-height:1.12;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--calm); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--calm);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>負けないかは自分次第。<br>勝てるかは、相手次第。</h1>
+      <p class="dek">勝敗は二つの領域に割れる。<b>負けない形（守り）は己に在り＝統制できる</b>。<b>勝機（攻め）は敵に在り＝統制できない</b>。だから順序は、先に守りを固め、勝機は待って乗る。これが「先に勝ってから戦う」。</p>
+      <div class="source"><span class="seal">孫子</span><span>孫武 ・ Day4「勝兵は先ず勝ちて而る後に戦う」形篇</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">統制できるのは<span class="em">負けない形</span>だけ。<span class="em2">勝機</span>は相手のミスにしか宿らない。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 314" role="img" aria-label="勝敗の二領域。左＝負けない形は己に在り統制できる、先に固める。右＝勝機は敵に在り統制できない、待って乗る。下に『形は水・常形無し』の注記">
+          <text class="side" x="132" y="26">自分の側</text>
+          <text class="side" x="388" y="26">相手の側</text>
+
+          <!-- left: controllable -->
+          <rect class="pnl pnl-ctrl" x="26" y="40" width="212" height="176" rx="14"/>
+          <text class="pnl-h ctrl" x="132" y="82">負けない形</text>
+          <text class="pnl-sub" x="132" y="106">守り ・ 己に在り</text>
+          <rect class="chip2 chip2-ctrl" x="72" y="122" width="120" height="26" rx="13"/>
+          <text class="chip2-t chip2-t-ctrl" x="132" y="140">統制できる</text>
+          <text class="verb" x="132" y="188">① 先に固める</text>
+
+          <!-- right: uncontrollable -->
+          <rect class="pnl pnl-unc" x="282" y="40" width="212" height="176" rx="14"/>
+          <text class="pnl-h unc" x="388" y="82">勝機</text>
+          <text class="pnl-sub" x="388" y="106">攻め ・ 敵に在り</text>
+          <rect class="chip2 chip2-unc" x="322" y="122" width="132" height="26" rx="13"/>
+          <text class="chip2-t chip2-t-unc" x="388" y="140">統制できない</text>
+          <text class="verb" x="388" y="188">② 待って、来たら乗る</text>
+
+          <!-- sequence: label on its own line ABOVE a full-width arrow (no overlap) -->
+          <text class="flowlab" x="260" y="238">①を固めてから、然（しか）る後に②を待つ</text>
+          <path class="flowarr" d="M150 252 L366 252"/>
+          <path class="flowarrh" d="M372 252 l-12 -5 l0 10 Z"/>
+
+          <!-- water notes (own lines, clear of the arrow) -->
+          <text class="water" x="260" y="278">形は水（常形無し）＝固めても、形は柔軟に変え続ける</text>
+          <text class="water" x="260" y="298" style="fill:var(--seal)">敗兵は逆順：先に戦ってから、勝ちを求める</text>
+        </svg>
+        <div class="cap"><b>勝敗は開戦前の態勢でほぼ決まる。</b>戦場での奮闘で挽回するのは「敗兵」のやり方。だから、<b>先に負けない形。勝機は、待つ。</b></div>
+      </div>
+
+      <div class="roadmap">
+        <div class="cap">4日間の使いどころマップ ＝ 利害衝突を時系列で解く道具箱</div>
+        <div class="rm">
+          <div class="step"><div class="d">DAY 1</div><div class="fr">廟算</div><div class="ac">感情でなく五事で数え、そもそも戦うか決める。</div><div class="ph">争いの気配</div></div>
+          <div class="step"><div class="d">DAY 2</div><div class="fr">戦わずして勝つ</div><div class="ac">謀・交で衝突を避ける。安い策から順に。</div><div class="ph">戦う前</div></div>
+          <div class="step"><div class="d">DAY 3</div><div class="fr">彼を知り己を知る</div><div class="ac">情報に金を払う。敵情と自己を見る。</div><div class="ph">戦うと決めたら</div></div>
+          <div class="step"><div class="d">DAY 4</div><div class="fr">先に勝つ</div><div class="ac">負けない形を固め、勝機は待つ。</div><div class="ph">戦いに臨む</div></div>
+        </div>
+      </div>
+
+      <div class="band">
+        <div class="tag">勝兵と敗兵 — 分けるのは「順序」</div>
+        <div class="q">勝つ軍は、先に勝ってから戦う。負ける軍は、先に戦ってから、勝ちを求める。</div>
+        <div class="cite">「勝兵は先ず勝ちて而（しか）る後に戦いを求め、敗兵は先ず戦いて而る後に勝を求む」— 形篇（番組訳）</div>
+        <div class="asym">
+          <div class="col win"><div class="h"><span class="ic">🛡️</span>勝兵（先に、負けない形）</div><p>統制できる守りを先に固める。<b>勝ちやすいところで勝つ</b>から、智名も勇功もない地味な勝ち。ギリギリの辛勝は、形が甘かった証拠。</p></div>
+          <div class="col lose"><div class="h"><span class="ic">🎲</span>敗兵（先に、戦ってから）</div><p>形を固めず戦端を開き、<b>統制できない勝機に賭ける</b>。戦場での奮闘で挽回を図る——運任せの順序。</p></div>
+        </div>
+        <div class="band-foot">効く場：競争・交渉・係争。効かない場：信頼を育てる場、創造の場（水を、火にかけるな）。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">勝つべきは<br>敵に在り</div><div class="lb">勝てるかは、最初から自分では決められない。孫子は「必勝」を書いていない。統制できるのは、負けない形だけ。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>先に勝つ</em></div>
+          <p>待遇に不満で、勢いのまま上司に直談判——は「先ず戦いて而る後に勝を求む」＝敗兵の順。まず<span class="now">負けない形を固める</span>：市場価値の証拠、実績の棚卸し、代替の選択肢（他社オファー等）。それから話す。勝機（相手のYES）は、形が固まってから待つ。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 統制できる／できないの二領域と、4日間の道具箱を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

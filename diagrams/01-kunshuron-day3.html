@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 君主論Day3 — 3状態モデル</title>
+<style>
+  :root{
+    --ground:#E9E1D2; --panel:#F3EDDD; --panel-2:#ECE4D2;
+    --ink:#211C18; --muted:#6B6154; --faint:#8A8072; --line:#CDBFA6; --line-soft:#DBD0BA;
+    --seal:#8B3A2E; --calm:#3F6E70; --heat:#B07A34;
+    --seal-soft:#EFDDD5; --calm-soft:#D8E5E4; --heat-soft:#EEE3CC;
+    --earth:#B3A184; --earth-d:#8C7A5E; --sky-top:#ECE9DE; --sky-bot:#E4E8E4;
+    --shadow:0 1px 2px rgba(33,28,24,.06), 0 8px 24px -12px rgba(33,28,24,.18);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#16130D; --panel:#201C14; --panel-2:#26221A;
+      --ink:#EBE2D2; --muted:#A69B88; --faint:#877D6C; --line:#3A3327; --line-soft:#2C271E;
+      --seal:#D06A57; --calm:#78ABAC; --heat:#D3A857;
+      --seal-soft:#2C1C18; --calm-soft:#16282A; --heat-soft:#2A2315;
+      --earth:#5C5140; --earth-d:#403829; --sky-top:#1A1B15; --sky-bot:#171A18;
+      --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);}
+  }
+  :root[data-theme="dark"]{ --ground:#16130D; --panel:#201C14; --panel-2:#26221A;
+    --ink:#EBE2D2; --muted:#A69B88; --faint:#877D6C; --line:#3A3327; --line-soft:#2C271E;
+    --seal:#D06A57; --calm:#78ABAC; --heat:#D3A857;
+    --seal-soft:#2C1C18; --calm-soft:#16282A; --heat-soft:#2A2315;
+    --earth:#5C5140; --earth-d:#403829; --sky-top:#1A1B15; --sky-bot:#171A18;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);}
+  :root[data-theme="light"]{ --ground:#E9E1D2; --panel:#F3EDDD; --panel-2:#ECE4D2;
+    --ink:#211C18; --muted:#6B6154; --faint:#8A8072; --line:#CDBFA6; --line-soft:#DBD0BA;
+    --seal:#8B3A2E; --calm:#3F6E70; --heat:#B07A34;
+    --seal-soft:#EFDDD5; --calm-soft:#D8E5E4; --heat-soft:#EEE3CC;
+    --earth:#B3A184; --earth-d:#8C7A5E; --sky-top:#ECE9DE; --sky-bot:#E4E8E4;
+    --shadow:0 1px 2px rgba(33,28,24,.06), 0 8px 24px -12px rgba(33,28,24,.18);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(28px,5.4vw,48px); line-height:1.18; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:#fff; background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.06em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .h{color:var(--heat);} .lead .s{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--sky-top),var(--sky-bot)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .pnl{stroke-width:1.7;}
+  .art .p-like{fill:var(--calm-soft); stroke:var(--faint);}
+  .art .p-fear{fill:var(--heat-soft); stroke:var(--heat);}
+  .art .p-hate{fill:var(--seal-soft); stroke:var(--seal);}
+  .art .ttl{font-family:var(--serif); font-weight:700; font-size:24px; text-anchor:middle;}
+  .art .ttl-like{fill:var(--muted);} .art .ttl-fear{fill:var(--heat);} .art .ttl-hate{fill:var(--seal);}
+  .art .rope{stroke:var(--earth-d); stroke-width:2.4; stroke-linecap:round;}
+  .art .rope-cut{stroke:var(--seal); stroke-width:2.4; stroke-linecap:round;}
+  .art .hold{fill:var(--ink);} .art .hold-self{fill:var(--heat);}
+  .art .who{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--muted);}
+  .art .verd{font-family:var(--serif); font-weight:700; font-size:14px; text-anchor:middle;}
+  .art .verd-like{fill:var(--faint);} .art .verd-fear{fill:var(--heat);} .art .verd-hate{fill:var(--seal);}
+  .art .rec{fill:var(--heat); font-family:var(--sans); font-weight:700; font-size:11px; text-anchor:middle;}
+  .art .linex{stroke:var(--seal); stroke-width:2.6; stroke-dasharray:6 4;}
+  .art .linex-t{fill:var(--seal); font-family:var(--sans); font-weight:700; font-size:11px; text-anchor:middle;}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .h{color:var(--heat);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:34px;height:34px;flex:none;border-radius:9px;display:grid;place-items:center;font-family:var(--serif);font-size:18px; font-weight:700;}
+  .wu.ok .gi{background:var(--heat-soft);color:var(--heat);} .wu.ng .gi{background:var(--calm-soft);color:var(--calm);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;} .wu .txt .nm span{font-family:var(--sans); font-size:11px; color:var(--faint); font-weight:500; margin-left:6px;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 9%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .halves{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .halves .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .halves .col .h{font-size:12.5px; font-weight:700; display:flex; gap:7px; align-items:center;}
+  .halves .col.fear .h{color:var(--heat);} .halves .col.hate .h{color:var(--seal);}
+  .halves .col .ic{font-size:17px;}
+  .halves .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .halves .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(18px,3.4vw,25px); font-weight:600; line-height:1.28;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>紐を、誰が握っているか。</h1>
+      <p class="dek">人を動かす紐帯は3状態。<b>好意</b>は紐が相手持ちで、いつでも切られる。<b>恐れ</b>は紐が自分持ちで、維持できる。だが<b>憎悪</b>に一線を越えると、紐は切れて燃え、損得計算ごと消える。マキャベリが選んだのは、自分で握れる紐だ。</p>
+      <div class="source"><span class="seal">君主論</span><span>マキャベリ ・ Day3「恐れられよ、ただし憎まれるな」第17章</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead"><span class="h">恐れ</span>は自分で維持できる。だが<span class="s">憎悪</span>の一線を越えると、すべてが無効になる。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 236" role="img" aria-label="3状態モデル。好意は紐が相手持ちで不安定、恐れは紐が自分持ちで安定、憎悪は紐が切れて全設計が無効。恐れと憎悪の間に越えてはならない一線">
+          <!-- 好意 -->
+          <rect class="pnl p-like" x="16" y="34" width="150" height="176" rx="13"/>
+          <text class="ttl ttl-like" x="91" y="80">好意</text>
+          <line class="rope" x1="40" y1="116" x2="142" y2="116"/>
+          <circle class="hold" cx="142" cy="116" r="6"/>
+          <text class="who" x="91" y="138">紐は相手が握る</text>
+          <text class="verd verd-like" x="91" y="172">気分で切れる</text>
+          <text class="verd verd-like" x="91" y="192">→ 不安定</text>
+
+          <!-- 恐れ (recommended) -->
+          <rect class="pnl p-fear" x="182" y="34" width="150" height="176" rx="13"/>
+          <text class="rec" x="257" y="54">◎ 頼れるのはこれ</text>
+          <text class="ttl ttl-fear" x="257" y="88">恐れ</text>
+          <line class="rope" x1="206" y1="120" x2="308" y2="120"/>
+          <circle class="hold-self" cx="206" cy="120" r="6"/>
+          <text class="who" x="257" y="140">紐は自分が握る</text>
+          <text class="verd verd-fear" x="257" y="172">帰結の予測で維持</text>
+          <text class="verd verd-fear" x="257" y="192">→ 安定</text>
+
+          <!-- 越えてはならない一線 -->
+          <line class="linex" x1="343" y1="30" x2="343" y2="214"/>
+          <text class="linex-t" x="343" y="24">越えてはならない一線</text>
+
+          <!-- 憎悪 -->
+          <rect class="pnl p-hate" x="354" y="34" width="150" height="176" rx="13"/>
+          <text class="ttl ttl-hate" x="429" y="80">憎悪</text>
+          <line class="rope-cut" x1="378" y1="116" x2="410" y2="116"/>
+          <line class="rope-cut" x1="448" y1="116" x2="480" y2="116"/>
+          <text class="who" x="429" y="138">報酬・尊厳を奪うと</text>
+          <text class="verd verd-hate" x="429" y="172">損得計算が消え</text>
+          <text class="verd verd-hate" x="429" y="192">全設計が無効</text>
+        </svg>
+        <div class="cap">恐れ＝怯えさせることではない。<span class="h">「何をすれば罰され、何を言っても罰されないか」の線が全員に見える状態</span>＝帰結の予測可能性（心理的安全性と両立）。機嫌で罰する君主は、恐れではなく<b>憎悪の種まき</b>。</div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">規律を決めるのは人柄ではなく「予測」— 第17章の対比</div>
+        <div class="wu ok"><div class="gi">苛</div><div class="txt"><div class="nm">苛烈さ ＝ 帰結の確実性<span>ハンニバル・敵地15年</span></div><div class="ex">言葉も部族も違う傭兵の大軍を敵地で率いて、<b>内紛・反乱ゼロ</b>。軍規を破れば何が起きるか、全員が正確に知っていた。</div></div></div>
+        <div class="wu ng"><div class="gi">寛</div><div class="txt"><div class="nm">寛大さ ＝ 帰結が来ない<span>スキピオ・英雄なのに反乱</span></div><div class="ex">人格者で兵に慕われたが、<b>自軍がスペインで反乱</b>。「破っても帰結が来ない」と兵が学習した。慕われるかは、規律とは別の変数。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">恐れと憎悪は、まったくの別物</div>
+        <div class="q">恐れは「あの人のルールを破るとまずい」。憎悪は「あの人自身を消したい」。</div>
+        <div class="cite">「君主は、たとえ愛されなくても、憎まれることだけは避けねばならない」— 第17章（番組訳）</div>
+        <div class="halves">
+          <div class="col fear"><div class="h"><span class="ic">📐</span>恐れ（ルールに向かう）</div><p>敵意は<b>行動（ルール違反）</b>に向く。線を守れば安全。設計でき、維持できる。</p></div>
+          <div class="col hate"><div class="h"><span class="ic">🔥</span>憎悪（あなた自身に向かう）</div><p>報酬・人前の尊厳を奪うと、敵意が<b>あなた自身</b>に向く。損得計算が消え、恐れの設計は全部効かなくなる。</p></div>
+        </div>
+        <div class="band-foot">人は、父の死は忘れても、財産の喪失は忘れない。（第17章）</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">優しさだと思うものは、<br>たいてい先送り</div><div class="lb">好意で規律を保とうとするのは、締切が来れば同じ場所で破れる。帰結を先に固定するのが、実は優しい。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>一線</em></div>
+          <p>テスト工程を2度スキップした若手に、<span class="now">「次に飛ばしたら何が起きるか」を予告し、例外なく実行</span>する（＝恐れ＝予測可能性）。全体会議で吊るし上げる（＝尊厳を奪う＝憎悪）でも、飲み会で流す（＝好意＝先送り）でもなく。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 「紐を誰が握るか」で、好意・恐れ・憎悪の三状態を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

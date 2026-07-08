@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 ベーコンDay2 — 4つの偶像</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .c-t{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.7;}
+  .art .c-d{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.7;}
+  .art .c-m{fill:var(--heat-soft); stroke:var(--heat); stroke-width:1.7;}
+  .art .c-g{fill:var(--panel); stroke:var(--faint); stroke-width:1.7;}
+  .art .nm{font-family:var(--serif); font-weight:700; font-size:19px; text-anchor:middle;}
+  .art .nm-t{fill:var(--seal);} .art .nm-d{fill:var(--calm);} .art .nm-m{fill:var(--heat);} .art .nm-g{fill:var(--ink);}
+  .art .og{font-family:var(--sans); font-weight:700; font-size:11.5px; text-anchor:middle; fill:var(--ink);}
+  .art .ex{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--muted);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:34px;height:34px;flex:none;border-radius:9px;display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.t .gi{background:var(--seal-soft);color:var(--seal);} .wu.d .gi{background:var(--calm-soft);color:var(--calm);} .wu.m .gi{background:var(--heat-soft);color:var(--heat);} .wu.g .gi{background:var(--panel-2);color:var(--ink);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;} .wu .txt .nm span{font-family:var(--sans); font-size:11px; color:var(--faint); font-weight:500; margin-left:6px;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 9%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .halves{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .halves .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .halves .col .h{font-size:12.5px; font-weight:700; display:flex; gap:7px; align-items:center;}
+  .halves .col.no .h{color:var(--faint);} .halves .col.yes .h{color:var(--seal);}
+  .halves .col .ic{font-size:17px;}
+  .halves .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .halves .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(21px,4vw,30px); font-weight:600; line-height:1.14;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>目は、放っておくと曇る。<br>四つのクセで。</h1>
+      <p class="dek">観察が土台だと言った。だが観察する目自体が、四つの偶像（イドラ＝思い込み）に歪む。<b>種族</b>（人類共通）・<b>洞窟</b>（個人）・<b>市場</b>（言葉）・<b>劇場</b>（権威）。偶像は<b>消せない</b>——ベーコン自身も例外でない。だから「消せ」でなく、知って手続きで補う。</p>
+      <div class="source"><span class="seal">ノヴム・オルガヌム</span><span>ベーコン ・ Day2「4つの偶像」第1巻 箴言39・41〜44</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">認識を歪める四つの偶像を、<span class="em">由来別</span>に知る。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 256" role="img" aria-label="4つの偶像。種族＝人類共通、洞窟＝個人、市場＝言葉、劇場＝権威。それぞれ由来と現代例">
+          <!-- 種族 -->
+          <rect class="c-t" x="20" y="36" width="228" height="94" rx="12"/>
+          <text class="nm nm-t" x="134" y="70">種族の偶像</text>
+          <text class="og" x="134" y="92">人類共通・逃れられない</text>
+          <text class="ex" x="134" y="112">無いところにも法則を見る</text>
+          <!-- 洞窟 -->
+          <rect class="c-d" x="272" y="36" width="228" height="94" rx="12"/>
+          <text class="nm nm-d" x="386" y="70">洞窟の偶像</text>
+          <text class="og" x="386" y="92">個人固有（生い立ち・職業）</text>
+          <text class="ex" x="386" y="112">ハンマーには、全部が釘</text>
+          <!-- 市場 -->
+          <rect class="c-m" x="20" y="142" width="228" height="94" rx="12"/>
+          <text class="nm nm-m" x="134" y="176">市場の偶像</text>
+          <text class="og" x="134" y="198">言葉が思考を縛る（最も厄介）</text>
+          <text class="ex" x="134" y="218">流行語・あやふやな語</text>
+          <!-- 劇場 -->
+          <rect class="c-g" x="272" y="142" width="228" height="94" rx="12"/>
+          <text class="nm nm-g" x="386" y="176">劇場の偶像</text>
+          <text class="og" x="386" y="198">権威の体系を丸呑み</text>
+          <text class="ex" x="386" y="218">「偉い先生が言った」</text>
+        </svg>
+        <div class="cap"><b>敵の姿を四つに整理してはじめて、手続きで対処できる。</b>気合や道徳で「なくす」のではなく、由来別に分類したのがベーコンの発明。</div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">四つの偶像 — 現代の姿</div>
+        <div class="wu t"><div class="gi">種</div><div class="txt"><div class="nm">種族<span>人類共通</span></div><div class="ex">3回続くと「法則がある」と感じる／株価チャートに顔やパターンを見る。<b>無秩序に秩序を見出す本性</b>。</div></div></div>
+        <div class="wu d"><div class="gi">洞</div><div class="txt"><div class="nm">洞窟<span>個人固有</span></div><div class="ex">技術者は何でも技術で、営業は何でも人間関係で説明したがる。<b>職業・立場が世界の見え方を染める</b>。</div></div></div>
+        <div class="wu m"><div class="gi">市</div><div class="txt"><div class="nm">市場<span>言葉由来</span></div><div class="ex">「運」「自然派」など中身の曖昧な語の実体視／「これからは◯◯の時代」。<b>言葉が主人になり思考を縛る</b>。</div></div></div>
+        <div class="wu g"><div class="gi">劇</div><div class="txt"><div class="nm">劇場<span>権威由来</span></div><div class="ex">「専門家の△△理論によれば」で中身を確かめず信じる。<b>よくできた体系ほど本当らしく見える</b>が、芝居は芝居。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">偶像は消せない — だから「補正」する</div>
+        <div class="q">意志の力で偏見を消す、なんて傲慢は言わない。歪んだ眼鏡の癖を知れば、見えたものを読み替えられる。</div>
+        <div class="cite">「私自身も、この偶像から自由ではない」——ベーコンは失脚した、欲に目のくらんだ男でもある（番組・第1巻より）</div>
+        <div class="halves">
+          <div class="col no"><div class="h"><span class="ic">🚫</span>できないこと</div><p>「4つ知れば偏見のない人になれる」。<b>これ自体が傲慢という新たな偶像</b>。意志で偏見は消えない。全否定の逆張りも別の偏り。</p></div>
+          <div class="col yes"><div class="h"><span class="ic">👓</span>できること</div><p>「自分の眼鏡は右に三度、青くずれている」と<b>知っていれば、頭の中で読み替えられる</b>。消せないから、手続き（方法）で補う。</p></div>
+        </div>
+        <div class="band-foot">この本の全部が、その「手続き」の話。偶像を知るのは、判断を捨てるためでなく、補正するため。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">消せない。<br>知って補う</div><div class="lb">認識の歪みを「道徳的欠陥」でなく「本性に根ざす構造」と捉えたから、処方は精神論でなく方法になる。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>偶像</em></div>
+          <p>「専門家の△△理論によれば」「これからは◯◯の時代」でつい信じ込む——<span class="now">劇場（権威の丸呑み）と市場（言葉に縛られる）の偶像</span>。消せないので、「この語は何を指すか」「反対の事例はあるか」を、信じる前に一度だけあてる。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 4つの偶像を由来別に並べ、「消さず手続きで補う」処方を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

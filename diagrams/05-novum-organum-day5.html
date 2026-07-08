@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 ベーコンDay5 — 観察は理論に先立つか</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:500px; margin:0 auto;}
+  .art .spine{stroke:var(--line); stroke-width:3;}
+  .art .node{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.8;}
+  .art .node1{fill:var(--seal); stroke:var(--seal);}
+  .art .nnum{fill:var(--seal); font-family:var(--serif); font-weight:700; font-size:15px; text-anchor:middle;}
+  .art .nnum1{fill:var(--ground);}
+  .art .nname{fill:var(--ink); font-family:var(--serif); font-weight:700; font-size:16px;}
+  .art .ntag{fill:var(--muted); font-family:var(--sans); font-size:12px;}
+  .art .flow{fill:var(--faint);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:34px;height:34px;flex:none;border-radius:9px;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:16px; font-weight:700;}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;} .wu .txt .nm span{font-family:var(--sans); font-size:11px; color:var(--faint); font-weight:500; margin-left:6px;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 9%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .halves{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .halves .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .halves .col .h{font-size:12.5px; font-weight:700; display:flex; gap:7px; align-items:center;}
+  .halves .col.flaw .h{color:var(--faint);} .halves .col.works .h{color:var(--seal);}
+  .halves .col .ic{font-size:17px;}
+  .halves .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .halves .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(18px,3.4vw,25px); font-weight:600; line-height:1.28;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>新機関は、真理ではない。<br>論争の、最初の一手。</h1>
+      <p class="dek">「まず偏見なく観察せよ」——だが<b>完全に空っぽの観察はない</b>（何を見るか自体が理論を負う）。ベーコン自身が認める。だからこそ偶像を知り、否定事例を探す手続きが要る。彼の帰納は、四百年続く論争の<b>出発点</b>。ヒューム・ポパー・ハンソンへ続く。</p>
+      <div class="source"><span class="seal">ノヴム・オルガヌム</span><span>ベーコン ・ Day5「観察は理論に先立つか」第1巻 回想</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">「観察は理論に先立つか」——この問いは、<span class="em">ベーコン一人では閉じない</span>。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 460 250" role="img" aria-label="論争史の縦糸。ベーコン→ヒューム→ポパー→ハンソンと、帰納をめぐる問いが受け継がれていく">
+          <line class="spine" x1="56" y1="34" x2="56" y2="218"/>
+          <path class="flow" d="M56 96 l-5 -10 l10 0 Z"/>
+          <path class="flow" d="M56 156 l-5 -10 l10 0 Z"/>
+          <path class="flow" d="M56 216 l-5 -10 l10 0 Z"/>
+
+          <circle class="node1" cx="56" cy="44" r="16"/><text class="nnum nnum1" x="56" y="49">1</text>
+          <text class="nname" x="86" y="40">ベーコン（1620）</text>
+          <text class="ntag" x="86" y="58">帰納・否定事例＝新機関＝最初の一手</text>
+
+          <circle class="node" cx="56" cy="104" r="16"/><text class="nnum" x="56" y="109">2</text>
+          <text class="nname" x="86" y="100">ヒューム</text>
+          <text class="ntag" x="86" y="118">集めても「次も同じ」の保証はない</text>
+
+          <circle class="node" cx="56" cy="164" r="16"/><text class="nnum" x="56" y="169">3</text>
+          <text class="nname" x="86" y="160">ポパー</text>
+          <text class="ntag" x="86" y="178">証明でなく反証。耐えたものを暫定採用</text>
+
+          <circle class="node" cx="56" cy="218" r="16"/><text class="nnum" x="56" y="223">4</text>
+          <text class="nname" x="86" y="214">ハンソン</text>
+          <text class="ntag" x="86" y="232">観察はそもそも理論を背負っている</text>
+        </svg>
+        <div class="cap"><b>純粋になれない「からこそ」、手続きで補う。</b>ベーコンの新機関は完成品ではなく、四百年続く論争の最初の一手。その扉の先に、近代の科学哲学が続く。</div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">三つの反論と、ベーコンの応答</div>
+        <div class="wu"><div class="gi">観</div><div class="txt"><div class="nm">観察の理論負荷<span>ハンソンの予告</span></div><div class="ex">「何を見るか自体が理論で決まる。純粋な観察はない」→ <b>認める。だからこそ</b>偶像を知り否定事例を探す手続きが要る。</div></div></div>
+        <div class="wu"><div class="gi">帰</div><div class="txt"><div class="nm">帰納の限界<span>ヒューム→ポパー</span></div><div class="ex">「いくら集めても『次も同じ』は証明できない」→ 認める。ポパーが「証明でなく<b>反証に耐えたものを暫定採用</b>」と組み替える。</div></div></div>
+        <div class="wu"><div class="gi">己</div><div class="txt"><div class="nm">著者自身の欠陥<span>賢者化の否認</span></div><div class="ex">「偶像から自由でなく、失脚し、実験で死んだあなたに説得力が?」→ <b>「ないと言えば嘘、あると言っても嘘」</b>。人格は別の法廷で裁け。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">最後の答え — 方法は、作った人間の欠点と別に働く</div>
+        <div class="q">賢者が山の上から真理を告げる、なんてのは、劇場の偶像さ。私は、麓で転んだ、ただの一人の男だよ。それで、十分だ。</div>
+        <div class="cite">ベーコンは収賄で失脚（1621）し、雪の防腐実験がもとで死んだ（1626）と伝わる（番組・第1巻より）</div>
+        <div class="halves">
+          <div class="col flaw"><div class="h"><span class="ic">🥀</span>作者の欠点</div><p>種族の偶像の一員で、栄達という洞窟に足をすくわれ失脚した男。<b>人格は褒められたものじゃない</b>。</p></div>
+          <div class="col works"><div class="h"><span class="ic">🏛️</span>方法は別に働く</div><p>欠陥だらけの私が震える手で置いた土台の上を、<b>ガリレオが歩き、ニュートンが歩いた</b>。土台が使えれば、それでいい。</p></div>
+        </div>
+        <div class="band-foot">私を信じるな。私の方法すら鵜呑みにするな（それこそ劇場の偶像）。使って、はずれを探して、耐えたら残す。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">同じ一節が、<br>五日目には<br>違って聞こえる</div><div class="lb">初日は「謙虚に観よ」。五日目は「下僕の観察は完璧ではありえない、だから手続きで補う」——それがインストール。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>5日間</em></div>
+          <p>「この健康法で調子が良くなった」——<span class="now">①「効いた気がする」を疑い（種族の偶像）②効かなかった日も数え（否定事例）③発信する成功者と沈黙する離脱者の非対称を思い出し④集めた事実で思い込みを一度壊す（蜜蜂）</span>。5フレームが一つの動作に結ぶ。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 論争史の縦糸で、「新機関は真理でなく最初の一手」を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -20,6 +20,7 @@ const viewState = { view: "script", forId: null };
 let unsub = null;
 let rafId = null;      // シークバー更新のrAF
 let seekDragging = false;
+let dgmCleanup = [];   // 図解iframeのリサイズ購読解除
 
 function fmtClock(sec) {
   sec = Math.max(0, Math.floor(sec || 0));
@@ -42,6 +43,7 @@ export function renderEpisode(el, app, { id }) {
   }
   if (unsub) { unsub(); unsub = null; }
   if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+  if (dgmCleanup.length) { dgmCleanup.forEach(fn => fn()); dgmCleanup = []; }
 
   // 肖像は index.json（本棚台帳）が唯一の正。エピソードJSONのseriesには無いので補完する
   if (!ep.series.portrait) {
@@ -307,7 +309,12 @@ function noteHTML(ep, app) {
   }
   if (n.mechanism?.length) h += `<section><h3>メカニズム</h3>${listHTML(n.mechanism, "clean")}</section>`;
   if (n.examples?.length) h += `<section><h3>事例</h3>${listHTML(n.examples, "clean")}</section>`;
-  if (n.diagramSpec) {
+  if (n.diagramFile) {
+    // v2: 各話専用のインフォグラフィック（app/diagrams/<ep_id>.html）を iframe で描画。
+    // 高さ・テーマは wireNote 内で同期する。
+    h += `<section class="dgm-sec"><h3>図解</h3>
+      <iframe class="dgm-frame" data-dgm src="${esc(n.diagramFile)}" title="図解" loading="lazy" scrolling="no"></iframe></section>`;
+  } else if (n.diagramSpec) {
     // spec.note が原典キャプションを内包するため、旧ASCIIキャプションは重複ゆえ出さない
     h += `<section><h3>図解</h3>${diagramHTML(n.diagramSpec)}</section>`;
   } else if (n.diagram) {
@@ -351,6 +358,8 @@ function noteHTML(ep, app) {
 
   if (n.nextPreview) {
     h += `<div class="next"><p class="l">次の一冊 / 次の回</p><p>${richText(n.nextPreview)}</p></div>`;
+  } else if (n.seriesEnd) {
+    h += `<div class="next series-end"><p class="l">シリーズを終えて</p><p>${richText(n.seriesEnd)}</p></div>`;
   }
   return `<div class="note">${h}</div>`;
 }
@@ -361,7 +370,43 @@ function optClass(k, answer, choice) {
   return " dim";
 }
 
+// ---- 図解iframe（各話専用インフォグラフィック）の高さ・テーマ同期 ----
+function syncDiagramTheme(f) {
+  try {
+    const doc = f.contentDocument; if (!doc || !doc.documentElement) return;
+    const t = document.documentElement.getAttribute("data-theme"); // light|dark|null(auto)
+    if (t) doc.documentElement.setAttribute("data-theme", t);
+    else doc.documentElement.removeAttribute("data-theme");
+  } catch (e) { /* cross-origin にはならない想定 */ }
+}
+function fitDiagram(f) {
+  try {
+    const doc = f.contentDocument; if (!doc) return;
+    const h = Math.max(doc.documentElement.scrollHeight || 0, doc.body ? doc.body.scrollHeight : 0);
+    if (h) f.style.height = h + "px";
+  } catch (e) { /* noop */ }
+}
+function wireDiagram(f) {
+  const onload = () => {
+    syncDiagramTheme(f);
+    fitDiagram(f);
+    // フォント・レイアウト確定後に再計測（初回1発では低めに出ることがある）
+    setTimeout(() => fitDiagram(f), 80);
+    setTimeout(() => fitDiagram(f), 300);
+  };
+  f.addEventListener("load", onload);
+  // キャッシュ即時ロード済みなら load が来ない可能性 → 明示的に一度走らせる
+  try {
+    if (f.contentDocument && f.contentDocument.readyState === "complete") onload();
+  } catch (e) { /* noop */ }
+  // 幅変化（回転・リサイズ）でレスポンシブに高さが変わる → 追従
+  const onResize = () => fitDiagram(f);
+  window.addEventListener("resize", onResize);
+  dgmCleanup.push(() => { window.removeEventListener("resize", onResize); f.removeEventListener("load", onload); });
+}
+
 function wireNote(body, ep) {
+  body.querySelectorAll("iframe[data-dgm]").forEach(f => wireDiagram(f));
   body.querySelectorAll("[data-quiz]").forEach(qz => {
     const answer = qz.dataset.answer;
     const epId = qz.dataset.ep;

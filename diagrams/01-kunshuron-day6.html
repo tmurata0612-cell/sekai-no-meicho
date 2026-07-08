@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 君主論Day6 — 使いどころマップ</title>
+<style>
+  :root{
+    --ground:#E9E1D2; --panel:#F3EDDD; --panel-2:#ECE4D2;
+    --ink:#211C18; --muted:#6B6154; --faint:#8A8072; --line:#CDBFA6; --line-soft:#DBD0BA;
+    --seal:#8B3A2E; --calm:#3F6E70; --heat:#B07A34;
+    --seal-soft:#EFDDD5; --calm-soft:#D8E5E4; --heat-soft:#EEE3CC;
+    --earth:#B3A184; --earth-d:#8C7A5E; --sky-top:#ECE9DE; --sky-bot:#E4E8E4;
+    --shadow:0 1px 2px rgba(33,28,24,.06), 0 8px 24px -12px rgba(33,28,24,.18);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#16130D; --panel:#201C14; --panel-2:#26221A;
+      --ink:#EBE2D2; --muted:#A69B88; --faint:#877D6C; --line:#3A3327; --line-soft:#2C271E;
+      --seal:#D06A57; --calm:#78ABAC; --heat:#D3A857;
+      --seal-soft:#2C1C18; --calm-soft:#16282A; --heat-soft:#2A2315;
+      --earth:#5C5140; --earth-d:#403829; --sky-top:#1A1B15; --sky-bot:#171A18;
+      --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);}
+  }
+  :root[data-theme="dark"]{ --ground:#16130D; --panel:#201C14; --panel-2:#26221A;
+    --ink:#EBE2D2; --muted:#A69B88; --faint:#877D6C; --line:#3A3327; --line-soft:#2C271E;
+    --seal:#D06A57; --calm:#78ABAC; --heat:#D3A857;
+    --seal-soft:#2C1C18; --calm-soft:#16282A; --heat-soft:#2A2315;
+    --earth:#5C5140; --earth-d:#403829; --sky-top:#1A1B15; --sky-bot:#171A18;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);}
+  :root[data-theme="light"]{ --ground:#E9E1D2; --panel:#F3EDDD; --panel-2:#ECE4D2;
+    --ink:#211C18; --muted:#6B6154; --faint:#8A8072; --line:#CDBFA6; --line-soft:#DBD0BA;
+    --seal:#8B3A2E; --calm:#3F6E70; --heat:#B07A34;
+    --seal-soft:#EFDDD5; --calm-soft:#D8E5E4; --heat-soft:#EEE3CC;
+    --earth:#B3A184; --earth-d:#8C7A5E; --sky-top:#ECE9DE; --sky-bot:#E4E8E4;
+    --shadow:0 1px 2px rgba(33,28,24,.06), 0 8px 24px -12px rgba(33,28,24,.18);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(28px,5.4vw,48px); line-height:1.18; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:64ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:#fff; background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.06em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--sky-top),var(--sky-bot)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .spine{stroke:var(--line); stroke-width:3;}
+  .art .node{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.8;}
+  .art .num{fill:var(--seal); font-family:var(--serif); font-weight:700; font-size:19px; text-anchor:middle;}
+  .art .ph{fill:var(--ink); font-family:var(--serif); font-weight:700; font-size:14px; text-anchor:middle;}
+  .art .day{fill:var(--faint); font-family:var(--sans); font-weight:700; font-size:10.5px; text-anchor:middle; letter-spacing:.04em;}
+  .art .flow{fill:var(--faint);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:10px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:16px; font-weight:700;}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;} .wu .txt .nm span{font-family:var(--sans); font-size:11px; color:var(--calm); font-weight:600; margin-left:6px;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+  .wu .txt .pit{font-size:11.5px; color:var(--seal); margin-top:3px;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 9%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .halves{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .halves .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .halves .col .h{font-size:12.5px; font-weight:700; display:flex; gap:7px; align-items:center;}
+  .halves .col.work .h{color:var(--seal);} .halves .col.no .h{color:var(--calm);}
+  .halves .col .ic{font-size:17px;}
+  .halves .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .halves .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(21px,4vw,30px); font-weight:600; line-height:1.14;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>炎上案件の30日を、<br>5フレームで解く。</h1>
+      <p class="dek">『君主論』の5つの道具は、非常時・利害対立を<b>時系列で</b>解く道具箱。<b>着任→計画→規律→交渉→鎮火後</b>。章の順ではなく、使う順に並べるのが肝。ただし平時の仲間づくり・創発には効かない——効く範囲を線引きして初めて、インストール完了。</p>
+      <div class="source"><span class="seal">君主論</span><span>マキャベリ ・ Day6「使いどころマップ」卒業回</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">章の順ではなく、<span class="em">使う順</span>に。着任から、鎮火後の備えまで。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 120" role="img" aria-label="5段の時系列。1着任・2計画・3規律・4交渉・5鎮火後。使う順であり章の順ではない">
+          <line class="spine" x1="52" y1="46" x2="500" y2="46"/>
+          <!-- flow arrowheads between nodes -->
+          <path class="flow" d="M110 46 l-9 -4 l0 8 Z"/>
+          <path class="flow" d="M222 46 l-9 -4 l0 8 Z"/>
+          <path class="flow" d="M334 46 l-9 -4 l0 8 Z"/>
+          <path class="flow" d="M446 46 l-9 -4 l0 8 Z"/>
+
+          <!-- 5 nodes -->
+          <circle class="node" cx="52"  cy="46" r="19"/><text class="num" x="52"  y="53">1</text>
+          <text class="ph" x="52"  y="90">着任</text><text class="day" x="52"  y="107">Day1</text>
+          <circle class="node" cx="164" cy="46" r="19"/><text class="num" x="164" y="53">2</text>
+          <text class="ph" x="164" y="90">計画</text><text class="day" x="164" y="107">Day2</text>
+          <circle class="node" cx="276" cy="46" r="19"/><text class="num" x="276" y="53">3</text>
+          <text class="ph" x="276" y="90">規律</text><text class="day" x="276" y="107">Day3</text>
+          <circle class="node" cx="388" cy="46" r="19"/><text class="num" x="388" y="53">4</text>
+          <text class="ph" x="388" y="90">交渉</text><text class="day" x="388" y="107">Day5</text>
+          <circle class="node" cx="500" cy="46" r="19"/><text class="num" x="500" y="53">5</text>
+          <text class="ph" x="500" y="90">鎮火後</text><text class="day" x="500" y="107">Day4</text>
+        </svg>
+        <div class="cap"><b>使う順（1→5）と、章の順（Day番号）は違う。</b>観察が先、備えが最後。この順序そのものに意味がある。</div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">5段の道具箱 — 各段のやること と 現代の落とし穴</div>
+        <div class="wu"><div class="gi">1</div><div class="txt"><div class="nm">着任<span>Day1 平地の観察</span></div><div class="ex">口を閉じ、組織図でなく<b>行動のパターン</b>を観察・記録する。まだ外側にいる利点は、30日目には失われる。</div><div class="pit">⚠ 所信表明で「べき論」を語りたくなる</div></div></div>
+        <div class="wu"><div class="gi">2</div><div class="txt"><div class="nm">計画<span>Day2「ある」の地図</span></div><div class="ex">手順書どおりでなく、<b>人が実際にどう動くか</b>で地図を描く。「〜のはず」は赤で囲む。</div><div class="pit">⚠ 理想の工程表を引き、「はず」で埋める</div></div></div>
+        <div class="wu"><div class="gi">3</div><div class="txt"><div class="nm">規律<span>Day3 恐れと憎悪の一線</span></div><div class="ex"><b>帰結の予測可能性</b>を固定する。ただし報酬・人前の尊厳には触れない（憎悪の一線）。</div><div class="pit">⚠ 人前で吊るし上げ、以後の報告を止める</div></div></div>
+        <div class="wu"><div class="gi">4</div><div class="txt"><div class="nm">交渉<span>Day5 狐とライオン</span></div><div class="ex">契約と経緯の精査（狐）が先、<b>押し返す力（ライオン）は後</b>。内を固めてから外へ。</div><div class="pit">⚠ 力任せに吠え、逆に言質を突かれる</div></div></div>
+        <div class="wu"><div class="gi">5</div><div class="txt"><div class="nm">鎮火後<span>Day4 平時の堤防</span></div><div class="ex">安定した今こそ、<b>依存解消・切り戻し・演習</b>。鎮火は終わりでなく、備えの始まり。静けさは工期。</div><div class="pit">⚠「安定したから縮小」の圧力に負ける</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">最後に、効く範囲を自分で線引きする</div>
+        <div class="q">この5つは、非常時と利害対立の道具箱。平時の仲間づくり・創発に持ち込むと、かえって成果を落とす。</div>
+        <div class="cite">「効く範囲を線引きして読む――それが、この本を道具として正しく使う唯一の方法」（番組・卒業回より）</div>
+        <div class="halves">
+          <div class="col work"><div class="h"><span class="ic">🔥</span>効く（この道具箱）</div><p>立て直し・火消し、規律の初期設定、対立交渉、危機の備え。<b>利害が対立し、上位審級に頼れず、迷う時間がない</b>局面。</p></div>
+          <div class="col no"><div class="h"><span class="ic">🌱</span>効かない（別の道具箱）</div><p>平時の信頼づくり、創発・イノベーション、長期の仲間関係。<b>好意・信頼・余白</b>が要る場面は、別の著者の担当。</p></div>
+        </div>
+        <div class="band-foot">受容史500年の誤読＝「非常時の外科手術マニュアル」を「平時の処世術」として読んだこと。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">順番に、<br>意味がある</div><div class="lb">観察なしに計画は引けず、事実の地図なしに規律は憎悪を生み、内を固めず外と交渉すれば足元を見られる。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>30日</em></div>
+          <p>炎上案件に立て直し役で着任——<span class="now">①まず口を閉じて観察</span>（所信表明はしない）→②事実で地図→③帰結の線を引く（尊厳は奪わない）→④契約を精査してから交渉→⑤鎮火後こそ堤防。迷いが最大の敵、已むを得ざる戦いには速さが力量。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 5フレームを使う順に並べ、各段の落とし穴と効く範囲を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

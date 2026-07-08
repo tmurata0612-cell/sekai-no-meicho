@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 ユクスキュルDay3 — 樫の木の多環世界</title>
+<style>
+  :root{
+    --ground:#E6E2D2; --panel:#F1EEDF; --panel-2:#E8E4D1;
+    --ink:#1E201A; --muted:#63685A; --faint:#888C79; --line:#C6C4A8; --line-soft:#D8D5BE;
+    --seal:#4E6A3B; --calm:#3C6E78; --heat:#A9762F;
+    --seal-soft:#DFE6D3; --calm-soft:#D6E4E6; --heat-soft:#EEE3CD;
+    --shadow:0 1px 2px rgba(30,32,26,.06), 0 8px 24px -12px rgba(30,32,26,.18);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#12140F; --panel:#1C1F17; --panel-2:#22261C;
+      --ink:#E7E6D3; --muted:#A0A48C; --faint:#868A72; --line:#363A2C; --line-soft:#2A2E22;
+      --seal:#8DB06A; --calm:#78ABB3; --heat:#D3A35D;
+      --seal-soft:#1E2618; --calm-soft:#18262A; --heat-soft:#2A2417;
+      --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);}
+  }
+  :root[data-theme="dark"]{ --ground:#12140F; --panel:#1C1F17; --panel-2:#22261C;
+    --ink:#E7E6D3; --muted:#A0A48C; --faint:#868A72; --line:#363A2C; --line-soft:#2A2E22;
+    --seal:#8DB06A; --calm:#78ABB3; --heat:#D3A35D;
+    --seal-soft:#1E2618; --calm-soft:#18262A; --heat-soft:#2A2417;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);}
+  :root[data-theme="light"]{ --ground:#E6E2D2; --panel:#F1EEDF; --panel-2:#E8E4D1;
+    --ink:#1E201A; --muted:#63685A; --faint:#888C79; --line:#C6C4A8; --line-soft:#D8D5BE;
+    --seal:#4E6A3B; --calm:#3C6E78; --heat:#A9762F;
+    --seal-soft:#DFE6D3; --calm-soft:#D6E4E6; --heat-soft:#EEE3CD;
+    --shadow:0 1px 2px rgba(30,32,26,.06), 0 8px 24px -12px rgba(30,32,26,.18);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(28px,5.4vw,48px); line-height:1.18; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:64ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:#fff; background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.06em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .link{stroke:var(--faint); stroke-width:1.3; stroke-dasharray:3 3; fill:none;}
+  .art .canopy{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.8;}
+  .art .trunk{fill:var(--heat-soft); stroke:var(--heat); stroke-width:1.4;}
+  .art .chip{stroke-width:1.5;}
+  .art .chip-h{fill:var(--heat-soft); stroke:var(--heat);}
+  .art .chip-a{fill:var(--seal-soft); stroke:var(--seal);}
+  .art .who{font-family:var(--sans); font-size:11px; text-anchor:middle;}
+  .art .who-h{fill:var(--heat);} .art .who-a{fill:var(--seal);}
+  .art .mean{font-family:var(--serif); font-weight:700; font-size:14px; text-anchor:middle; fill:var(--ink);}
+  .art .qmark{font-family:var(--serif); font-weight:700; font-size:30px; text-anchor:middle; fill:var(--seal);}
+  .art .core{font-family:var(--serif); font-size:12px; text-anchor:middle; fill:var(--seal);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--calm-soft);color:var(--calm);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 9%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .halves{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .halves .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .halves .col .h{font-size:12.5px; font-weight:700; display:flex; gap:7px; align-items:center;}
+  .halves .col.mis .h{color:var(--faint);} .halves .col.real .h{color:var(--seal);}
+  .halves .col .ic{font-size:17px;}
+  .halves .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .halves .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>一本の樫が、<br>住人の数だけ別の物になる。</h1>
+      <p class="dek">同じ一本の樫の木が、きこりには<b>材木</b>、狐には<b>巣の屋根</b>、フクロウには<b>止まり木</b>……住人ごとに、意味ある部分だけを切り取られる。肝心なのは、<b>樫そのものは、そのどれでもない</b>。どの環世界にも、まるごとは捉えられない。</p>
+      <div class="source"><span class="seal">生物から見た世界</span><span>ユクスキュル ・ Day3「相手の環世界を推定する」意味の章</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">同じ樫から、<span class="em">それぞれの意味</span>だけが切り出される。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 300" role="img" aria-label="中央の一本の樫から、きこり・少女・狐・フクロウ・リス・キクイムシへ、それぞれ別の意味が切り出される。樫そのものはどれでもない">
+          <!-- connectors -->
+          <path class="link" d="M146 66 L246 120"/>
+          <path class="link" d="M374 66 L274 120"/>
+          <path class="link" d="M146 150 L244 150"/>
+          <path class="link" d="M374 150 L276 150"/>
+          <path class="link" d="M146 234 L246 180"/>
+          <path class="link" d="M374 234 L274 180"/>
+
+          <!-- central oak -->
+          <circle class="canopy" cx="260" cy="96" r="42"/>
+          <rect class="trunk" x="252" y="132" width="16" height="86" rx="3"/>
+          <text class="qmark" x="260" y="106">?</text>
+          <text class="core" x="260" y="238">樫そのものは</text>
+          <text class="core" x="260" y="254">どれでもない</text>
+
+          <!-- left chips (row1/2/3) -->
+          <rect class="chip chip-h" x="18" y="42" width="128" height="48" rx="11"/>
+          <text class="who who-h" x="82" y="62">きこり</text><text class="mean" x="82" y="80">材木</text>
+          <rect class="chip chip-a" x="18" y="126" width="128" height="48" rx="11"/>
+          <text class="who who-a" x="82" y="146">狐</text><text class="mean" x="82" y="164">巣の屋根</text>
+          <rect class="chip chip-a" x="18" y="210" width="128" height="48" rx="11"/>
+          <text class="who who-a" x="82" y="230">リス</text><text class="mean" x="82" y="248">のぼり道</text>
+
+          <!-- right chips -->
+          <rect class="chip chip-h" x="374" y="42" width="128" height="48" rx="11"/>
+          <text class="who who-h" x="438" y="62">暗がりの少女</text><text class="mean" x="438" y="80">恐ろしい顔</text>
+          <rect class="chip chip-a" x="374" y="126" width="128" height="48" rx="11"/>
+          <text class="who who-a" x="438" y="146">フクロウ</text><text class="mean" x="438" y="164">止まり木</text>
+          <rect class="chip chip-a" x="374" y="210" width="128" height="48" rx="11"/>
+          <text class="who who-a" x="438" y="230">キクイムシ</text><text class="mean" x="438" y="248">坑道の天地</text>
+        </svg>
+        <div class="cap"><b>人（きこり・少女）から虫（キクイムシ）まで、切り取る意味はまるで違う。</b>そして樫は、材木でも恐い顔でも止まり木でもない——どの泡にも、まるごとは入らない。</div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">「相手が分からない」時の三ステップ ＝ 相手の環世界を推定する</div>
+        <div class="wu"><div class="gi">1</div><div class="txt"><div class="nm">相手の受容器を見る</div><div class="ex">その相手に、そもそも<b>何が届いているか</b>。何が見え・聞こえ・触れ、何が届いていないか（立場・経験・忙しさで違う）。</div></div></div>
+        <div class="wu"><div class="gi">2</div><div class="txt"><div class="nm">相手にとっての標識を見る</div><div class="ex">届いたもののうち、相手に<b>意味をもつのは何か</b>。何に反応し、何を無視しているか（Day2の探索像の裏返し）。</div></div></div>
+        <div class="wu"><div class="gi">3</div><div class="txt"><div class="nm">自分の意味の投影を点検する</div><div class="ex">「自分にとって価値あるもの」を、相手も同じく価値あると<b>見なしていないか疑う</b>（Day1の知育玩具の親と同じ構造）。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">「擬人化では?」への答え — むしろ逆</div>
+        <div class="q">ユクスキュルはダニに人間の心を着せていない。「人間ならこう感じるはず」を、ダニから引き算した。</div>
+        <div class="cite">「どの環世界も閉じている。だが、そのすべてが、一つの自然の、さまざまな顔だ」— 結び（番組訳）</div>
+        <div class="halves">
+          <div class="col mis"><div class="h"><span class="ic">🎭</span>擬人化（誤解）</div><p>動物に<b>人間の心を着せる</b>こと。ダニに人間くさい感情を投影する——ユクスキュルがやったのは、これではない。</p></div>
+          <div class="col real"><div class="h"><span class="ic">➖</span>実際の手つき</div><p><b>人間の物差しを外す</b>作業。器官という物証から積み上げ、想像を入れない。しかも最後は「ダニの中には入れない」と自分で認める。</p></div>
+        </div>
+        <div class="band-foot">「全部わかる」という顔をしない——それが、どこでもない神の視点を下ろすということ。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">どの泡にも、<br>まるごとは<br>入らない</div><div class="lb">推定は外からのなぞり。器官が語らぬところは分からない、と線を引くのが誠実な使い方。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>樫の木</em></div>
+          <p>「多機能・高機能」の業務システムが現場に使われない——。<span class="now">開発側の樫（多機能＝便利）と、使う側の樫（覚える負担）は別の物</span>。研修で教え込む前に、使う側の受容器（何が届く）→標識（何が負担か）→自分の「便利さ」を投影していないか、を推定する。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 一本の樫から放射する多環世界で、「同じ物が住人ごとに別の物」を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

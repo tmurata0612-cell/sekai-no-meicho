@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 ベーコンDay4 — 否定事例／生存者バイアス</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .wall{fill:var(--panel); stroke:var(--line); stroke-width:1.4;}
+  .art .frame{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.4;}
+  .art .water{fill:var(--seal-soft); opacity:.55;}
+  .art .waterline{stroke:var(--seal); stroke-width:1.4; stroke-dasharray:5 4; opacity:.7;}
+  .art .drowned{fill:none; stroke:var(--faint); stroke-width:1.4; stroke-dasharray:3 3;}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle;}
+  .art .lab-vis{fill:var(--calm);} .art .lab-inv{fill:var(--seal);}
+  .art .sub{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--muted);}
+  .art .qm{font-family:var(--serif); font-weight:700; font-size:20px; text-anchor:middle; fill:var(--seal);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 9%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .halves{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .halves .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .halves .col .h{font-size:12.5px; font-weight:700; display:flex; gap:7px; align-items:center; color:var(--seal);}
+  .halves .col .ic{font-size:17px;}
+  .halves .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .halves .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>溺れ死んだ者の絵は、<br>どこにある?</h1>
+      <p class="dek">神殿の壁には「祈って助かった者」の奉納画がびっしり。だが、祈って<b>溺れ死んだ者は、絵を奉納できない</b>——壁に残らない。人は壁の絵（当たり）だけ数えて「祈れば助かる」と結論する。数えるべきは、当たりの数ではなく「<b>はずれはどこにあるか</b>」。</p>
+      <div class="source"><span class="seal">ノヴム・オルガヌム</span><span>ベーコン ・ Day4「否定事例の力」第1巻 箴言46</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">見えるのは<span class="em">壁の中の当たり</span>だけ。数えられない者が、壁の外にいる。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 236" role="img" aria-label="神殿の壁に助かった者の奉納画が並ぶ（見える・当たり）。壁の下の水中に溺れた者（見えない・否定事例）が沈み、その絵はどこにもない">
+          <!-- wall with votive pictures (visible / hits) -->
+          <rect class="wall" x="26" y="34" width="468" height="96" rx="8"/>
+          <rect class="frame" x="48" y="52" width="58" height="60" rx="4"/>
+          <rect class="frame" x="128" y="52" width="58" height="60" rx="4"/>
+          <rect class="frame" x="208" y="52" width="58" height="60" rx="4"/>
+          <rect class="frame" x="288" y="52" width="58" height="60" rx="4"/>
+          <rect class="frame" x="368" y="52" width="58" height="60" rx="4"/>
+          <text class="lab lab-vis" x="260" y="26">見える：祈って助かった者の奉納画 ＝ 当たり</text>
+
+          <!-- waterline -->
+          <line class="waterline" x1="26" y1="150" x2="494" y2="150"/>
+
+          <!-- water zone with drowned (invisible / misses) -->
+          <rect class="water" x="26" y="150" width="468" height="70" rx="8"/>
+          <circle class="drowned" cx="70" cy="188" r="13"/>
+          <circle class="drowned" cx="150" cy="200" r="13"/>
+          <circle class="drowned" cx="230" cy="184" r="13"/>
+          <circle class="drowned" cx="310" cy="202" r="13"/>
+          <circle class="drowned" cx="390" cy="188" r="13"/>
+          <text class="qm" x="452" y="196">?</text>
+          <text class="lab lab-inv" x="240" y="214">見えない：祈って溺れた者 ＝ 否定事例（絵は、どこにも無い）</text>
+        </svg>
+        <div class="cap"><b>壁に飾られるのは、生き残った者の絵だけ。</b><span class="r">処方＝当たりを数えるのをやめ、「溺れた者の絵はどこ?＝はずれはどこ?」を自分から問う。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">人の癖と、ベーコンの処方</div>
+        <div class="wu hit"><div class="gi">当</div><div class="txt"><div class="nm">当たりは、目に飛び込む</div><div class="ex">いったんある意見を採用すると、<b>支持する事例を無意識に引き寄せる</b>。よく見え、数えたくなる。</div></div></div>
+        <div class="wu miss"><div class="gi">否</div><div class="txt"><div class="nm">はずれは、脇へ押しやる</div><div class="ex">反対する事例は、そもそも見えない（発信されない・退場して消える）か、見えても<b>「例外だ」と脇へ押しやる</b>（＝生存者バイアス）。</div></div></div>
+        <div class="wu fix"><div class="gi">殺</div><div class="txt"><div class="nm">採用した考えを、一度殺しにいく</div><div class="ex">「これが<b>間違っているとしたら、どんな事実があるはずか</b>」を探す。反証に耐えて残った考えは、当たりを百集めるより強い。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">クロスオーバー — 五百年前から、同じ癖を</div>
+        <div class="q">私は「溺れた者の絵はどこだ」と言い、マキャベリは「人は結果に目を向ける」と言った。指しているものは、一つ。</div>
+        <div class="cite">乱入したのは『君主論』のマキャベリ。構造的並行のクロスオーバー（本話は未聴でも自己完結）</div>
+        <div class="halves">
+          <div class="col"><div class="h"><span class="ic">🏆</span>人は結果に目を向ける</div><p>生き延びて勝った<b>結果だけ</b>を見て、途中で溺れて消えた者を数えない（『君主論』第18章・第5話）。</p></div>
+          <div class="col"><div class="h"><span class="ic">🍀</span>好調を実力と誤認する</div><p>たまたま時代と噛み合って生き延びただけなのに、<b>「自分が優れていたから」</b>と数える（同 第25章・第4話）。</p></div>
+        </div>
+        <div class="band-foot">成功例に学ぶのは良い。だが成功例「だけ」を数えると、偶然を法則と取り違える。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">「はずれは、<br>どこにある?」</div><div class="lb">当たりの数を数えるのをやめ、溺れた者を探す。反証を数個、意図的に探すだけで足りる。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>奉納画</em></div>
+          <p>「この投資法／副業で成功した」体験談が何件も——<span class="now">見えているのは、成功して発信した人だけ</span>。同じ方法で失敗し黙って退場した人（溺れた者）は表に出ない。それが見つからない情報環境なら、判断材料は片側しかない、と知る。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 壁の中の当たりと壁の外の溺死者で、生存者バイアスを一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 孫子Day2 — 攻めの四段</title>
+<style>
+  :root{
+    --ground:#E7DECB; --panel:#F2EBDA; --panel-2:#ECE3CF;
+    --ink:#211E16; --muted:#6C6450; --faint:#8A8069; --line:#CBBE9F; --line-soft:#DAD0B6;
+    --seal:#B2382A; --calm:#3E7560; --heat:#9A5236;
+    --seal-soft:#F0DED4; --calm-soft:#DCE7DF; --heat-soft:#EFE0D3;
+    --earth:#C3B48F; --earth-d:#948663; --sky-top:#EFE9DA; --sky-bot:#E7E2D0;
+    --shadow:0 1px 2px rgba(33,29,22,.06), 0 8px 24px -12px rgba(33,29,22,.18);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#15140E; --panel:#201E16; --panel-2:#24221A; --ink:#E8E0CE; --muted:#A79D84; --faint:#8B8269; --line:#3A362A; --line-soft:#2E2B21;
+      --seal:#E0604F; --calm:#7FA88F; --heat:#C07A5F; --seal-soft:#2C1E1A; --calm-soft:#1B2721; --heat-soft:#2A2015;
+      --earth:#5A5140; --earth-d:#3E382B; --sky-top:#1A1913; --sky-bot:#171610;
+      --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);}
+  }
+  :root[data-theme="dark"]{ --ground:#15140E; --panel:#201E16; --panel-2:#24221A; --ink:#E8E0CE; --muted:#A79D84; --faint:#8B8269; --line:#3A362A; --line-soft:#2E2B21;
+    --seal:#E0604F; --calm:#7FA88F; --heat:#C07A5F; --seal-soft:#2C1E1A; --calm-soft:#1B2721; --heat-soft:#2A2015;
+    --earth:#5A5140; --earth-d:#3E382B; --sky-top:#1A1913; --sky-bot:#171610;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);}
+  :root[data-theme="light"]{ --ground:#E7DECB; --panel:#F2EBDA; --panel-2:#ECE3CF; --ink:#211E16; --muted:#6C6450; --faint:#8A8069; --line:#CBBE9F; --line-soft:#DAD0B6;
+    --seal:#B2382A; --calm:#3E7560; --heat:#9A5236; --seal-soft:#F0DED4; --calm-soft:#DCE7DF; --heat-soft:#EFE0D3;
+    --earth:#C3B48F; --earth-d:#948663; --sky-top:#EFE9DA; --sky-bot:#E7E2D0;
+    --shadow:0 1px 2px rgba(33,29,22,.06), 0 8px 24px -12px rgba(33,29,22,.18);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(30px,6vw,52px); line-height:1.14; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:64ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:#fff; background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.08em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--calm);} .lead .em2{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--sky-top),var(--sky-bot)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .stair{fill:var(--earth); opacity:.55;} .art .stair-s{stroke:var(--earth-d); stroke-width:1.5; fill:none;}
+  .art .tread{stroke-width:1.6;}
+  .art .t1{fill:var(--calm-soft); stroke:var(--calm);}
+  .art .t2{fill:var(--calm-soft); stroke:var(--earth-d);}
+  .art .t3{fill:var(--heat-soft); stroke:var(--heat);}
+  .art .t4{fill:var(--seal-soft); stroke:var(--seal);}
+  .art .tk{font-family:var(--serif); font-weight:700; font-size:21px; text-anchor:middle; fill:var(--ink);}
+  .art .tsub{font-family:var(--sans); font-size:10.5px; text-anchor:middle; fill:var(--muted);}
+  .art .tier{font-family:var(--serif); font-weight:700; font-size:12px; text-anchor:middle;}
+  .art .tier-hi{fill:var(--calm);} .art .tier-lo{fill:var(--seal);}
+  .art .axis{stroke:var(--faint); stroke-width:1.8; fill:none;} .art .axish{fill:var(--faint);}
+  .art .axis-t{fill:var(--faint); font-family:var(--sans); font-size:13px; font-weight:600;}
+  .art .axis-v{fill:var(--muted); font-family:var(--sans); font-size:13px; writing-mode:vertical-rl; text-orientation:upright; letter-spacing:3px; text-anchor:middle;}
+  .art .free{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.4;}
+  .art .free-t{fill:var(--calm); font-family:var(--serif); font-weight:700; font-size:15px; text-anchor:middle;}
+  .art .free-s{fill:var(--muted); font-family:var(--sans); font-size:10.5px; text-anchor:middle;}
+  .art .lead-dash{stroke:var(--calm); stroke-width:1.4; stroke-dasharray:3 4; fill:none;}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);}
+
+  /* 四段 scorecard */
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--calm); font-weight:700; margin:0 2px 8px; display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:36px;height:36px;flex:none;border-radius:9px;display:grid;place-items:center;font-family:var(--serif);font-size:20px; font-weight:700;}
+  .wu.s1 .gi{background:var(--calm-soft);color:var(--calm);}
+  .wu.s2 .gi{background:var(--calm-soft);color:var(--earth-d);}
+  .wu.s3 .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu.s4 .gi{background:var(--seal-soft);color:var(--seal);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;} .wu .txt .nm span{font-family:var(--sans); font-size:11px; color:var(--faint); font-weight:500; margin-left:6px;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+  .wu .cst{margin-left:auto; flex:none; text-align:right; align-self:center; padding-left:8px;}
+  .wu .cst .lb{font-size:10px; color:var(--faint); letter-spacing:.06em;}
+  .wu .dots{font-size:13px; letter-spacing:1px; line-height:1;}
+  .wu.s1 .dots{color:var(--calm);} .wu.s2 .dots{color:var(--earth-d);} .wu.s3 .dots{color:var(--heat);} .wu.s4 .dots{color:var(--seal);}
+  .wu .dots .off{opacity:.28;}
+
+  /* band: 勝つほど痩せる */
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 8%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .asym{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .asym .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .asym .col .h{font-size:12.5px; font-weight:700; display:flex; gap:8px; align-items:center;}
+  .asym .col.melt .h{color:var(--seal);} .asym .col.gone .h{color:var(--calm);}
+  .asym .col .ic{font-size:17px;}
+  .asym .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .asym .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  /* fact + apply */
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(22px,4.2vw,32px); font-weight:600; line-height:1.08;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--calm); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--calm);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>戦うほど、高くつく。</h1>
+      <p class="dek">百戦百勝は最善ではない。<b>勝つたびに兵と金が減る</b>から、勝利の累積は消耗の累積になる。だから最上は<b>戦わないこと</b>。やむを得ず動くなら、<b>謀→交→兵→城</b>——コストの安い順に選ぶ。</p>
+      <div class="source"><span class="seal">孫子</span><span>孫武 ・ Day2「戦わずして人の兵を屈する」謀攻篇</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">真の最上策は、階段の<span class="em">外</span>にある。戦うなら、<span class="em2">下るほど高くつく</span>四段を上から選ぶ。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 580 362" role="img" aria-label="下り階段。上段ほど安い攻め方。謀・交・兵・城の順にコストが上がり、階段の外に『戦わない＝真の最上』がある">
+          <!-- cost axis: vertical, down = costlier -->
+          <path class="axis" d="M58 88 L58 322"/><path class="axish" d="M58 328 l-5 -12 l10 0 Z"/>
+          <text class="axis-t" x="58" y="78" text-anchor="middle">安</text>
+          <text class="axis-t" x="58" y="346" text-anchor="middle">高</text>
+          <text class="axis-v" x="32" y="150">コスト</text>
+
+          <!-- staircase solid mass under treads -->
+          <path class="stair" d="M110 100 L230 100 L230 160 L338 160 L338 220 L446 220 L446 280 L554 280 L554 340 L110 340 Z"/>
+          <path class="stair-s" d="M110 100 L230 100 L230 160 L338 160 L338 220 L446 220 L446 280 L554 280"/>
+
+          <!-- diagonal descent arrow along the stairs -->
+          <path class="lead-dash" d="M182 96 L486 250" style="stroke:var(--faint)"/>
+          <path class="axish" d="M486 250 l-11 -3 l3 -9 Z" style="fill:var(--faint)"/>
+
+          <!-- treads (large label only; meanings live in the scorecard below) -->
+          <rect class="tread t1" x="115" y="72" width="110" height="26" rx="6"/><text class="tk" x="170" y="92">謀</text>
+          <rect class="tread t2" x="229" y="132" width="110" height="26" rx="6"/><text class="tk" x="284" y="152">交</text>
+          <rect class="tread t3" x="337" y="192" width="110" height="26" rx="6"/><text class="tk" x="392" y="212">兵</text>
+          <rect class="tread t4" x="445" y="252" width="110" height="26" rx="6"/><text class="tk" x="500" y="272">城</text>
+
+          <!-- tier labels in open space (no overlap) -->
+          <text class="tier tier-hi" x="300" y="90">上策</text>
+          <text class="tier tier-lo" x="500" y="308">最下策</text>
+
+          <!-- 戦わない banner: outside / above the stairs -->
+          <rect class="free" x="196" y="12" width="216" height="42" rx="10"/>
+          <text class="free-t" x="304" y="32">戦わない ＝ 真の最上</text>
+          <text class="free-s" x="304" y="47">二重のコスト（金・時間）を丸ごと回避</text>
+          <path class="lead-dash" d="M234 54 C206 60 188 65 176 71"/>
+        </svg>
+        <div class="cap">段を下るほど、コスト（金・時間・血）が跳ね上がる。<b>血が流れ始めるのは三段目「兵」から。</b>最上策は階段の外＝<b>そもそも戦わない。</b></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap"><span>攻めの四段 ＝ やむを得ず戦うときの選択順（安い順）</span><span>上から順に試す・飛ばさない</span></div>
+        <div class="wu s1"><div class="gi">謀</div><div class="txt"><div class="nm">謀を伐つ<span>ぼうをうつ / 企みを挫く</span></div><div class="ex">相手の作戦を、始まる前にぽしゃらせる。<b>血が流れない・最安。</b>現代なら「話をつける／先回りで芽を摘む」。</div></div><div class="cst"><div class="dots">●<span class="off">●●●</span></div><div class="lb">コスト小</div></div></div>
+        <div class="wu s2"><div class="gi">交</div><div class="txt"><div class="nm">交を伐つ<span>こうをうつ / 同盟を断つ</span></div><div class="ex">相手が味方を集める前に、外交で切り離し孤立させる。<b>外交コストのみ。</b>現代なら「味方を増やし相手を孤立させる根回し」。</div></div><div class="cst"><div class="dots">●●<span class="off">●●</span></div><div class="lb">コスト中</div></div></div>
+        <div class="wu s3"><div class="gi">兵</div><div class="txt"><div class="nm">兵を伐つ<span>へいをうつ / 軍の激突</span></div><div class="ex">ここで初めて、正面から軍がぶつかる。<b>流血が始まる。</b>現代なら「全面対決・真っ向勝負」。ここまで来た時点で高くつく。</div></div><div class="cst"><div class="dots">●●●<span class="off">●</span></div><div class="lb">コスト大</div></div></div>
+        <div class="wu s4"><div class="gi">城</div><div class="txt"><div class="nm">城を攻む<span>しろをせむ / 力攻め</span></div><div class="ex">籠った敵の城を力攻め。当時は数ヶ月〜年単位、兵糧欠乏と疫病で攻め手が先に崩れた。<b>最長・最も死ぬ＝最下策。</b>現代なら「消耗の泥仕合」。</div></div><div class="cst"><div class="dots">●●●●</div><div class="lb">コスト最大</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">百戦百勝が「最善でない」理由 — 勝つほど痩せる</div>
+        <div class="q">勝利の回数は、そのまま消耗の回数。勝ち続ける名将が、国を滅ぼす。</div>
+        <div class="cite">「百戦百勝は善の善なる者に非ざるなり。戦わずして人の兵を屈するは、善の善なる者なり」— 謀攻篇（番組訳）</div>
+        <div class="asym">
+          <div class="col melt"><div class="h"><span class="ic">🏆</span>派手な全勝（消耗が積み上がる）</div><p>十万を動かせば<b>日に千金</b>。勝っても戻らない。百勝すれば百回分減る。勝ちに酔って、痩せていくのに気づかない。</p></div>
+          <div class="col gone"><div class="h"><span class="ic">🌿</span>戦わずの勝ち（痩せない）</div><p>危うくなる前に決着させるから<b>智名も無く、勇功も無い＝地味</b>。誰も気づかないが、兵も金も残る。名将は、危うくする前に勝つ。</p></div>
+        </div>
+        <div class="band-foot">派手な逆転劇は、危機を招いた失敗の産物。最高の勝ちは、誰も気づかない。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">百勝 ＝ 百消耗</div><div class="lb">勝った回数が、そのまま減った回数。だから「勝ち方」より先に「戦わずに済ませられないか」を問う。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>四段</em></div>
+          <p>隣に大手チェーンの安売り店が開店。<span class="now">値下げは「城攻め」＝最下策</span>——資本の厚い相手が最後に立つ土俵だ。まず上の段：常連の名と好み（謀）、地元の仕入れ・時間帯の住み分け（交）。相手が金で買えない土俵に、正面衝突ごと持ち込ませない。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 「攻めの四段」を下り階段の画にして、安い戦から順に選ぶ思考を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

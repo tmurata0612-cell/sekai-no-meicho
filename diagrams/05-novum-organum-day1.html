@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 ベーコンDay1 — 観察は介入に先行する</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .k{color:var(--calm);} .lead .p{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:540px; margin:0 auto;}
+  .art .b-obs{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.8;}
+  .art .b-act{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.8;}
+  .art .bt{font-family:var(--serif); font-weight:700; font-size:17px; text-anchor:middle;}
+  .art .bt-obs{fill:var(--calm);} .art .bt-act{fill:var(--seal);}
+  .art .bs{font-family:var(--sans); font-size:12px; text-anchor:middle; fill:var(--muted);}
+  .art .ordn{width:0;}
+  .art .num{font-family:var(--serif); font-weight:700; font-size:15px; text-anchor:middle;}
+  .art .numc-obs{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.5;} .art .numt-obs{fill:var(--calm);}
+  .art .numc-act{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.5;} .art .numt-act{fill:var(--seal);}
+  .art .ordarr{stroke:var(--heat); stroke-width:2.4; fill:none;} .art .ordarrh{fill:var(--heat);}
+  .art .ordlab{font-family:var(--sans); font-weight:700; font-size:11px; fill:var(--heat); text-anchor:middle;}
+  .art .banner{font-family:var(--serif); font-weight:700; font-size:14.5px; text-anchor:middle; fill:var(--heat);}
+  .art .grd{stroke:var(--faint); stroke-width:1.4; opacity:.6;}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:34px;height:34px;flex:none;border-radius:9px;background:var(--calm-soft);color:var(--calm);display:grid;place-items:center;font-family:var(--serif);font-size:16px; font-weight:700;}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;} .wu .txt .nm span{font-family:var(--sans); font-size:11px; color:var(--faint); font-weight:500; margin-left:6px;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 9%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .halves{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .halves .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .halves .col .h{font-size:12.5px; font-weight:700; display:flex; gap:7px; align-items:center;}
+  .halves .col.half1 .h{color:var(--faint);} .halves .col.half2 .h{color:var(--seal);}
+  .halves .col .ic{font-size:17px;}
+  .halves .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .halves .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(21px,4vw,30px); font-weight:600; line-height:1.14;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--calm); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--calm);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>従うことが、<br>征服に先立つ。</h1>
+      <p class="dek">「知は力なり」——だが皆、前半だけ覚えて後半を忘れる。<b>自然は「従う」ことでしか「征服」できない</b>。何かを変えたければ（力）、まずその仕組みに<b>従って観る</b>（知）。人間は自然の主人ではなく<b>下僕・解釈者</b>。観察した分だけしか、動かせない。</p>
+      <div class="source"><span class="seal">ノヴム・オルガヌム</span><span>ベーコン ・ Day1「観察は介入に先行する」第1巻 箴言1・3</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead"><span class="k">観察（知）</span>の土台の上にしか、<span class="p">介入（力）</span>は立たない。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 250" role="img" aria-label="下に観察（知）の土台、その上に介入（力）。順番は土台が先、力は後。従うことが征服に先立つ">
+          <text class="banner" x="260" y="24">従うことが、征服に先立つ</text>
+
+          <!-- order badges in the left gutter (outside the blocks) -->
+          <circle class="numc-act" cx="52" cy="75" r="15"/><text class="num numt-act" x="52" y="80">②</text>
+          <circle class="numc-obs" cx="52" cy="168" r="15"/><text class="num numt-obs" x="52" y="173">①</text>
+
+          <!-- 介入 block (top) -->
+          <rect class="b-act" x="92" y="44" width="286" height="62" rx="11"/>
+          <text class="bt bt-act" x="235" y="72">介入（力）</text>
+          <text class="bs" x="235" y="92">変える・征服する</text>
+
+          <!-- 観察 block (foundation) -->
+          <rect class="b-obs" x="92" y="132" width="352" height="72" rx="11"/>
+          <text class="bt bt-obs" x="268" y="162">観察（知）＝ 仕組みに従って観る</text>
+          <text class="bs" x="268" y="186">人間＝自然の下僕・解釈者（観た分だけ動かせる）</text>
+
+          <!-- order arrow (foundation -> structure) -->
+          <path class="ordarr" d="M478 190 L478 92"/><path class="ordarrh" d="M478 84 l-6 12 l12 0 Z"/>
+          <text class="ordlab" x="478" y="212">順番</text>
+
+          <!-- ground -->
+          <line class="grd" x1="74" y1="204" x2="462" y2="204"/>
+        </svg>
+        <div class="cap"><b>土台（観察）が先、力（介入）は後。</b>土台を飛ばして架けた橋は、落ちる。ただし観察は目的ではなく、力のための土台——<b>見て満足する評論家にも堕さない。</b></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">「従って観る」から、力が立つ — 三つの例</div>
+        <div class="wu"><div class="gi">火</div><div class="txt"><div class="nm">火を使う</div><div class="ex">「言うことを聞け」と命じても燃えない。<b>燃えるもの・酸素・温度という火の性質に従って</b>、はじめて火は働く。</div></div></div>
+        <div class="wu"><div class="gi">川</div><div class="txt"><div class="nm">川に橋を架ける</div><div class="ex">水をねじ伏せるのではなく、<b>水の流れの理に従って</b>架ける。相手の動きに従って観た上にしか、力は立たない。</div></div></div>
+        <div class="wu"><div class="gi">体</div><div class="txt"><div class="nm">病を治す</div><div class="ex">気合では治らない。<b>体の仕組みに従って</b>はじめて治せる。原因（仕組み）を知らずに加える力は、空回りする。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">「知は力なり」の、忘れられた後半</div>
+        <div class="q">みんな前半だけ覚えて、いちばん大事な後半を忘れる。自然は、従うことによってでなければ、征服されない。</div>
+        <div class="cite">「人間の知と力は、一つに合致する。……自然は、これに従うことによってでなければ、征服されない」— 第1巻 箴言3（番組訳）</div>
+        <div class="halves">
+          <div class="col half1"><div class="h"><span class="ic">🗡️</span>覚えられた前半</div><p>「知は力なり」＝知れば、<b>征服できる・支配できる</b>。ここだけが標語として一人歩きした。</p></div>
+          <div class="col half2"><div class="h"><span class="ic">🌿</span>忘れられた後半</div><p>その知は、自然に<b>「従って」観る</b>ことでしか得られない。ねじ伏せる前に、従って観よ。従うことが、征服に先立つ。</p></div>
+        </div>
+        <div class="band-foot">頭の中で世界を演繹する学者は自然の「主人」を気取る。ベーコンは「下僕・解釈者」へ引き戻す。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">土台が先、<br>力は後</div><div class="lb">観察は目的ではなく、力のための土台。土台を飛ばして架けた橋は落ちる。順番の話をしている。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>順番</em></div>
+          <p>うまく回らない現場に着任、早々「こう変えろ」と指示して回っても改善しない——。<span class="now">「変える」の前に、その現場が実際にどう動いているか</span>（人の動線・なぜ今のやり方なのか）に従って観る。多くの「非効率」には、観れば分かる理由がある。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 観察の土台の上に力が立つ積み木で、「従う→征服」の順番を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 ベーコンDay3 — 蟻と蜘蛛と蜜蜂</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--calm);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .p-a{fill:var(--panel); stroke:var(--faint); stroke-width:1.7;}
+  .art .p-b{fill:var(--calm-soft); stroke:var(--calm); stroke-width:2;}
+  .art .nm{font-family:var(--serif); font-weight:700; font-size:22px; text-anchor:middle;}
+  .art .nm-a{fill:var(--muted);} .art .nm-b{fill:var(--calm);}
+  .art .proc{font-family:var(--sans); font-size:12px; text-anchor:middle; fill:var(--ink);}
+  .art .verd{font-family:var(--serif); font-weight:700; font-size:12.5px; text-anchor:middle;}
+  .art .verd-a{fill:var(--faint);} .art .verd-b{fill:var(--calm);}
+  .art .rec{fill:var(--calm); font-family:var(--sans); font-weight:700; font-size:11px; text-anchor:middle;}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .g{color:var(--calm);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:34px;height:34px;flex:none;border-radius:9px;display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.a .gi{background:var(--panel-2);color:var(--faint);} .wu.s .gi{background:var(--panel-2);color:var(--faint);} .wu.b .gi{background:var(--calm-soft);color:var(--calm);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;} .wu .txt .nm span{font-family:var(--sans); font-size:11px; color:var(--faint); font-weight:500; margin-left:6px;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--calm) 12%, var(--panel)), var(--panel)); border:1px solid var(--calm); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--calm);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .halves{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .halves .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .halves .col .h{font-size:12.5px; font-weight:700; display:flex; gap:7px; align-items:center;}
+  .halves .col.stuck .h{color:var(--faint);} .halves .col.move .h{color:var(--calm);}
+  .halves .col .ic{font-size:17px;}
+  .halves .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .halves .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(21px,4vw,30px); font-weight:600; line-height:1.14;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--calm); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--calm);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>集めるだけでも、<br>こねるだけでも、いけない。</h1>
+      <p class="dek">知の作り方は三タイプ。<b>蟻</b>＝集めて溜めるだけ（経験論の極端）。<b>蜘蛛</b>＝自分の中身だけで巣を紡ぐ（独断論の極端）。<b>蜜蜂</b>＝花を集め、しかも自分の力で変え・消化する。集めることと考えることは、対立でなく<b>結婚</b>させるもの。</p>
+      <div class="source"><span class="seal">ノヴム・オルガヌム</span><span>ベーコン ・ Day3「蟻と蜘蛛と蜜蜂」第1巻 箴言95</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead"><span class="em">蜜蜂</span>だけが、集めて、そして自分の力で<span class="em">変換</span>する。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 190" role="img" aria-label="蟻＝集めて溜めるだけ、蜘蛛＝中身で紡ぐだけ、蜜蜂＝集めて変換して蜜。蜜蜂が経験と理性の結婚">
+          <!-- 蟻 -->
+          <rect class="p-a" x="16" y="30" width="156" height="142" rx="12"/>
+          <text class="nm nm-a" x="94" y="70">蟻</text>
+          <text class="proc" x="94" y="100">集める → 溜める</text>
+          <text class="proc" x="94" y="118" style="fill:var(--muted)">（だけ）</text>
+          <text class="verd verd-a" x="94" y="152">経験論の極端</text>
+
+          <!-- 蜘蛛 -->
+          <rect class="p-a" x="182" y="30" width="156" height="142" rx="12"/>
+          <text class="nm nm-a" x="260" y="70">蜘蛛</text>
+          <text class="proc" x="260" y="100">中身 → 巣を紡ぐ</text>
+          <text class="proc" x="260" y="118" style="fill:var(--muted)">（だけ・一払いで消える）</text>
+          <text class="verd verd-a" x="260" y="152">独断論の極端</text>
+
+          <!-- 蜜蜂 (recommended) -->
+          <rect class="p-b" x="348" y="30" width="156" height="142" rx="12"/>
+          <text class="rec" x="426" y="50">◎ これが「知」</text>
+          <text class="nm nm-b" x="426" y="80">蜜蜂</text>
+          <text class="proc" x="426" y="108">集める × 変換</text>
+          <text class="proc" x="426" y="126" style="fill:var(--calm)">→ 蜜</text>
+          <text class="verd verd-b" x="426" y="158">経験と理性の結婚</text>
+        </svg>
+        <div class="cap"><b>蟻は集めるだけ、蜘蛛は紡ぐだけ。蜜蜂は「集める × 変換」。</b><span class="g">外の素材（経験）を集め、自分の力（理性）で別のもの（蜜＝知）に変える。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">三匹の姿（現代）と、足りないもの</div>
+        <div class="wu a"><div class="gi">蟻</div><div class="txt"><div class="nm">蟻<span>集めるだけ</span></div><div class="ex">情報をひたすら保存・ブックマークするが、いつまでも自分の意見にならない。<b>足りないのは変換</b>（集めた素材に問いをぶつける）。</div></div></div>
+        <div class="wu s"><div class="gi">蛛</div><div class="txt"><div class="nm">蜘蛛<span>紡ぐだけ</span></div><div class="ex">本や現場に当たらず、持論だけで壮大に語る。理路整然だが検証に触れると崩れる。<b>足りないのは素材</b>（持論を壊す外の事実）。</div></div></div>
+        <div class="wu b"><div class="gi">蜂</div><div class="txt"><div class="nm">蜜蜂<span>集める×変換</span></div><div class="ex">資料を集め、仮説をぶつけ、合わなければ仮説を作り替え、また集め直す。<b>この往復が変換の実質</b>。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">変換の正体 — 持論を、壊させること</div>
+        <div class="q">蜜蜂は、外の花（事実）で、自分の中の蜜（持論）を、何度も作り替える。自分の蜜を否定する事実を、自分から探しにいく。</div>
+        <div class="cite">「その『当たり前』が、できていないから、私は本を一冊書いた」——ベーコン（番組・第1巻より）</div>
+        <div class="halves">
+          <div class="col stuck"><div class="h"><span class="ic">🕸️</span>往復しない（蟻・蜘蛛）</div><p>蟻は<b>壊すべき持論がない</b>。蜘蛛は<b>壊させる事実を入れない</b>。だから、どちらも同じ場所で止まる。</p></div>
+          <div class="col move"><div class="h"><span class="ic">🐝</span>往復する（蜜蜂）</div><p>集めた事実に持論を壊させ、壊れた持論でまた集め直す。<b>自分の考えを壊しにいくのは怖い</b>——だから勇気がいる（→Day4 否定事例）。</p></div>
+        </div>
+        <div class="band-foot">人は支持する事実ばかり集めたい（壊れてほしくない）から、放っておくと蜘蛛に傾く。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">集める<br>×<br>変換</div><div class="lb">集めることと考えることは、対立ではなく結婚。往復する一つの営みとして回す。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>蜜蜂</em></div>
+          <p>資料をブックマークしても自分の考えにならない（蟻化）なら、<span class="now">集めた素材に「自分はどう読むか／どんな仮説が立つか」を毎回ぶつける</span>。持論だけで語りがち（蜘蛛化）なら、その持論を壊しうる外の事実を、意図的に取りにいく。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 三匹の虫で、「集めるだけ／こねるだけ／集めて変換する」を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

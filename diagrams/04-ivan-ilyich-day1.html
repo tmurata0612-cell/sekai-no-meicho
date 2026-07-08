@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 イワンDay1 — 間違った壁の梯子</title>
+<style>
+  :root{
+    --ground:#E3E1D8; --panel:#EEEDE4; --panel-2:#E6E5DA;
+    --ink:#20211E; --muted:#5F625A; --faint:#83867C; --line:#C3C3B4; --line-soft:#D5D5C8;
+    --seal:#7A4A3E; --calm:#495A62; --heat:#8E7A3C;
+    --seal-soft:#EADFD9; --calm-soft:#DBE1E2; --heat-soft:#E9E3CF;
+    --earth:#B7AE9A; --earth-d:#8E856F; --sky-top:#E7E5DC; --sky-bot:#DEDDD3;
+    --shadow:0 1px 2px rgba(32,33,30,.06), 0 8px 24px -12px rgba(32,33,30,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#111210; --panel:#1B1C18; --panel-2:#212219; --ink:#E6E4D6; --muted:#9EA090; --faint:#83867A; --line:#34352C; --line-soft:#282922;
+      --seal:#C08A5E; --calm:#84979F; --heat:#BBA366; --seal-soft:#241A15; --calm-soft:#1A2326; --heat-soft:#262214;
+      --earth:#4E4A3E; --earth-d:#37342A; --sky-top:#141510; --sky-bot:#111210;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#111210; --panel:#1B1C18; --panel-2:#212219; --ink:#E6E4D6; --muted:#9EA090; --faint:#83867A; --line:#34352C; --line-soft:#282922;
+    --seal:#C08A5E; --calm:#84979F; --heat:#BBA366; --seal-soft:#241A15; --calm-soft:#1A2326; --heat-soft:#262214;
+    --earth:#4E4A3E; --earth-d:#37342A; --sky-top:#141510; --sky-bot:#111210;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E3E1D8; --panel:#EEEDE4; --panel-2:#E6E5DA; --ink:#20211E; --muted:#5F625A; --faint:#83867C; --line:#C3C3B4; --line-soft:#D5D5C8;
+    --seal:#7A4A3E; --calm:#495A62; --heat:#8E7A3C; --seal-soft:#EADFD9; --calm-soft:#DBE1E2; --heat-soft:#E9E3CF;
+    --earth:#B7AE9A; --earth-d:#8E856F; --sky-top:#E7E5DC; --sky-bot:#DEDDD3;
+    --shadow:0 1px 2px rgba(32,33,30,.06), 0 8px 24px -12px rgba(32,33,30,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:62ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+  .note{margin-top:18px; border-left:3px solid var(--calm); background:var(--panel); border-radius:0 10px 10px 0; padding:11px 16px; font-family:var(--serif); font-size:14px; color:var(--muted);} .note b{color:var(--ink);}
+
+  .diagram{margin-top:clamp(22px,4vw,34px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--sky-top),var(--sky-bot)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:520px; margin:0 auto;}
+  .art .wall-wrong{fill:var(--heat-soft); stroke:color-mix(in srgb,var(--heat) 45%,var(--line)); stroke-width:1.5;}
+  .art .brick{stroke:color-mix(in srgb,var(--heat) 30%,var(--line)); stroke-width:1; opacity:.5;}
+  .art .wall-right{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.4; stroke-dasharray:5 4; opacity:.6;}
+  .art .wall-tw{fill:var(--heat); font-family:var(--serif); font-weight:600; font-size:13px; text-anchor:middle; writing-mode:vertical-rl; text-orientation:upright;}
+  .art .wall-tr{fill:var(--calm); font-family:var(--serif); font-weight:600; font-size:11px; text-anchor:middle; opacity:.9; writing-mode:vertical-rl; text-orientation:upright;}
+  .art .rail{stroke:var(--earth-d); stroke-width:3.5; stroke-linecap:round;}
+  .art .rung{stroke:var(--earth-d); stroke-width:2.4; stroke-linecap:round;}
+  .art .fig{fill:var(--ink);} .art .fig-l{stroke:var(--ink); stroke-width:2.6; stroke-linecap:round; fill:none;}
+  .art .glow{fill:var(--seal); opacity:.10;}
+  .art .candle{fill:var(--panel); stroke:var(--earth-d); stroke-width:1.2;} .art .flame{fill:var(--heat);}
+  .art .q{fill:var(--faint); font-family:var(--serif); font-size:22px; font-weight:700; text-anchor:middle;}
+  .art .lbl{fill:var(--seal); font-family:var(--sans); font-size:11px; text-anchor:middle; font-weight:700;}
+  .art .guide{fill:var(--faint); font-family:var(--sans); font-size:11px; text-anchor:middle;}
+  .art .arw{stroke:var(--faint); stroke-width:1.6; fill:none; stroke-dasharray:4 3;} .art .arwh{fill:var(--faint);}
+  .art .void{stroke:var(--faint); stroke-width:1.4; stroke-dasharray:4 4;}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:10px 12px 4px;} .stage .cap b{color:var(--ink);}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 10%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(19px,3.3vw,26px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .band-foot{font-family:var(--serif); color:var(--seal); font-size:14.5px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:180px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(23px,4.2vw,32px); font-weight:600; line-height:1.1;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>登りきった梯子は、間違った壁に立てかけてあった。</h1>
+      <p class="dek">イワンは「正しく、体面よく」人生の梯子を全力で登った。だが死を前に気づく——<b>登る速さ</b>ではなく、<b>掛けた壁</b>が間違っていた。死の視点だけが、正しい壁を照らす。</p>
+      <div class="source"><span class="seal">イワン・イリイチの死</span><span>トルストイ ・ Day1「最も恐ろしい人生」第2章</span></div>
+      <div class="note">これは<b>筋を追う本ではない</b>。物語は主人公が<b>死んだところから始まる</b>——だから安心して、死の側から人生を眺められる。</div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">問題は「<span class="em">どれだけ登ったか</span>」ではない。「<span class="em">どの壁に掛けたか</span>」だ。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 460 340" role="img" aria-label="間違った壁に立てかけられた梯子を人が登りきっている。正しい壁は別にあり、根元の蝋燭がそれを照らす">
+          <!-- correct wall (faded, left) -->
+          <rect class="wall-right" x="58" y="112" width="48" height="188"/>
+          <text class="wall-tr" x="82" y="206">本物の物差し・憐れみ・真実</text>
+
+          <!-- wrong wall (right) -->
+          <rect class="wall-wrong" x="300" y="58" width="54" height="242"/>
+          <line class="brick" x1="300" y1="98" x2="354" y2="98"/><line class="brick" x1="300" y1="138" x2="354" y2="138"/>
+          <line class="brick" x1="300" y1="178" x2="354" y2="178"/><line class="brick" x1="300" y1="218" x2="354" y2="218"/>
+          <line class="brick" x1="300" y1="258" x2="354" y2="258"/>
+          <line class="brick" x1="327" y1="58" x2="327" y2="98"/><line class="brick" x1="327" y1="138" x2="327" y2="178"/><line class="brick" x1="327" y1="218" x2="327" y2="258"/>
+          <text class="wall-tw" x="327" y="179">世間の物差し・昇進・体面</text>
+
+          <!-- void above the wrong wall top -->
+          <line class="void" x1="300" y1="52" x2="360" y2="52"/>
+          <text class="q" x="332" y="38">？</text>
+          <text class="guide" x="332" y="20">登りきった、その先に…</text>
+
+          <!-- ladder on wrong wall -->
+          <line class="rail" x1="168" y1="300" x2="292" y2="90"/>
+          <line class="rail" x1="188" y1="300" x2="312" y2="90"/>
+          <line class="rung" x1="180" y1="279" x2="200" y2="279"/>
+          <line class="rung" x1="200" y1="249" x2="220" y2="249"/>
+          <line class="rung" x1="220" y1="219" x2="240" y2="219"/>
+          <line class="rung" x1="240" y1="189" x2="260" y2="189"/>
+          <line class="rung" x1="259" y1="159" x2="279" y2="159"/>
+          <line class="rung" x1="278" y1="129" x2="298" y2="129"/>
+
+          <!-- climbing figure near the top -->
+          <circle class="fig" cx="286" cy="120" r="6"/>
+          <path class="fig-l" d="M286 126 L284 146"/>
+          <path class="fig-l" d="M286 132 L272 138 M286 132 L300 128"/>
+          <path class="fig-l" d="M284 146 L274 160 M284 146 L296 158"/>
+
+          <!-- ground -->
+          <line x1="40" y1="300" x2="420" y2="300" stroke="var(--earth-d)" stroke-width="1.5" opacity=".6"/>
+
+          <!-- candle = 死の視点 -->
+          <circle class="glow" cx="150" cy="286" r="60"/>
+          <rect class="candle" x="145" y="282" width="10" height="20" rx="2"/>
+          <path class="flame" d="M150 268 Q145 276 150 282 Q155 276 150 268 Z"/>
+          <text class="lbl" x="150" y="320">死の視点</text>
+
+          <!-- pointer: the ladder should have been on the faded wall -->
+          <path class="arw" d="M164 296 Q132 300 112 276"/>
+          <path class="arwh" d="M108 282 L109 268 L119 275 Z"/>
+        </svg>
+        <div class="cap">全力で登った。だが梯子は<b>間違った壁</b>に。掛けるべきは、左に静かに佇む<b>本物の壁</b>だった——<b>死の一点</b>だけが、それを照らす。</div>
+      </div>
+
+      <div class="band">
+        <div class="tag">Day1の核心 — 死は脅しではなく、装置</div>
+        <div class="q">あの明るく、感じよく、体裁のよい人生こそが——まさに、問題だったのではないか。</div>
+        <div class="cite">— 物語の核（『イワン・イリイチの死』トルストイ・番組の趣意）</div>
+        <div class="band-foot">死の直視は、恐怖を煽る道具ではない。梯子を掛け替える——優先順位を本物へ組み替える装置だ。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">終わりから<br>逆算する</div><div class="lb">死の視点は、「速く登る」問いを、「正しい壁か」の問いに掛け替える。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>壁</em></div>
+          <p>今の忙しさ・見栄・「やるべき」は、<span class="now">人生の最後から見て、正しい壁か。</span>時々、終わりの側から今を眺める——メメント・モリの実務版。速く登ることより、掛ける壁を、まず確かめる。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 「掛ける壁を間違えた梯子」を絵にして、死の視点による優先順位の反転を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>
