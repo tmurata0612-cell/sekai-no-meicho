@@ -297,18 +297,14 @@ function diagramHTML(spec) {
 }
 
 function noteHTML(ep, app) {
+  // v2.1 レイアウト（2026-07-09 ユーザー決定）: 図解ファースト。
+  // 定義（1〜2文）→ 図解（直感の入口）→ メカニズム → 背景と事例 → 原典 →
+  // 使いどころ → 限界 → クイズ、の順で「直感で掴んでから深掘りへ降りる」流れにする。
   const n = ep.note;
   let h = "";
   h += `<section><h3>今日のフレーム</h3><p class="frame nf">${esc(ep.frame.name)}</p>
     <div class="lead">${richText(n.definition).replaceAll("\n", "<br>")}</div></section>`;
 
-  if (n.reading?.length) {
-    h += `<section><h3>原典を読む — 抄</h3><div class="genten">` +
-      n.reading.map(g => `<div class="g"><q>${esc(g.quote)}</q>${g.annotation ? `<span class="n">${richText(g.annotation)}</span>` : ""}</div>`).join("") +
-      `</div></section>`;
-  }
-  if (n.mechanism?.length) h += `<section><h3>メカニズム</h3>${listHTML(n.mechanism, "clean")}</section>`;
-  if (n.examples?.length) h += `<section><h3>事例</h3>${listHTML(n.examples, "clean")}</section>`;
   if (n.diagramFile) {
     // v2: 各話専用のインフォグラフィック（app/diagrams/<ep_id>.html）を iframe で描画。
     // 高さ・テーマは wireNote 内で同期する。
@@ -320,6 +316,14 @@ function noteHTML(ep, app) {
   } else if (n.diagram) {
     h += `<section><h3>図解</h3><pre class="zukai">${esc(n.diagram)}</pre>${n.diagramCaption ? `<p class="zukai-cap">${richText(n.diagramCaption)}</p>` : ""}</section>`;
   }
+  if (n.mechanism?.length) h += `<section><h3>メカニズム</h3>${listHTML(n.mechanism, "clean")}</section>`;
+  if (n.context?.length) h += `<section><h3>背景と事例</h3>${listHTML(n.context, "clean")}</section>`;
+  if (n.examples?.length) h += `<section><h3>事例</h3>${listHTML(n.examples, "clean")}</section>`;
+  if (n.reading?.length) {
+    h += `<section><h3>原典を読む — 抄</h3><div class="genten">` +
+      n.reading.map(g => `<div class="g"><q>${esc(g.quote)}</q>${g.annotation ? `<span class="n">${richText(g.annotation)}</span>` : ""}</div>`).join("") +
+      `</div></section>`;
+  }
   if (ep.crossover) {
     h += `<section><h3>この回の乱入ゲスト</h3><div class="xover">
       <p class="xo-who">${esc(ep.crossover.guestAuthor)}</p>
@@ -330,7 +334,6 @@ function noteHTML(ep, app) {
   if (n.useCasesTable) h += `<section><h3>使いどころ</h3>${tableHTML(n.useCasesTable)}</section>`;
   else if (n.useCases?.length) h += `<section><h3>使いどころ</h3>${listHTML(n.useCases, "clean")}</section>`;
   if (n.limits?.length) h += `<section><h3>限界・効かない条件</h3>${listHTML(n.limits, "clean")}</section>`;
-  if (n.context?.length) h += `<section><h3>時代背景</h3>${listHTML(n.context, "clean")}</section>`;
 
   // インストール確認（3択）
   if (n.install && n.install.question) {
