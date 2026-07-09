@@ -37,6 +37,18 @@ export function renderSettings(el, app) {
     </section>
 
     <section class="set">
+      <span class="set-label">毎日の習慣にする（通知）</span>
+      <div class="credits">
+        <p class="set-help">お使いのカレンダーに「毎日1話」の繰り返し予定を取り込む方式です（アプリからの通知と違いサーバ不要で確実。時刻は取り込み後にカレンダー側で自由に変更できます）。</p>
+        <div class="set-row" style="margin-top:8px">
+          <a class="btn" href="assets/habit/meicho-daily-2115.ics">毎晩 21:15 の予定を取り込む</a>
+          <a class="btn" href="assets/habit/meicho-weekday-0800.ics">平日朝 8:00 の予定を取り込む</a>
+        </div>
+        <p class="set-help" style="margin-top:8px">iPhone: リンクを開く →「カレンダーに追加」。さらに強力にするなら、ショートカットアプリの「オートメーション」で<b>「イヤホンに接続したとき → このサイトを開く」</b>を設定すると、歩き出してイヤホンを着けるだけで本棚が開きます。</p>
+      </div>
+    </section>
+
+    <section class="set">
       <span class="set-label">クレジット</span>
       <div class="credits">
         <p><b>音声合成</b>：VOICEVOX</p>
