@@ -24,4 +24,5 @@ export function audioUrlFor(ep) {
 // VOICEVOX 利用規約により必須のクレジット（使用話者すべて）。設定画面に表示する。
 export const VOICEVOX_CREDITS = [
   "九州そら", "白上虎太郎", "玄野武宏", "青山龍星", "麒ヶ島宗麟", "雀松朱司",
+  "黒沢冴白", "剣崎雌雄",
 ];

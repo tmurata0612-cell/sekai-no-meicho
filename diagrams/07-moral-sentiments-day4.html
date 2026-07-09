@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 スミスDay4 — 梯子と機械（想像の欺きと見えざる手）</title>
+<style>
+  :root{
+    --ground:#E7E5DE; --panel:#F2F0E8; --panel-2:#EAE8DE;
+    --ink:#1E2024; --muted:#5A5E66; --faint:#83868C; --line:#C6C4BA; --line-soft:#D8D6CC;
+    --seal:#4A6A80; --calm:#5E7E64; --heat:#A86B3C;
+    --seal-soft:#DEE5EA; --calm-soft:#DFE7DF; --heat-soft:#EDE0CF;
+    --shadow:0 1px 2px rgba(30,32,36,.06), 0 8px 24px -12px rgba(30,32,36,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#101318; --panel:#191D23; --panel-2:#1F242B; --ink:#E5E8ED; --muted:#9AA0A9; --faint:#7B818A; --line:#323841; --line-soft:#262C34;
+      --seal:#89ADC6; --calm:#8FB08C; --heat:#CBA267; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#101318; --panel:#191D23; --panel-2:#1F242B; --ink:#E5E8ED; --muted:#9AA0A9; --faint:#7B818A; --line:#323841; --line-soft:#262C34;
+    --seal:#89ADC6; --calm:#8FB08C; --heat:#CBA267; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E7E5DE; --panel:#F2F0E8; --panel-2:#EAE8DE; --ink:#1E2024; --muted:#5A5E66; --faint:#83868C; --line:#C6C4BA; --line-soft:#D8D6CC;
+    --seal:#4A6A80; --calm:#5E7E64; --heat:#A86B3C; --seal-soft:#DEE5EA; --calm-soft:#DFE7DF; --heat-soft:#EDE0CF;
+    --shadow:0 1px 2px rgba(30,32,36,.06), 0 8px 24px -12px rgba(30,32,36,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--heat);} .lead .em2{color:var(--calm);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .ground-l{stroke:var(--line); stroke-width:1.4;}
+  .art .rail{fill:none; stroke:var(--seal); stroke-width:2.2; stroke-linecap:round;}
+  .art .rung{stroke:var(--seal); stroke-width:1.6;}
+  .art .person{fill:var(--faint);}
+  .art .mirage{fill:none; stroke:var(--faint); stroke-width:1.4; stroke-dasharray:4 4;}
+  .art .gear{fill:var(--panel-2); stroke:var(--heat); stroke-width:1.8;}
+  .art .tooth{stroke:var(--heat); stroke-width:2; stroke-linecap:round;}
+  .art .hole{fill:var(--ground);}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:13px; fill:var(--ink);}
+  .art .lab.h{fill:var(--heat);} .art .lab.s{fill:var(--seal);}
+  .art .sub{font-family:var(--sans); font-size:11px; fill:var(--muted);}
+
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--heat);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--heat-soft);color:var(--heat);} .wu.fix .gi{background:var(--seal-soft);color:var(--seal);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--calm) 9%, var(--panel)), var(--panel)); border:1px solid var(--calm); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--calm);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .halves{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .halves .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .halves .col .h{font-size:12.5px; font-weight:700; display:flex; gap:7px; align-items:center; color:var(--calm);}
+  .halves .col .ic{font-size:17px;}
+  .halves .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .halves .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--heat); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--heat);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>登るほど、宮殿は<br>「手のかかる機械」に見える。</h1>
+      <p class="dek">富と地位の魅力の正体は「便利さ」ではなく、<b>「便利そうに見える秩序の美しさ」への想像上の恋</b>（想像の欺き）。梯子を登りきった老年で、宮殿はただの手のかかる機械だったと分かる。だがこの欺きが人を働かせ、めぐりめぐって<b>社会全体に富を分配する</b>——見えざる手。同じ野心が、二つの顔を持つ。</p>
+      <div class="source"><span class="seal">道徳感情論</span><span>アダム・スミス ・ Day4「想像の欺きと見えざる手」第4部第1章</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">個人には<span class="em">割に合わない幻想</span>。だが社会には、<span class="em2">富を回す動力</span>。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 560 250" role="img" aria-label="貧しい男の息子が梯子を登り、上にある蜃気楼の宮殿を目指す。宮殿は近づくほど、歯車でできた手のかかる機械の姿に変わる">
+          <!-- 地面 -->
+          <line class="ground-l" x1="30" y1="218" x2="330" y2="218"/>
+          <!-- 梯子 -->
+          <path class="rail" d="M74 214 L292 66"/>
+          <path class="rail" d="M100 222 L318 74"/>
+          <line class="rung" x1="86" y1="203" x2="107" y2="211"/>
+          <line class="rung" x1="120" y1="180" x2="141" y2="188"/>
+          <line class="rung" x1="154" y1="157" x2="175" y2="165"/>
+          <line class="rung" x1="188" y1="134" x2="209" y2="142"/>
+          <line class="rung" x1="222" y1="111" x2="243" y2="119"/>
+          <line class="rung" x1="256" y1="88" x2="277" y2="96"/>
+          <!-- 登る息子 -->
+          <circle class="person" cx="176" cy="150" r="10"/>
+          <path class="person" d="M162 176 Q176 152 190 176 Z"/>
+          <text class="lab" x="60" y="240">貧しい男の息子（登る）</text>
+
+          <!-- 蜃気楼の宮殿（点線）＝機械（歯車） -->
+          <path class="mirage" d="M360 90 L410 62 L460 90"/>
+          <line class="mirage" x1="368" y1="90" x2="368" y2="132"/>
+          <line class="mirage" x1="452" y1="90" x2="452" y2="132"/>
+          <line class="mirage" x1="360" y1="132" x2="460" y2="132"/>
+          <!-- 歯車1 -->
+          <line class="tooth" x1="404" y1="80" x2="404" y2="112"/>
+          <line class="tooth" x1="384" y1="96" x2="424" y2="96"/>
+          <line class="tooth" x1="390" y1="82" x2="418" y2="110"/>
+          <line class="tooth" x1="418" y1="82" x2="390" y2="110"/>
+          <circle class="gear" cx="404" cy="96" r="17"/>
+          <circle class="hole" cx="404" cy="96" r="5"/>
+          <!-- 歯車2 -->
+          <line class="tooth" x1="440" y1="102" x2="440" y2="126"/>
+          <line class="tooth" x1="428" y1="114" x2="452" y2="114"/>
+          <circle class="gear" cx="440" cy="114" r="12"/>
+          <circle class="hole" cx="440" cy="114" r="3.5"/>
+
+          <text class="lab h" x="344" y="46">蜃気楼の宮殿</text>
+          <text class="sub" x="344" y="62">＝ 手のかかる機械</text>
+        </svg>
+        <div class="cap"><b>宮殿だと思って登るほど、それはただの「手のかかる機械」だと分かってくる。便宜はわずか、維持の手間は莫大。</b><span class="r">処方＝「便利さ」への出費か「便利そうに見える美しさ」への恋か、を仕分ける。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">野心を、二つの帳簿で見る</div>
+        <div class="wu fix"><div class="gi">恋</div><div class="txt"><div class="nm">恋の対象＝秩序の美しさ</div><div class="ex">人が恋しているのは便宜ではなく、整然と組み合わさった仕組みの<b>「美しさ」</b>。だから成就せず、手に入れれば「手のかかる機械」だったと分かる（懐中時計を買い替え続けるのと同じ）。</div></div></div>
+        <div class="wu miss"><div class="gi">個</div><div class="txt"><div class="nm">個人の会計＝割に合わない</div><div class="ex">得る便宜は身体にわずか、守り維持する手間は莫大。<b>代償（健康・時間・平静）は老年の床にまとめて請求</b>される。若い頃には見えない請求書。</div></div></div>
+        <div class="wu hit"><div class="gi">社</div><div class="txt"><div class="nm">社会の会計＝富を回す動力</div><div class="ex">金持ちの胃袋にも限りがある。幻想を追って蓄えた富は、<b>彼のために働く人々へ分配</b>されていく（見えざる手）。個人には幻想でも、全体には推進力。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">俯瞰すると — 見えざる手</div>
+        <div class="q">一人の幻想の追求が、めぐりめぐって、畑を耕し、家を建て、都市を築く。</div>
+        <div class="cite">第4部第1章（番組訳・『道徳感情論』での初出）— 蓄えた富は、彼のために働く人々へ分配されていく</div>
+        <div class="halves">
+          <div class="col"><div class="h"><span class="ic">🏗️</span>虚栄が、生計になる</div><p>豪邸を建てれば大工が、馬車を仕立てれば職人が、宴を開けば料理人が食べていける。<b>本人が意図せずとも</b>、富は配られる。</p></div>
+          <div class="col"><div class="h"><span class="ic">🔀</span>意図と結果が、ずれる</div><p>善意で世界がよくなるとは限らず、<b>虚栄で世界が回ることもある</b>。同じ野心が、個人の幸福と社会の仕組みで、別の顔を持つ。</p></div>
+        </div>
+        <div class="band-foot">「登るな」でも「登れ」でもない。請求書を先に机に置くだけ。知って登るのと、知らずに登るのは、同じ坂でもまったく違う。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">便利さか、<br>便利そうに見える<br>美しさへの恋か</div><div class="lb">恋の分には、老年の請求書（維持費・気苦労）が付く。仕分けて、知って払うなら自由。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>アップグレード</em></div>
+          <p>収入が増えるたびに住まいや車のグレードを上げ、次の昇給も次の原資に当てにしている。<span class="now">その出費が「便利さ」への投資か「美しさへの恋」かを仕分けてから、次の一手を決める</span>。混ぜたまま進むと、手のかかる機械を増やし続け、請求書に気づくのが老年になる。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 蜃気楼の宮殿へ架かる梯子と、機械に化ける宮殿で、想像の欺きと見えざる手を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 パースDay1 — 疑念のエンジン</title>
+<style>
+  :root{
+    --ground:#E5E7E2; --panel:#F1F2ED; --panel-2:#E8EAE4;
+    --ink:#1C2027; --muted:#586069; --faint:#828A93; --line:#C2C6BF; --line-soft:#D5D8D1;
+    --seal:#356B7A; --calm:#587B54; --heat:#AE7134;
+    --seal-soft:#D6E4E7; --calm-soft:#DEE7DA; --heat-soft:#EEE1CD;
+    --shadow:0 1px 2px rgba(28,32,39,.06), 0 8px 24px -12px rgba(28,32,39,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0E1114; --panel:#171B1F; --panel-2:#1D2228; --ink:#E3E7EA; --muted:#98A0A8; --faint:#79828B; --line:#2F353B; --line-soft:#242A30;
+      --seal:#71A9BA; --calm:#8AAE80; --heat:#C9A25E; --seal-soft:#14262B; --calm-soft:#17251A; --heat-soft:#271F12;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0E1114; --panel:#171B1F; --panel-2:#1D2228; --ink:#E3E7EA; --muted:#98A0A8; --faint:#79828B; --line:#2F353B; --line-soft:#242A30;
+    --seal:#71A9BA; --calm:#8AAE80; --heat:#C9A25E; --seal-soft:#14262B; --calm-soft:#17251A; --heat-soft:#271F12;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E5E7E2; --panel:#F1F2ED; --panel-2:#E8EAE4; --ink:#1C2027; --muted:#586069; --faint:#828A93; --line:#C2C6BF; --line-soft:#D5D8D1;
+    --seal:#356B7A; --calm:#587B54; --heat:#AE7134; --seal-soft:#D6E4E7; --calm-soft:#DEE7DA; --heat-soft:#EEE1CD;
+    --shadow:0 1px 2px rgba(28,32,39,.06), 0 8px 24px -12px rgba(28,32,39,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .lane{fill:var(--panel-2); stroke:var(--line-soft); stroke-width:1;}
+  .art .st{fill:var(--panel); stroke:var(--seal); stroke-width:1.6;}
+  .art .st-calm{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.6;}
+  .art .flow{stroke:var(--seal); stroke-width:2.2; fill:none;}
+  .art .flow-h{fill:var(--seal);}
+  .art .ret{stroke:var(--heat); stroke-width:2; fill:none; stroke-dasharray:6 4;}
+  .art .ret-h{fill:var(--heat);}
+  .art .spark{stroke:var(--heat); stroke-width:2; stroke-linecap:round;}
+  .art .nm{font-family:var(--serif); font-weight:700; font-size:16px; text-anchor:middle; fill:var(--ink);}
+  .art .sub{font-family:var(--sans); font-size:11.5px; text-anchor:middle; fill:var(--muted);}
+  .art .title{font-family:var(--serif); font-weight:600; font-size:13px; text-anchor:middle; fill:var(--muted);}
+  .art .ret-l{font-family:var(--sans); font-size:12px; text-anchor:middle; fill:var(--heat); font-weight:600;}
+  .art .idle{font-family:var(--sans); font-size:12px; text-anchor:middle; fill:var(--faint); font-weight:600;}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.a .gi{background:var(--seal-soft);color:var(--seal);} .wu.b .gi{background:var(--calm-soft);color:var(--calm);} .wu.c .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 9%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .halves{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .halves .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .halves .col .h{font-size:12.5px; font-weight:700; display:flex; gap:7px; align-items:center;}
+  .halves .col.bad .h{color:var(--faint);} .halves .col.good .h{color:var(--seal);}
+  .halves .col .ic{font-size:17px;}
+  .halves .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .halves .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>考えは、<br>火花からしか始まらない。</h1>
+      <p class="dek">滑らかに回る歯車を、人はいちいち見ない。<b>引っかかって、はじめて見る</b>。その引っかかり＝疑念という苛立ち（火花）が、探究というピストンを動かし、信念という巡航へ戻す。火花が飛ばないなら、それは賢いのではなく——<b>疑っていない＝考えていない</b>。</p>
+      <div class="source"><span class="seal">科学の論理の例解</span><span>パース ・ Day1「探究は本物の疑いから始まる」「信念の固定」1877年</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">疑念（火花）→ 探究（もがく）→ 信念（巡航）。<span class="em">火花が飛ばなければ、回らない。</span></div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 250" role="img" aria-label="思考のエンジン。疑念という火花が探究のピストンを動かし信念という巡航へ戻す循環。歯車が引っかかると再点火する。火花が飛ばなければ回らない＝疑っていない＝考えていない">
+          <text class="title" x="260" y="20">思考のエンジン ── 火花・ピストン・巡航</text>
+
+          <!-- return arc (re-ignition) -->
+          <path class="ret" d="M434 104 C 434 60, 86 60, 92 100"/>
+          <path class="ret-h" d="M92 100 l-6 -9 l11 1 Z"/>
+          <text class="ret-l" x="260" y="52">歯車が引っかかると、再点火（新しい疑念）</text>
+
+          <!-- spark over station A -->
+          <line class="spark" x1="86" y1="98" x2="79" y2="88"/>
+          <line class="spark" x1="86" y1="98" x2="86" y2="85"/>
+          <line class="spark" x1="86" y1="98" x2="93" y2="88"/>
+
+          <!-- stations -->
+          <rect class="st" x="20" y="104" width="132" height="64" rx="12"/>
+          <text class="nm" x="86" y="134">疑念</text>
+          <text class="sub" x="86" y="154">苛立ち・火花</text>
+
+          <rect class="st" x="194" y="104" width="132" height="64" rx="12"/>
+          <text class="nm" x="260" y="134">探究</text>
+          <text class="sub" x="260" y="154">もがく</text>
+
+          <rect class="st-calm" x="368" y="104" width="132" height="64" rx="12"/>
+          <text class="nm" x="434" y="134">信念</text>
+          <text class="sub" x="434" y="154">なめらかに巡航</text>
+
+          <!-- horizontal flows -->
+          <line class="flow" x1="156" y1="136" x2="186" y2="136"/>
+          <path class="flow-h" d="M190 136 l-9 -5 l0 10 Z"/>
+          <line class="flow" x1="330" y1="136" x2="360" y2="136"/>
+          <path class="flow-h" d="M364 136 l-9 -5 l0 10 Z"/>
+
+          <!-- idle lane -->
+          <rect class="lane" x="20" y="192" width="480" height="30" rx="8"/>
+          <text class="idle" x="260" y="211">火花が飛ばなければ、回らない ＝ 疑っていない ＝ 考えていない</text>
+        </svg>
+        <div class="cap"><b>信念は、なめらかに回っている間は、見えない。</b><span class="r">処方＝「何も気にならない」ときこそ、探究が眠っているサインだと疑う。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">エンジンの、3つの怖い真実</div>
+        <div class="wu a"><div class="gi">検</div><div class="txt"><div class="nm">信念は「中身」では検品できない</div><div class="ex">正しい信念も誤った信念も、<b>本人の内側からは同じ手ざわり</b>。だから質は中身では測れず、「どう固めたか」＝方法だけが分ける（Day2への扉）。</div></div></div>
+        <div class="wu b"><div class="gi">意</div><div class="txt"><div class="nm">疑いは、意志では起こせない</div><div class="ex">デカルト流「まず全てを疑え」は紙の上の疑い。書斎で火を疑う者も、台所では<b>火傷を避けて鍋を掴む</b>。本物の疑いは現実に噛みつかれて生じる。</div></div></div>
+        <div class="wu c"><div class="gi">順</div><div class="txt"><div class="nm">順調な観測記録は、思考を呼ばない</div><div class="ex">振り子の周期が昨日と違う数字を出した瞬間にだけ、測定者は釘づけになる。<b>「引っかかり」だけが、思考の入口</b>。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">同じ疑いでも、行き先が違う — 抱えるか、載せるか</div>
+        <div class="q">疑念という苛立ちが、信念に達しようとする闘いを引き起こす。私はこの闘いを、探究と呼ぶ。</div>
+        <div class="cite">「信念の固定」1877年（番組訳）— 原語 irritation は、虫に刺された、あのむず痒さと同じ言葉</div>
+        <div class="halves">
+          <div class="col bad"><div class="h"><span class="ic">🌀</span>疑いを、抱える</div><p>夜中に何度も鍵を確かめ、それでも安心しない。<b>苛立ちを、増やしているだけ</b>。抱える者は、苦しみ続ける。</p></div>
+          <div class="col good"><div class="h"><span class="ic">🧪</span>疑いを、載せる</div><p>玄関に札を下げ、かけたら裏返す。<b>苛立ちを、明日の答えに変える</b>。載せる者は、駅から戻らなくていい。</p></div>
+        </div>
+        <div class="band-foot">苛立ちを、段取りに落とす。それが、探究者の睡眠薬。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">それは<br>「本物の疑い」か?<br>ただの「音」か?</div><div class="lb">掻きたい苛立ちがまだ残っているか。何年も同じ言葉で足りているなら、そこに疑いはもう無い。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>ずっと気になっていること</em></div>
+          <p>「うちの子は算数が苦手だ」と何年も言うのに、どの単元でいつからつまずいたかは調べていない——<span class="now">「苦手」はもう疑念ではなく、固まった信念</span>。掻きたい苛立ちが消え、探究のエンジンが一度も点火していない。確かめる仕組みに載せて、初めて火花が飛ぶ。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 火花・ピストン・巡航のエンジンで、探究は本物の疑いから始まると一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -347,6 +347,339 @@
           "crossover": false
         }
       ]
+    },
+    {
+      "slug": "06-de-brevitate",
+      "title": "人生の短さについて",
+      "author": "セネカ",
+      "genre": "哲学・政治思想",
+      "genreKey": "philosophy",
+      "totalDays": 3,
+      "portrait": "assets/portraits/06-de-brevitate.jpg",
+      "portraitCredit": "セネカ（ルーベンス画「瀕死のセネカ」部分、1612–1613年）Wikimedia Commons／パブリックドメイン（PD-Art, PD-old-100）",
+      "titleLines": [
+        "人生の短さ",
+        "について"
+      ],
+      "days": [
+        {
+          "id": "06-de-brevitate-day1",
+          "day": 1,
+          "title": "人生は短くない——使い方を知らないだけ",
+          "kind": [
+            "author-intro"
+          ],
+          "kindLabel": "著者登場回",
+          "frameName": "人生は短くない——使い方を知らないだけ",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "06-de-brevitate-day2",
+          "day": 2,
+          "title": "時間の帳簿——金は守るのに、時間は配って歩く",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "時間の帳簿——金は守るのに、時間は配って歩く",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "06-de-brevitate-day3",
+          "day": 3,
+          "title": "『いつか生きる』は今日を捨てる——先送りとの決着",
+          "kind": [
+            "rebuttal",
+            "practice"
+          ],
+          "kindLabel": "反論特集＋実戦適用回・卒業回",
+          "frameName": "「いつか生きる」は今日を捨てる——先送りとの決着",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
+    },
+    {
+      "slug": "07-moral-sentiments",
+      "title": "道徳感情論",
+      "author": "アダム・スミス",
+      "genre": "経済・社会",
+      "genreKey": "economy",
+      "totalDays": 6,
+      "portrait": "assets/portraits/07-moral-sentiments.jpg",
+      "portraitCredit": "アダム・スミス「ミュア肖像」（作者不詳、1800年頃）Wikimedia Commons／パブリックドメイン",
+      "titleLines": [
+        "道徳感情論"
+      ],
+      "days": [
+        {
+          "id": "07-moral-sentiments-day1",
+          "day": 1,
+          "title": "経済学の父は、まず『共感』を書いた",
+          "kind": [
+            "author-intro"
+          ],
+          "kindLabel": "著者登場回",
+          "frameName": "共感",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "07-moral-sentiments-day2",
+          "day": 2,
+          "title": "公平な観察者——胸の内に裁判官を育てる",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "公平な観察者",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "07-moral-sentiments-day3",
+          "day": 3,
+          "title": "『称賛される』より『称賛に値する』",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "称賛される／称賛に値する",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "07-moral-sentiments-day4",
+          "day": 4,
+          "title": "貧しい男の息子——野心という『想像の欺き』と見えざる手",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "想像の欺きと見えざる手",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "07-moral-sentiments-day5",
+          "day": 5,
+          "title": "公開質問——共感の射程と『アダム・スミス問題』",
+          "kind": [
+            "rebuttal"
+          ],
+          "kindLabel": "反論特集回",
+          "frameName": "共感",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "07-moral-sentiments-day6",
+          "day": 6,
+          "title": "四つの道具の使い分けと、焼かれた原稿",
+          "kind": [
+            "practice"
+          ],
+          "kindLabel": "実戦適用回・卒業回",
+          "frameName": "『道徳感情論』使い分けマップ",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
+    },
+    {
+      "slug": "09-macbeth",
+      "title": "マクベス",
+      "author": "シェイクスピア",
+      "genre": "文学",
+      "genreKey": "literature",
+      "totalDays": 4,
+      "portrait": "assets/portraits/09-macbeth.jpg",
+      "portraitCredit": "シェイクスピア「チャンドス肖像」（ジョン・テイラー作とされる、17世紀初頭）Wikimedia Commons／パブリックドメイン（PD-Art, PD-old-100）",
+      "titleLines": [
+        "マクベス"
+      ],
+      "days": [
+        {
+          "id": "09-macbeth-day1",
+          "day": 1,
+          "title": "予言は『当たる』のではない、『動かす』のだ",
+          "kind": [
+            "author-intro"
+          ],
+          "kindLabel": "著者登場回",
+          "frameName": "予言は「当たる」のではない、「動かす」のだ",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "09-macbeth-day2",
+          "day": 2,
+          "title": "跳びすぎる野心——動機の点検に自分で失敗する",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "跳びすぎる野心——動機の点検に自分で失敗する",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "09-macbeth-day3",
+          "day": 3,
+          "title": "血の川の真ん中——『戻るのも渡るのも同じ手間』という錯覚",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "血の川の真ん中——「戻るのも渡るのも同じ手間」という錯覚",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "09-macbeth-day4",
+          "day": 4,
+          "title": "音と怒りに満ちて——公開質問と、作者自身の忖度",
+          "kind": [
+            "rebuttal",
+            "practice"
+          ],
+          "kindLabel": "反論特集＋実戦適用回・卒業回",
+          "frameName": "「音と怒りに満ちて、意味は何もない」は結論ではなく請求書",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
+    },
+    {
+      "slug": "10-discours",
+      "title": "方法序説",
+      "author": "デカルト",
+      "genre": "哲学・政治思想",
+      "genreKey": "philosophy",
+      "totalDays": 4,
+      "portrait": "assets/portraits/10-discours.jpg",
+      "portraitCredit": "ルネ・デカルト肖像（フランス・ハルス原画に基づく、1649年頃）Wikimedia Commons／パブリックドメイン（PD-Art, PD-old-100）",
+      "titleLines": [
+        "方法序説"
+      ],
+      "days": [
+        {
+          "id": "10-discours-day1",
+          "day": 1,
+          "title": "頭の良さは配られている——差がつくのは導き方",
+          "kind": [
+            "author-intro"
+          ],
+          "kindLabel": "著者登場回",
+          "frameName": "頭の良さは配られている——差がつくのは「導き方」",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "10-discours-day2",
+          "day": 2,
+          "title": "困難は分割せよ——4つの規則",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "困難は分割せよ——4つの規則",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "10-discours-day3",
+          "day": 3,
+          "title": "方法的懐疑——全部疑って、残る一点から建て直す",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "方法的懐疑——全部疑って、残る一点から建て直す",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "10-discours-day4",
+          "day": 4,
+          "title": "仮の道徳と、計算ずくの臆病——森の旅人",
+          "kind": [
+            "rebuttal",
+            "practice"
+          ],
+          "kindLabel": "反論特集＋実戦適用回・卒業回",
+          "frameName": "森の旅人の歩き方——仮の決断",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
+    },
+    {
+      "slug": "11-peirce",
+      "title": "科学の論理の例解",
+      "author": "パース",
+      "genre": "科学哲学",
+      "genreKey": "sciphil",
+      "totalDays": 4,
+      "portrait": "assets/portraits/11-peirce.jpg",
+      "portraitCredit": "チャールズ・S・パース（ナポレオン・サロニー撮影、1891年）Wikimedia Commons／パブリックドメイン（PD-old）",
+      "titleLines": [
+        "科学の論理の",
+        "例解"
+      ],
+      "days": [
+        {
+          "id": "11-peirce-day1",
+          "day": 1,
+          "title": "探究は『本物の疑い』から始まる",
+          "kind": [
+            "author-intro"
+          ],
+          "kindLabel": "著者登場回",
+          "frameName": "探究は「本物の疑い」から始まる",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "11-peirce-day2",
+          "day": 2,
+          "title": "信念を固める、4つの方法",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "信念を固める4つの方法——固執・権威・ア・プリオリ・科学",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "11-peirce-day3",
+          "day": 3,
+          "title": "豆の袋と、内陸の魚——アブダクション",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "アブダクション——驚きから、最良の説明への跳躍",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "11-peirce-day4",
+          "day": 4,
+          "title": "実践的効果で、考えを磨く",
+          "kind": [
+            "rebuttal",
+            "practice"
+          ],
+          "kindLabel": "反論特集＋実戦適用回・卒業回",
+          "frameName": "プラグマティズムの格率——実践的効果で考えを磨く",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
     }
   ]
 }

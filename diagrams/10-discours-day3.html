@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 方法序説Day3 — 疑いの解体工事</title>
+<style>
+  :root{
+    --ground:#E5E4DF; --panel:#F1F0EA; --panel-2:#E9E8E1;
+    --ink:#1C1F24; --muted:#585D64; --faint:#80858C; --line:#C5C4BB; --line-soft:#D6D5CC;
+    --seal:#3E5670; --calm:#4F7A64; --heat:#A8703A;
+    --seal-soft:#DDE2E8; --calm-soft:#DDE6DF; --heat-soft:#ECE1CF;
+    --shadow:0 1px 2px rgba(28,31,36,.06), 0 8px 24px -12px rgba(28,31,36,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#101317; --panel:#181C22; --panel-2:#1E232B; --ink:#E3E6EB; --muted:#9AA0A9; --faint:#7B818A; --line:#31363F; --line-soft:#262B33;
+      --seal:#82A6C6; --calm:#83AE8E; --heat:#CBA163; --seal-soft:#162430; --calm-soft:#18261D; --heat-soft:#271F12;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#101317; --panel:#181C22; --panel-2:#1E232B; --ink:#E3E6EB; --muted:#9AA0A9; --faint:#7B818A; --line:#31363F; --line-soft:#262B33;
+    --seal:#82A6C6; --calm:#83AE8E; --heat:#CBA163; --seal-soft:#162430; --calm-soft:#18261D; --heat-soft:#271F12;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E5E4DF; --panel:#F1F0EA; --panel-2:#E9E8E1; --ink:#1C1F24; --muted:#585D64; --faint:#80858C; --line:#C5C4BB; --line-soft:#D6D5CC;
+    --seal:#3E5670; --calm:#4F7A64; --heat:#A8703A; --seal-soft:#DDE2E8; --calm-soft:#DDE6DF; --heat-soft:#ECE1CF;
+    --shadow:0 1px 2px rgba(28,31,36,.06), 0 8px 24px -12px rgba(28,31,36,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .crane{stroke:var(--muted); stroke-width:2; fill:none; stroke-linecap:round;}
+  .art .slab{fill:var(--panel); stroke:var(--faint); stroke-width:1.4; stroke-dasharray:5 4;}
+  .art .rock{fill:var(--panel-2); stroke:var(--line); stroke-width:1.4;}
+  .art .stake{fill:var(--seal); stroke:var(--seal);}
+  .art .step{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.4;}
+  .art .up{stroke:var(--calm); stroke-width:2.2; fill:none; stroke-linecap:round;}
+  .art .ah{fill:var(--calm);}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle;}
+  .art .lab.f{fill:var(--faint);} .art .lab.k{fill:var(--seal);} .art .lab.g{fill:var(--calm);} .art .lab.h{fill:var(--heat);}
+  .art .sub{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--muted);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .duo{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px;}
+  @media (max-width:520px){ .duo{grid-template-columns:1fr;} }
+  .du{border:1px solid var(--line); border-radius:12px; padding:13px 15px; box-shadow:var(--shadow);}
+  .du.good{background:var(--calm-soft);} .du.bad{background:var(--panel);}
+  .du .h{font-family:var(--serif); font-weight:600; font-size:15px;} .du.good .h{color:var(--calm);} .du.bad .h{color:var(--heat);}
+  .du p{margin:4px 0 0; font-size:12.5px; color:var(--muted);} .du p b{color:var(--ink);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--heat-soft);color:var(--heat);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.keep .gi{background:var(--calm-soft);color:var(--calm);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;} .wu .txt .nm span{font-family:var(--sans); font-size:11px; color:var(--faint); font-weight:500; margin-left:6px;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--calm) 9%, var(--panel)), var(--panel)); border:1px solid var(--calm); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--calm);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:16px; align-items:stretch;}
+  @media (max-width:640px){ .steps{grid-template-columns:1fr 1fr;} }
+  .stp{background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:11px 12px;}
+  .stp .n{font-family:var(--serif); font-weight:700; color:var(--calm); font-size:13px;}
+  .stp p{margin:3px 0 0; font-size:12.5px; color:var(--muted); line-height:1.5;} .stp p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s} .diagram>*:nth-child(5){animation-delay:.18s} .diagram>*:nth-child(6){animation-delay:.24s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>全部を疑って、<br>残る一点から。</h1>
+      <p class="dek">確実な土台を得るための<b>「道具としての懐疑」</b>。感覚は時に騙し、夢と現実は見分けがたく、計算すら疑いうる——だから<b>「少しでも疑えるものは偽」</b>を徹底し、床を一枚ずつ剥がし切る。崩壊の底に一つだけ残るのが<b>「疑っている私」（我思う、ゆえに我あり）</b>。懐疑は目的でなく<b>工事</b>——更地にするのは、建てるためだ。</p>
+      <div class="source"><span class="seal">方法序説</span><span>デカルト ・ Day3「方法的懐疑」第4部</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">床を一枚ずつ剥がし、崩壊の底に残る<span class="em">一本の杭</span>から建て直す。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 560 270" role="img" aria-label="感覚・世界・数学の床板が疑いのクレーンで一枚ずつ剥がされ、崩壊の底に残るのは我思うという一本の杭。そこから右へ階段状に建て直す">
+          <!-- crane lifting the top slab -->
+          <path class="crane" d="M225 14 L225 40 M225 40 q7 6 0 0"/>
+          <path class="crane" d="M219 40 q6 8 12 0"/>
+          <text class="lab h" x="356" y="30">疑いで剥がす</text>
+
+          <!-- peeled slabs -->
+          <rect class="slab" x="150" y="44" width="150" height="28" rx="3"/>
+          <text class="lab f" x="225" y="63">感覚</text>
+          <rect class="slab" x="150" y="90" width="150" height="28" rx="3"/>
+          <text class="lab f" x="225" y="109">世界（夢）</text>
+          <rect class="slab" x="150" y="126" width="150" height="28" rx="3"/>
+          <text class="lab f" x="225" y="145">数学</text>
+
+          <!-- bedrock + stake -->
+          <rect class="rock" x="118" y="182" width="214" height="18" rx="3"/>
+          <rect class="stake" x="218" y="154" width="14" height="42"/>
+          <polygon class="stake" points="218,196 232,196 225,208"/>
+          <text class="lab k" x="225" y="236">我思う＝抜けない杭</text>
+
+          <!-- rebuild stairs -->
+          <path class="up" d="M240 182 L332 178"/>
+          <polygon class="ah" points="332,172 344,179 332,185"/>
+          <rect class="step" x="356" y="172" width="52" height="15" rx="2"/>
+          <rect class="step" x="410" y="152" width="52" height="15" rx="2"/>
+          <rect class="step" x="464" y="132" width="52" height="15" rx="2"/>
+          <text class="lab g" x="436" y="120">ここから建て直す</text>
+        </svg>
+        <div class="cap"><b>疑いは、住むためでなく、建て直すための解体。</b><span class="r">崩壊の底に残る一点（我思う）を第一原理に、Day2の順序の規則で積み直す。</span></div>
+      </div>
+
+      <div class="duo">
+        <div class="du bad"><div class="h">剥がす — 疑えるもの</div><p><b>感覚</b>（水中の棒は折れて見える）・<b>伝聞</b>（みんな言ってる）・<b>印象</b>（気がする）。一度でも欺くものは、いったん全部「偽」に落として床から剥がす。</p></div>
+        <div class="du good"><div class="h">残す — 疑えないもの</div><p><b>「疑っている私」</b>（我思う、ゆえに我あり）と、自分が<b>直接確かめた事実</b>。どれだけ騙されても、騙されている私が、いなければ騙し自体が成り立たない。</p></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">剥がす順 — 疑いの強度を、段階的に上げる</div>
+        <div class="wu"><div class="gi">感</div><div class="txt"><div class="nm">感覚を剥がす<span>第1段</span></div><div class="ex">まっすぐな棒も、水では折れて見える。<b>一度でも欺く証人</b>の証言は、全部いったん疑わしい側に置く。</div></div></div>
+        <div class="wu"><div class="gi">夢</div><div class="txt"><div class="nm">世界を剥がす<span>第2段</span></div><div class="ex">夢と現実を確実に見分ける<b>印がない</b>。今この瞬間が夢でない、という保証もない。目の前の世界も外す。</div></div></div>
+        <div class="wu"><div class="gi">数</div><div class="txt"><div class="nm">数学を剥がす<span>第3段</span></div><div class="ex">意地の悪い霊が計算を誤らせている可能性を、私の側からは<b>覗けない</b>。一番堅い床板も、最後に外す。</div></div></div>
+        <div class="wu keep"><div class="gi">杭</div><div class="txt"><div class="nm">我思う＝残る<span>抜けない杭</span></div><div class="ex">疑うという行為が、疑う私の存在を<b>逆に証明する</b>。ここを第一原理に、順序の規則で建て直す。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">現代適用 — 家族チャットの健康情報</div>
+        <div class="q">「気がする」と「みんな」は、私が真っ先に床からはがした、感覚と、伝聞ですよ。</div>
+        <div class="cite">Day3 現代適用（グループチャットで回ってきた健康情報を、信じかけている場面）</div>
+        <div class="steps">
+          <div class="stp"><div class="n">1. 落とす</div><p>「テレビでやってた気がする」（感覚）「みんな言ってる」（伝聞）を、一度<b>ゼロと見なす</b>。</p></div>
+          <div class="stp"><div class="n">2. 残す</div><p>疑いようのない部分＝<b>出典・元データ</b>だけを、手元に残す。</p></div>
+          <div class="stp"><div class="n">3. 検算</div><p>その確かな部分だけで、主張が<b>成り立つか</b>を組み立て直す。</p></div>
+          <div class="stp"><div class="n">4. 札を貼る</div><p>確かめていないものは「未確認」の札。<b>遮断（＝更地に住む）はしない</b>。</p></div>
+        </div>
+        <div class="band-foot">懐疑は情報を止める作業ではない。確かな一点から、建て直すための工事。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">疑いには、必ず<br>出口がある。</div><div class="lb">建て直して、また住むための、期間限定の解体。更地に住み着けば、それは懐疑の目的化。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>「なんとなくそう思う」</em></div>
+          <p>「乗り遅れる不安」や「みんな言ってる」で結論に流れかけたら——<span class="now">伝聞と印象を一度ゼロに</span>。出典・元データ・自分が直接確かめた事実だけを残し、そこから組み立て直す。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 床を剥がす解体と残る一本の杭で、「方法的懐疑」を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

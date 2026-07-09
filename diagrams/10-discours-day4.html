@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 方法序説Day4 — 森の旅人</title>
+<style>
+  :root{
+    --ground:#E5E4DF; --panel:#F1F0EA; --panel-2:#E9E8E1;
+    --ink:#1C1F24; --muted:#585D64; --faint:#80858C; --line:#C5C4BB; --line-soft:#D6D5CC;
+    --seal:#3E5670; --calm:#4F7A64; --heat:#A8703A;
+    --seal-soft:#DDE2E8; --calm-soft:#DDE6DF; --heat-soft:#ECE1CF;
+    --shadow:0 1px 2px rgba(28,31,36,.06), 0 8px 24px -12px rgba(28,31,36,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#101317; --panel:#181C22; --panel-2:#1E232B; --ink:#E3E6EB; --muted:#9AA0A9; --faint:#7B818A; --line:#31363F; --line-soft:#262B33;
+      --seal:#82A6C6; --calm:#83AE8E; --heat:#CBA163; --seal-soft:#162430; --calm-soft:#18261D; --heat-soft:#271F12;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#101317; --panel:#181C22; --panel-2:#1E232B; --ink:#E3E6EB; --muted:#9AA0A9; --faint:#7B818A; --line:#31363F; --line-soft:#262B33;
+    --seal:#82A6C6; --calm:#83AE8E; --heat:#CBA163; --seal-soft:#162430; --calm-soft:#18261D; --heat-soft:#271F12;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E5E4DF; --panel:#F1F0EA; --panel-2:#E9E8E1; --ink:#1C1F24; --muted:#585D64; --faint:#80858C; --line:#C5C4BB; --line-soft:#D6D5CC;
+    --seal:#3E5670; --calm:#4F7A64; --heat:#A8703A; --seal-soft:#DDE2E8; --calm-soft:#DDE6DF; --heat-soft:#ECE1CF;
+    --shadow:0 1px 2px rgba(28,31,36,.06), 0 8px 24px -12px rgba(28,31,36,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--calm);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:580px; margin:0 auto;}
+  .art .tree{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.2;}
+  .art .fp{fill:var(--calm); opacity:.42;}
+  .art .straight{fill:none; stroke:var(--calm); stroke-width:4; stroke-linecap:round;}
+  .art .loop{fill:none; stroke:var(--heat); stroke-width:3; stroke-linecap:round; stroke-dasharray:6 6;}
+  .art .ahg{fill:var(--calm);} .art .ahb{fill:var(--heat);}
+  .art .trav{fill:var(--ink);}
+  .art .pole{stroke:var(--muted); stroke-width:2; stroke-linecap:round;}
+  .art .flag{fill:var(--heat);}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle;}
+  .art .lab.g{fill:var(--calm);} .art .lab.b{fill:var(--heat);} .art .flagt{fill:var(--ground); font-size:12px;}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--calm);}
+
+  .duo{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px;}
+  @media (max-width:520px){ .duo{grid-template-columns:1fr;} }
+  .du{border:1px solid var(--line); border-radius:12px; padding:13px 15px; box-shadow:var(--shadow);}
+  .du.good{background:var(--calm-soft);} .du.bad{background:var(--panel);}
+  .du .h{font-family:var(--serif); font-weight:600; font-size:15px;} .du.good .h{color:var(--calm);} .du.bad .h{color:var(--heat);}
+  .du p{margin:4px 0 0; font-size:12.5px; color:var(--muted);} .du p b{color:var(--ink);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.d1 .gi{background:var(--calm-soft);color:var(--calm);} .wu.d2 .gi{background:var(--seal-soft);color:var(--seal);} .wu.d3 .gi{background:var(--seal-soft);color:var(--seal);} .wu.d4 .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;} .wu .txt .nm span{font-family:var(--sans); font-size:11px; color:var(--faint); font-weight:500; margin-left:6px;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--calm) 9%, var(--panel)), var(--panel)); border:1px solid var(--calm); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--calm);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .halves{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .halves .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .halves .col .h{font-size:12.5px; font-weight:700; display:flex; gap:7px; align-items:center; color:var(--calm);}
+  .halves .col .ic{font-size:17px;}
+  .halves .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .halves .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--calm); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--calm);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s} .diagram>*:nth-child(5){animation-delay:.18s} .diagram>*:nth-child(6){animation-delay:.24s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>森で迷ったら、<br>まっすぐ歩く。</h1>
+      <p class="dek">正解が分からないまま動くしかない時、<b>森で最悪の二手は「ぐるぐる回る」と「座り込む」</b>——どちらも森から出られない。だから決め手がなくても<b>一つを（偶然でもいい）選んで、まっすぐ歩く</b>。ただし<b>「これは仮の方角だ」の札は剥がさない</b>。真理の場面（疑い切る）と行動の場面（果断に動く）を、分けて使う。</p>
+      <div class="source"><span class="seal">方法序説</span><span>デカルト ・ Day4「森の旅人・仮の決断」第3部（最終回）</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">ぐるぐる回る者より、<span class="em">まっすぐ歩く者</span>が、ずっと遠くへ行ける。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 580 260" role="img" aria-label="迷いの森。ぐるぐる回る足跡は同じ木に戻り出られない。まっすぐ歩く足跡は森を抜ける。旅人は手に仮の旗を持つ">
+          <!-- forest edge trees (gap on the right = exit) -->
+          <polygon class="tree" points="54,66 86,66 70,30"/>
+          <polygon class="tree" points="138,58 170,58 154,24"/>
+          <polygon class="tree" points="430,58 462,58 446,24"/>
+          <polygon class="tree" points="512,66 544,66 528,32"/>
+          <polygon class="tree" points="64,236 96,236 80,200"/>
+          <polygon class="tree" points="196,242 228,242 212,206"/>
+          <polygon class="tree" points="352,242 384,242 368,206"/>
+          <polygon class="tree" points="486,236 518,236 502,202"/>
+
+          <!-- traveler with provisional flag -->
+          <line class="pole" x1="130" y1="150" x2="130" y2="116"/>
+          <polygon class="flag" points="130,116 160,122 130,128"/>
+          <text class="flagt lab" x="142" y="127">仮</text>
+          <circle class="trav" cx="130" cy="150" r="6"/>
+          <polygon class="trav" points="119,174 141,174 130,153"/>
+
+          <!-- straight path = exits the forest -->
+          <ellipse class="fp" cx="210" cy="162" rx="6" ry="3"/>
+          <ellipse class="fp" cx="262" cy="159" rx="6" ry="3"/>
+          <ellipse class="fp" cx="314" cy="156" rx="6" ry="3"/>
+          <ellipse class="fp" cx="366" cy="153" rx="6" ry="3"/>
+          <path class="straight" d="M156 165 L520 150"/>
+          <polygon class="ahg" points="520,143 538,150 520,157"/>
+          <text class="lab g" x="352" y="120">まっすぐ歩く＝森を抜ける</text>
+
+          <!-- loop path = stuck -->
+          <path class="loop" d="M304 172 C356 170 360 214 306 214 C256 214 250 178 300 176"/>
+          <polygon class="ahb" points="306,170 292,177 300,185"/>
+          <text class="lab b" x="300" y="246">ぐるぐる回る＝同じ木に戻る</text>
+        </svg>
+        <div class="cap"><b>決め手がなくても、一つ選んでまっすぐ歩けば、森は抜ける。</b><span class="r">ただし「仮の方角」の札は貼ったまま。決定的な手がかりが見えたら、変える。</span></div>
+      </div>
+
+      <div class="duo">
+        <div class="du good"><div class="h">◯ 果断 — 仮の札を貼って歩く</div><p>まっすぐ進む<b>強さ</b>と、決定的な手がかりが出たら方角を変えられる<b>柔らかさ</b>を、両手に持つ。風が吹くたびにふらつかない。</p></div>
+        <div class="du bad"><div class="h">✕ 頑固 — 札を剥がして思い込む</div><p>「これが正解だ」と<b>決めつけ</b>、決定的な手がかりが出ても方角を変えられない。間違った道を、意地で進み続ける。</p></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">4日間の使いどころマップ — どの場面で、どのフレームか</div>
+        <div class="wu d1"><div class="gi">道</div><div class="txt"><div class="nm">才能・センスを嘆いて足が止まった時<span>Day1 道筋帰属</span></div><div class="ex">能力のせいをやめ、<b>手順・順序を観察</b>して引き直す。</div></div></div>
+        <div class="wu d2"><div class="gi">割</div><div class="txt"><div class="nm">「なんとかしろ」と丸ごと渡された問題<span>Day2 分割</span></div><div class="ex">解ける大きさまで割り、<b>単純なものから順に</b>解く。</div></div></div>
+        <div class="wu d3"><div class="gi">疑</div><div class="txt"><div class="nm">前提や情報が総崩れ・怪しい時<span>Day3 方法的懐疑</span></div><div class="ex">疑えるものを落とし、<b>確実な一点から</b>建て直す。</div></div></div>
+        <div class="wu d4"><div class="gi">仮</div><div class="txt"><div class="nm">決め手がないまま動くしかない時<span>Day4 仮の決断</span></div><div class="ex">仮の札を貼って<b>果断に歩き</b>、手がかりで修正する。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">卒業 — 真理の場面と、行動の場面を分ける</div>
+        <div class="q">疑いだけの人は、動けない。行動だけの人は、確かめない。両方を、場面で使い分ける。</div>
+        <div class="cite">Day4 卒業（4日間を束ねる使い分け）</div>
+        <div class="halves">
+          <div class="col"><div class="h"><span class="ic">🔎</span>真理の場面（疑い切る）</div><p>何が本当かを決める時は、Day3の<b>方法的懐疑</b>。疑えるものを落とし、確実な一点まで掘り下げてから決める（急がない）。</p></div>
+          <div class="col"><div class="h"><span class="ic">🧭</span>行動の場面（果断に動く）</div><p>待ってくれない決断は、今日の<b>仮の決断</b>。偶然でも一つ選んでまっすぐ歩く（座り込まない）。</p></div>
+        </div>
+        <div class="band-foot">場面の取り違えが、最大の誤用。デカルト自身、最期に適用を誤った。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">答えではなく、<br>歩き方を。</div><div class="lb">あなたの森を、あなたの足で歩くための、ただそれだけの手順。「あなたもこうせよ」とは、一度も書かれていない。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>「決められない進路」</em></div>
+          <p>二つの進路を何週間も比べ、決め手が出ずに時間だけが過ぎているなら——<span class="now">弱い理由でも一つ選び</span>、「これは仮の選択だ」の札を貼って、まっすぐ進む。決定的な手がかりが出たら、変えればいい。動かないことが、一番の損失。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 迷いの森の二つの足跡と仮の旗で、「果断な仮の決断」を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

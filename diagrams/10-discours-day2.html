@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 方法序説Day2 — 4規則の階段</title>
+<style>
+  :root{
+    --ground:#E5E4DF; --panel:#F1F0EA; --panel-2:#E9E8E1;
+    --ink:#1C1F24; --muted:#585D64; --faint:#80858C; --line:#C5C4BB; --line-soft:#D6D5CC;
+    --seal:#3E5670; --calm:#4F7A64; --heat:#A8703A;
+    --seal-soft:#DDE2E8; --calm-soft:#DDE6DF; --heat-soft:#ECE1CF;
+    --shadow:0 1px 2px rgba(28,31,36,.06), 0 8px 24px -12px rgba(28,31,36,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#101317; --panel:#181C22; --panel-2:#1E232B; --ink:#E3E6EB; --muted:#9AA0A9; --faint:#7B818A; --line:#31363F; --line-soft:#262B33;
+      --seal:#82A6C6; --calm:#83AE8E; --heat:#CBA163; --seal-soft:#162430; --calm-soft:#18261D; --heat-soft:#271F12;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#101317; --panel:#181C22; --panel-2:#1E232B; --ink:#E3E6EB; --muted:#9AA0A9; --faint:#7B818A; --line:#31363F; --line-soft:#262B33;
+    --seal:#82A6C6; --calm:#83AE8E; --heat:#CBA163; --seal-soft:#162430; --calm-soft:#18261D; --heat-soft:#271F12;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E5E4DF; --panel:#F1F0EA; --panel-2:#E9E8E1; --ink:#1C1F24; --muted:#585D64; --faint:#80858C; --line:#C5C4BB; --line-soft:#D6D5CC;
+    --seal:#3E5670; --calm:#4F7A64; --heat:#A8703A; --seal-soft:#DDE2E8; --calm-soft:#DDE6DF; --heat-soft:#ECE1CF;
+    --shadow:0 1px 2px rgba(28,31,36,.06), 0 8px 24px -12px rgba(28,31,36,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:600px; margin:0 auto;}
+  .art .arc{fill:none; stroke:var(--seal); stroke-width:2; stroke-dasharray:6 5;}
+  .art .ah{fill:var(--seal);}
+  .art .ic{fill:none; stroke:var(--calm); stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round;}
+  .art .ic2{stroke:var(--seal); stroke-width:1.6;}
+  .art .split{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.6;}
+  .art .ok{fill:none; stroke:var(--calm); stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round;}
+  .art .riser{stroke:var(--faint); stroke-width:2; stroke-dasharray:3 3;}
+  .art .tread{fill:var(--panel-2); stroke:var(--line); stroke-width:1.4;}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle;}
+  .art .lab.c{fill:var(--seal);} .art .lab.g{fill:var(--calm);} .art .lab.s{fill:var(--seal);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.r1 .gi{background:var(--seal-soft);color:var(--seal);} .wu.r2 .gi{background:var(--calm-soft);color:var(--calm);} .wu.r3 .gi{background:var(--calm-soft);color:var(--calm);} .wu.r4 .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;} .wu .txt .nm span{font-family:var(--sans); font-size:11px; color:var(--faint); font-weight:500; margin-left:6px;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--calm) 9%, var(--panel)), var(--panel)); border:1px solid var(--calm); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--calm);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:16px; align-items:stretch;}
+  @media (max-width:640px){ .steps{grid-template-columns:1fr 1fr;} }
+  .stp{background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:11px 12px;}
+  .stp .n{font-family:var(--serif); font-weight:700; color:var(--calm); font-size:13px;}
+  .stp p{margin:3px 0 0; font-size:12.5px; color:var(--muted); line-height:1.5;} .stp p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s} .diagram>*:nth-child(5){animation-delay:.18s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>困難は、<br>分割せよ。</h1>
+      <p class="dek">思考の道筋は、たった<b>四つの規則</b>で足りる。入口の関所で<b>明らかでないものを止め（明証）</b>、残った難問を<b>解ける大きさに割り（分割）</b>、<b>やさしい部品から順に積み（順序）</b>、最後に<b>抜けを数え上げて全体を見直す（枚挙）</b>。核は分割——大きな問題は「大きいまま」だから解けない。ただし刻むのではなく、<b>よりよく解くために必要なだけ</b>割る。</p>
+      <div class="source"><span class="seal">方法序説</span><span>デカルト ・ Day2「困難は分割せよ」第2部</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">四つの規則は、別々の技ではない。<span class="em">一つの流れ</span>で登り、枚挙で見直す。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 580 250" role="img" aria-label="明証の関所、分割で割る、順序で単純から複雑へ階段を上る、という三段を上り、最後に枚挙が全体を見直して始めへ戻る往復の矢印">
+          <!-- 枚挙: return arc over the whole -->
+          <path class="arc" d="M432 64 C360 22 150 22 76 64"/>
+          <polygon class="ah" points="76,64 86,50 68,52"/>
+          <text class="lab s" x="252" y="30">④枚挙 — 全体を見直す</text>
+
+          <!-- node1 明証: gate -->
+          <line class="ic" x1="90" y1="134" x2="90" y2="164"/>
+          <line class="ic" x1="122" y1="134" x2="122" y2="164"/>
+          <line class="ic" x1="82" y1="134" x2="130" y2="134"/>
+          <path class="ok" d="M97 150 l6 7 l12 -16"/>
+          <text class="lab c" x="106" y="177">①明証</text>
+          <rect class="tread" x="36" y="182" width="140" height="9" rx="3"/>
+
+          <line class="riser" x1="176" y1="187" x2="176" y2="155"/>
+
+          <!-- node2 分割: split square -->
+          <rect class="split" x="228" y="100" width="36" height="30" rx="2"/>
+          <line class="ic2" x1="246" y1="100" x2="246" y2="130"/>
+          <line class="ic2" x1="228" y1="115" x2="264" y2="115"/>
+          <text class="lab c" x="246" y="145">②分割</text>
+          <rect class="tread" x="176" y="150" width="140" height="9" rx="3"/>
+
+          <line class="riser" x1="316" y1="155" x2="316" y2="123"/>
+
+          <!-- node3 順序: rising steps -->
+          <path class="ic" d="M366 96 h13 v-12 h13 v-12 h13"/>
+          <text class="lab g" x="386" y="113">③順序</text>
+          <rect class="tread" x="316" y="118" width="140" height="9" rx="3"/>
+        </svg>
+        <div class="cap"><b>関所で止め → 割り → 順に積み → 全体を数え直す。</b><span class="r">処方＝丸ごとの難問に施策を打つ前に、解ける大きさまで割って、どこが穴かを見る。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">4つの規則 — 一つの流れとして</div>
+        <div class="wu r1"><div class="gi">明</div><div class="txt"><div class="nm">① 明証<span>入口の関所</span></div><div class="ex">明らかに真と認めたものだけ受け入れる。「みんな言ってる」「それらしい」の<b>即断</b>を止め、明らかでないものは「未確認」の札を貼って脇に置く。</div></div></div>
+        <div class="wu r2"><div class="gi">割</div><div class="txt"><div class="nm">② 分割<span>核はここ</span></div><div class="ex">難問を、解ける大きさまで割る。大きな問題は「大きいまま」だから解けない。ただし刻むのでなく<b>よりよく解くために必要なだけ</b>割る。</div></div></div>
+        <div class="wu r3"><div class="gi">順</div><div class="txt"><div class="nm">③ 順序<span>階段を上る</span></div><div class="ex">いきなり難所に飛びつかない。<b>一番やさしい石から積む</b>と、一段上るごとに次の一段が見えてくる。</div></div></div>
+        <div class="wu r4"><div class="gi">数</div><div class="txt"><div class="nm">④ 枚挙<span>往復の安全装置</span></div><div class="ex">割ったピースを数え漏らさず、全体へ戻して抜けを確かめる。分割を<b>往復運動</b>にし、部分最適の寄せ集めを防ぐ。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">現代適用 — 「売上が落ちた」を割っていく</div>
+        <div class="q">「売上が落ちた」のままでは、暗闇に矢を放つ。割ってはじめて、的が見える。</div>
+        <div class="cite">Day2 現代適用（分割の実演。焦って施策を打つ前に）</div>
+        <div class="steps">
+          <div class="stp"><div class="n">1. 丸ごと</div><p>「売上が落ちた、何とかしろ」——<b>大きすぎて</b>手が出ない。</p></div>
+          <div class="stp"><div class="n">2. 客数か単価か</div><p>客の数が減ったのか、単価か → <b>客数が減少</b>と判明。</p></div>
+          <div class="stp"><div class="n">3. いつ</div><p>朝か、昼か、夜か → <b>夕方だけ</b>落ちている。</p></div>
+          <div class="stp"><div class="n">4. 特定</div><p>「夕方の客数」が穴 → <b>打ち手が的</b>を持つ。</p></div>
+        </div>
+        <div class="band-foot">割る目的は、細かさではない。手の届く大きさにして、穴を見つけること。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">困難は、<br>分割せよ。</div><div class="lb">ただし刻むのではなく、よりよく解くために必要なだけ。割ったら、枚挙で全体へ戻す。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>「なんとかしろ」</em></div>
+          <p>丸ごと渡された大きな案件（売上・不具合・停滞）に、思いつく施策を手当たり次第打っているなら——<span class="now">手を打つ前に割る</span>。調べられる大きさまで分解し、どの部分が沈んでいるかを特定してから、やさしい所へ手を入れる。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 明証・分割・順序・枚挙の階段で、「困難は分割せよ」を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

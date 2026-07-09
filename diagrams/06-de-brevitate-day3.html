@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 セネカDay3 — 明日に架かる橋／先送りとの決着</title>
+<style>
+  :root{
+    --ground:#E9E1D0; --panel:#F4EDDC; --panel-2:#EDE4D0;
+    --ink:#211E15; --muted:#6B6250; --faint:#8C8370; --line:#CCC0A6; --line-soft:#DBD1B8;
+    --seal:#9A6A2E; --calm:#4A7A5E; --heat:#A5462F;
+    --seal-soft:#EFE3CB; --calm-soft:#DCE7DE; --heat-soft:#F0DDD3;
+    --sky:#DCE4E4; --cloud:#C7CFD2; --river:#B9CBD1;
+    --shadow:0 1px 2px rgba(33,29,22,.06), 0 8px 24px -12px rgba(33,29,22,.18);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#14120C; --panel:#1F1C13; --panel-2:#232016; --ink:#E9E1CE; --muted:#A79D82; --faint:#8B826A; --line:#39352A; --line-soft:#2D2A20;
+      --seal:#D2A45C; --calm:#7FAB8C; --heat:#D2714F; --seal-soft:#2A2114; --calm-soft:#1A2620; --heat-soft:#291812;
+      --sky:#1B2125; --cloud:#39444A; --river:#22313A;
+      --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);}
+  }
+  :root[data-theme="dark"]{ --ground:#14120C; --panel:#1F1C13; --panel-2:#232016; --ink:#E9E1CE; --muted:#A79D82; --faint:#8B826A; --line:#39352A; --line-soft:#2D2A20;
+    --seal:#D2A45C; --calm:#7FAB8C; --heat:#D2714F; --seal-soft:#2A2114; --calm-soft:#1A2620; --heat-soft:#291812;
+    --sky:#1B2125; --cloud:#39444A; --river:#22313A;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);}
+  :root[data-theme="light"]{ --ground:#E9E1D0; --panel:#F4EDDC; --panel-2:#EDE4D0; --ink:#211E15; --muted:#6B6250; --faint:#8C8370; --line:#CCC0A6; --line-soft:#DBD1B8;
+    --seal:#9A6A2E; --calm:#4A7A5E; --heat:#A5462F; --seal-soft:#EFE3CB; --calm-soft:#DCE7DE; --heat-soft:#F0DDD3;
+    --sky:#DCE4E4; --cloud:#C7CFD2; --river:#B9CBD1;
+    --shadow:0 1px 2px rgba(33,29,22,.06), 0 8px 24px -12px rgba(33,29,22,.18);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--heat);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--sky),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:580px; margin:0 auto;}
+  .art .bank{fill:var(--panel-2); stroke:var(--line); stroke-width:1.4;}
+  .art .bank-today{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.6;}
+  .art .river{fill:var(--river); opacity:.5;}
+  .art .plank{stroke:var(--seal); stroke-width:5; stroke-linecap:round;}
+  .art .plank-gap{stroke:var(--seal); stroke-width:5; stroke-linecap:round; stroke-dasharray:2 12; opacity:.55;}
+  .art .pier{stroke:var(--seal); stroke-width:3.4; stroke-linecap:round; opacity:.85;}
+  .art .cloud{fill:var(--cloud);}
+  .art .person{fill:var(--heat);}
+  .art .bt{font-family:var(--serif); font-weight:700; font-size:14px; text-anchor:middle;}
+  .art .bt.g{fill:var(--calm);} .art .bt.f{fill:var(--muted);}
+  .art .st{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--muted);}
+  .art .warn{font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle; fill:var(--heat);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--calm);}
+
+  .duo{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px;}
+  @media (max-width:520px){ .duo{grid-template-columns:1fr;} }
+  .du{border:1px solid var(--line); border-radius:12px; padding:13px 15px; box-shadow:var(--shadow);}
+  .du.good{background:var(--calm-soft);} .du.bad{background:var(--panel);}
+  .du .h{font-family:var(--serif); font-weight:600; font-size:15px;} .du.good .h{color:var(--calm);} .du.bad .h{color:var(--heat);}
+  .du p{margin:4px 0 0; font-size:12.5px; color:var(--muted);} .du p b{color:var(--ink);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.d1 .gi{background:var(--calm-soft);color:var(--calm);} .wu.d2 .gi{background:var(--seal-soft);color:var(--seal);} .wu.d3 .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;} .wu .txt .nm span{font-family:var(--sans); font-size:11px; color:var(--faint); font-weight:500; margin-left:6px;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--calm) 9%, var(--panel)), var(--panel)); border:1px solid var(--calm); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--calm);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:16px;}
+  @media (max-width:640px){ .steps{grid-template-columns:1fr 1fr;} }
+  .stp{background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:11px 12px;}
+  .stp .n{font-family:var(--serif); font-weight:700; color:var(--calm); font-size:13px;}
+  .stp p{margin:3px 0 0; font-size:12.5px; color:var(--muted); line-height:1.5;} .stp p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--calm); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--calm);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s} .diagram>*:nth-child(5){animation-delay:.18s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>期待は、明日にぶら下がり、<br>今日を失わせる。</h1>
+      <p class="dek">「いつかやる」「落ち着いたら」——先送り＝期待は、<b>今日の岸から明日の岸へ架けかけの橋</b>だ。橋の上の人は、今日にも明日にもいない。しかも<b>明日の岸を持っているのは運命</b>で、あなたではない。確実に手にある今日を捨て、来る保証のない明日に賭ける——賭け方が逆だ。</p>
+      <div class="source"><span class="seal">人生の短さについて</span><span>セネカ ・ Day3「『いつか生きる』は今日を捨てる」第9章</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">橋の上の人は、<span class="em">どちらの岸にもいない</span>。明日の岸は、運命の手の中。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 600 250" role="img" aria-label="今日の岸から明日の岸へ、未完成の橋が伸びる。橋の上の人はどちらの岸にもおらず、明日の岸は運命の手＝雲の上に浮かんで保証がない">
+          <!-- river between -->
+          <rect class="river" x="150" y="188" width="300" height="42" rx="6"/>
+
+          <!-- today bank (solid, yours) -->
+          <rect class="bank-today" x="20" y="150" width="130" height="80" rx="8"/>
+          <text class="bt g" x="85" y="182">今日の岸</text>
+          <text class="st" x="85" y="202">自分の手の中</text>
+          <text class="st" x="85" y="218">確実に、ここにある</text>
+
+          <!-- tomorrow bank (floating on cloud, fate's) -->
+          <g>
+            <ellipse class="cloud" cx="520" cy="158" rx="64" ry="14"/>
+            <ellipse class="cloud" cx="480" cy="166" rx="30" ry="10"/>
+            <ellipse class="cloud" cx="556" cy="167" rx="26" ry="9"/>
+            <rect class="bank" x="462" y="86" width="116" height="52" rx="8"/>
+            <text class="bt f" x="520" y="108">明日の岸</text>
+            <text class="st" x="520" y="126">運命の手の中</text>
+            <text class="st" x="520" y="198">来る保証は、ない</text>
+          </g>
+
+          <!-- unfinished bridge = expectation -->
+          <line class="plank" x1="150" y1="150" x2="330" y2="124"/>
+          <line class="plank-gap" x1="330" y1="124" x2="452" y2="106"/>
+          <line class="pier" x1="210" y1="142" x2="210" y2="190"/>
+          <line class="pier" x1="288" y1="130" x2="288" y2="190"/>
+          <text class="warn" x="300" y="52">期待 ＝ 架けかけの橋</text>
+          <text class="st" x="300" y="70">先は、まだ架かっていない</text>
+
+          <!-- person on the bridge, in neither bank -->
+          <circle class="person" cx="258" cy="112" r="7"/>
+          <path class="person" d="M247 138 q11 -18 22 0 z"/>
+          <text class="st" x="258" y="158">橋の上 ＝ どちらの岸にもいない</text>
+        </svg>
+        <div class="cap"><b>明日を細かく段取りしながら、足元の今日を手放す。</b><span class="r">処方＝橋を眺めるのをやめ、今日の岸の上で、今日を整える。</span></div>
+      </div>
+
+      <div class="duo">
+        <div class="du bad"><div class="h">✕ 使い果たす</div><p>「最後の日だから」と明日を捨て、刹那的に燃やす。<b>これはフレームの誤読</b>。貯えも仕込みも壊れる。</p></div>
+        <div class="du good"><div class="h">◯ 整える</div><p>今日を<b>悔いのない一日として完成させる</b>。明日への種まきも、今日の生きた行いとして落ち着いて行う。焦らないから、長期の仕込みこそできる。</p></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">三日間の使いどころマップ — どの場面で、どのフレームか</div>
+        <div class="wu d1"><div class="gi">配</div><div class="txt"><div class="nm">Day1 配置<span>「時間がない」が口癖</span></div><div class="ex">不足ではなく<b>流出</b>を疑う。まず1週間、時間の流れ先を帳簿のように記録する。</div></div></div>
+        <div class="wu d2"><div class="gi">帳</div><div class="txt"><div class="nm">Day2 帳簿<span>カレンダーが他人で埋まる</span></div><div class="ex">金と同じ<b>審査</b>を通す——誰の用事か・自分が出す意味は。支払い先を自分の署名で選び直す。</div></div></div>
+        <div class="wu d3"><div class="gi">今</div><div class="txt"><div class="nm">Day3 先送りとの決着<span>「いつかやる」が10年続く</span></div><div class="ex">今日<b>15分</b>で始められる部分を切り出し、今日に前倒す。始まっていない十年より、始まった十五分のほうが長い。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">実戦適用 — 「いつか」を今夜の15分に変える4手順</div>
+        <div class="q">アトリエは、運命の手の中。紙とペンの十五分は、あなたの手の中だ。</div>
+        <div class="cite">Day3 実戦適用（例: 「いつか絵を描き始めたい」と10年言い続けた場合）</div>
+        <div class="steps">
+          <div class="stp"><div class="n">1. 選ぶ</div><p>「いつかやる」リストから<b>1つ</b>選ぶ。</p></div>
+          <div class="stp"><div class="n">2. 書き出す</div><p>その「いつか」に必要だと思っている<b>条件</b>を全部書き出す。</p></div>
+          <div class="stp"><div class="n">3. 切り出す</div><p>実は<b>今日15分</b>で始められる部分を切り出す（紙とペンで線を引く、など）。</p></div>
+          <div class="stp"><div class="n">4. 捻出する</div><p>Day2の帳簿から原資を出す——<b>他人の用事を1つ断り</b>、空いた枠に差し替える。</p></div>
+        </div>
+        <div class="band-foot">期待を、今日の行いに変える。それだけで、十年の「いつか」が今夜始まる。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">始まっていない十年より、<br>始まった十五分</div><div class="lb">上手くなるかは運命の手の中。「始めた」という事実は、今日、自分の手で取れる。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>「いつか」</em></div>
+          <p>「来年、時間ができたら本気で取る」と言い続けた資格が、今年もまだ一冊目のままなら——<span class="now">今日の15分</span>に切り出す（参考書を1ページ、過去問を1問）。今日という一日は、まだあなたの手の中にある。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 架けかけの橋と運命の雲で、「期待が今日を失わせる」を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

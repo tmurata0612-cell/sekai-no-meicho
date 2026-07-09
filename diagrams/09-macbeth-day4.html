@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 マクベスDay4 — 舞台のロウソク</title>
+<style>
+  :root{
+    --ground:#E4E2D9; --panel:#EFEDE4; --panel-2:#E7E5DA;
+    --ink:#20232A; --muted:#5C616A; --faint:#83878F; --line:#C6C4B9; --line-soft:#D7D6CB;
+    --seal:#8E3B3B; --calm:#4B5A68; --heat:#A9793A;
+    --seal-soft:#EBDCDA; --calm-soft:#DCE1E6; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(32,35,42,.06), 0 8px 24px -12px rgba(32,35,42,.22);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1114; --panel:#181B20; --panel-2:#1E222A; --ink:#E5E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#CD7A76; --calm:#8AA0B2; --heat:#CBA664; --seal-soft:#2A1919; --calm-soft:#17222B; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1114; --panel:#181B20; --panel-2:#1E222A; --ink:#E5E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#CD7A76; --calm:#8AA0B2; --heat:#CBA664; --seal-soft:#2A1919; --calm-soft:#17222B; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E4E2D9; --panel:#EFEDE4; --panel-2:#E7E5DA; --ink:#20232A; --muted:#5C616A; --faint:#83878F; --line:#C6C4B9; --line-soft:#D7D6CB;
+    --seal:#8E3B3B; --calm:#4B5A68; --heat:#A9793A; --seal-soft:#EBDCDA; --calm-soft:#DCE1E6; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(32,35,42,.06), 0 8px 24px -12px rgba(32,35,42,.22);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:580px; margin:0 auto;}
+  .art .arch{fill:var(--panel-2); stroke:var(--line); stroke-width:1.2;}
+  .art .floor{stroke:var(--line); stroke-width:1.5; opacity:.8;}
+  .art .shadow{fill:var(--ink); opacity:.24;}
+  .art .shadowl{stroke:var(--ink); stroke-width:6; stroke-linecap:round; fill:none; opacity:.24;}
+  .art .stick{fill:var(--faint);}
+  .art .candle{fill:var(--heat-soft); stroke:var(--heat); stroke-width:1.4;}
+  .art .flame{fill:var(--heat);}
+  .art .glow{fill:var(--heat); opacity:.16;}
+  .art .wick{stroke:var(--ink); stroke-width:1.6;}
+  .art .node{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.5;}
+  .art .nlab{fill:var(--ink); font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle;}
+  .art .fuse{stroke:var(--heat); stroke-width:2.2; fill:none; stroke-dasharray:5 4;}
+  .art .spark{fill:var(--heat);}
+  .art .lab-h{fill:var(--heat); font-family:var(--sans); font-size:12px; font-weight:700; text-anchor:middle;}
+  .art .lab-f{fill:var(--faint); font-family:var(--sans); font-size:11.5px; font-weight:700; text-anchor:middle;}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--heat-soft);color:var(--heat);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 9%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(17px,3vw,22px); line-height:1.55; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,24px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で ・ シリーズ総括</div>
+      <h1>「意味は何もない」は結論ではなく、請求書。</h1>
+      <p class="dek">「人生は歩きまわる影法師」——あの虚無の独白は、人生の哲学ではない。<b>すべてを予言に預けた男の最終残高</b>だ。登るきっかけも、実行の決断も、続行の理由も、全部「外の声」。自分で選んだ段が一段もない階段を登り切り、外の声が消えたとき、足元には何も残らない。</p>
+      <div class="source"><span class="seal">マクベス</span><span>シェイクスピア ・ Day4（最終回）「音と怒り」第5幕第5場</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">3つのフレームは、<span class="em">外の声に判断を明け渡す</span>、同じ病の三症状だ。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 560 320" role="img" aria-label="舞台の上で束の間のロウソクが燃え、その足元を歩く影法師が横切る。予言の回路・跳びすぎる野心・血の川という三つのフレームが一本の導火線でロウソクに繋がる総括マップ">
+          <!-- proscenium arch -->
+          <polygon class="arch" points="0,14 560,14 560,40 0,40"/>
+          <polygon class="arch" points="0,40 46,40 46,250 0,250"/>
+          <polygon class="arch" points="514,40 560,40 560,250 514,250"/>
+          <line class="floor" x1="46" y1="250" x2="514" y2="250"/>
+
+          <!-- walking shadow -->
+          <ellipse class="shadow" cx="120" cy="180" rx="9" ry="10"/>
+          <path class="shadowl" d="M120 190 L118 224"/>
+          <path class="shadowl" d="M120 200 L106 214"/>
+          <path class="shadowl" d="M120 200 L134 212"/>
+          <path class="shadowl" d="M118 224 L104 246"/>
+          <path class="shadowl" d="M118 224 L132 244"/>
+          <text class="lab-f" x="120" y="242">歩く影法師</text>
+
+          <!-- candle -->
+          <ellipse class="glow" cx="280" cy="86" rx="30" ry="40"/>
+          <polygon class="stick" points="252,196 308,196 298,176 262,176"/>
+          <polygon class="stick" points="272,176 288,176 288,166 272,166"/>
+          <polygon class="candle" points="272,166 288,166 288,104 272,104"/>
+          <line class="wick" x1="280" y1="104" x2="280" y2="94"/>
+          <path class="flame" d="M280 72 C 269 84 271 96 280 100 C 289 96 291 84 280 72 Z"/>
+          <text class="lab-h" x="410" y="86">束の間のロウソク</text>
+
+          <!-- three frame nodes -->
+          <rect class="node" x="54"  y="262" width="142" height="40" rx="9"/>
+          <text class="nlab" x="125" y="287">①予言の回路</text>
+          <rect class="node" x="209" y="262" width="142" height="40" rx="9"/>
+          <text class="nlab" x="280" y="287">②跳びすぎる野心</text>
+          <rect class="node" x="364" y="262" width="142" height="40" rx="9"/>
+          <text class="nlab" x="435" y="287">③血の川</text>
+
+          <!-- fuses converging up to the candle -->
+          <path class="fuse" d="M125 262 C 125 238 210 228 274 224"/>
+          <path class="fuse" d="M280 262 L280 224"/>
+          <path class="fuse" d="M435 262 C 435 238 350 228 286 224"/>
+          <path class="fuse" d="M280 222 L280 198"/>
+          <circle class="spark" cx="280" cy="222" r="4"/>
+        </svg>
+        <div class="cap"><b>予言の回路→跳びすぎる野心→血の川</b>——三症状が一本の導火線でロウソクに繋がる。<span class="r">処方＝予言デトックス。自分を動かしている予言を特定し、行動の根拠を予言の外（観察できる事実）へ置き直す。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">予言デトックス — 紙とペンでできる四手順</div>
+        <div class="wu"><div class="gi">①</div><div class="txt"><div class="nm">信じている"予言"を、1つ書き出す</div><div class="ex">占い・評判・誰かの期待・「あの人は◯◯だ」——<b>自分の頭に住み着いた、外から来た一文</b>を特定する。自分の荒野で聞いた、魔女の声。</div></div></div>
+        <div class="wu"><div class="gi">②</div><div class="txt"><div class="nm">聞いてから変わった行動を、列挙する</div><div class="ex">会う回数を減らした、挑戦をやめた、チェックを厳しくした。<b>ここが回路の見える化</b>——予言は当たるのではなく、動かすのだった。</div></div></div>
+        <div class="wu"><div class="gi">③</div><div class="txt"><div class="nm">「予言が無かったら」を、自問する</div><div class="ex">予言抜きでも同じ判断なら、それは<b>あなた自身の判断</b>。堂々と続ければいい。だが予言が無ければ選ばない行動なら、その持ち主は自分ではなく予言だ。</div></div></div>
+        <div class="wu"><div class="gi">④</div><div class="txt"><div class="nm">根拠を、予言の外へ引っ越す</div><div class="ex">「問題児だと聞いた」ではなく「この三か月で実際に何があったか」。<b>予言と戦うのではなく、根拠の置き場所を動かす</b>。声と戦うより、引っ越しが安上がり。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">今日の一節 — 妻の死を聞いた直後</div>
+        <div class="q">消えろ、消えろ、束の間のロウソク。人生は歩きまわる影法師、哀れな役者だ。出番のあいだだけ舞台で気取り、喚き、そして二度と聞かれない。——音と怒りに満ちて、意味は何もない。</div>
+        <div class="cite">『マクベス』第5幕第5場・マクベス（番組訳。既存邦訳は不参照、PD原典で照合）</div>
+        <div class="band-foot">これは人生の哲学ではない——外の声だけで登り切った男の、最終残高。誰が・どの状況で言ったかを外すと誤読する。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">「このロウソクは、<br>誰の風で燃えているか」</div><div class="lb">予言の風で燃えるロウソクは、予言が止んだ夜に消える。だから、根拠を予言の外へ引っ越す。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>火</em></div>
+          <p>「あなたは理系に向いている」と言われ続けた子が、文系への興味を口にしなくなる。親は「見込んだとおりだ」と満足。<span class="now">証明されたのではなく、予言に合わせて発言が変わった可能性がある。</span>進路の根拠を、本人の観察できる言葉に置き直す。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 舞台のロウソクへ繋がる三症状の総括マップで、シリーズ全体を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

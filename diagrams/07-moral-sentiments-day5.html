@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 スミスDay5 — 三つの公開質問の法廷マップ</title>
+<style>
+  :root{
+    --ground:#E7E5DE; --panel:#F2F0E8; --panel-2:#EAE8DE;
+    --ink:#1E2024; --muted:#5A5E66; --faint:#83868C; --line:#C6C4BA; --line-soft:#D8D6CC;
+    --seal:#4A6A80; --calm:#5E7E64; --heat:#A86B3C;
+    --seal-soft:#DEE5EA; --calm-soft:#DFE7DF; --heat-soft:#EDE0CF;
+    --shadow:0 1px 2px rgba(30,32,36,.06), 0 8px 24px -12px rgba(30,32,36,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#101318; --panel:#191D23; --panel-2:#1F242B; --ink:#E5E8ED; --muted:#9AA0A9; --faint:#7B818A; --line:#323841; --line-soft:#262C34;
+      --seal:#89ADC6; --calm:#8FB08C; --heat:#CBA267; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#101318; --panel:#191D23; --panel-2:#1F242B; --ink:#E5E8ED; --muted:#9AA0A9; --faint:#7B818A; --line:#323841; --line-soft:#262C34;
+    --seal:#89ADC6; --calm:#8FB08C; --heat:#CBA267; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E7E5DE; --panel:#F2F0E8; --panel-2:#EAE8DE; --ink:#1E2024; --muted:#5A5E66; --faint:#83868C; --line:#C6C4BA; --line-soft:#D8D6CC;
+    --seal:#4A6A80; --calm:#5E7E64; --heat:#A86B3C; --seal-soft:#DEE5EA; --calm-soft:#DFE7DF; --heat-soft:#EDE0CF;
+    --shadow:0 1px 2px rgba(30,32,36,.06), 0 8px 24px -12px rgba(30,32,36,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .n-seal{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.8;}
+  .art .n-calm{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.8;}
+  .art .n-heat{fill:var(--heat-soft); stroke:var(--heat); stroke-width:1.8;}
+  .art .flowln{fill:none; stroke:var(--ink); stroke-width:2;}
+  .art .ah{fill:var(--ink);}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:16px; text-anchor:middle; fill:var(--ink);}
+  .art .lab.s{fill:var(--seal);} .art .lab.g{fill:var(--calm);} .art .lab.h{fill:var(--heat);}
+  .art .sub{font-family:var(--sans); font-size:12px; text-anchor:middle; fill:var(--muted);}
+
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .cases{margin-top:16px; display:flex; flex-direction:column; gap:10px;}
+  .cases .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 2px;}
+  .case{border:1px solid var(--line); border-radius:12px; background:var(--panel); padding:11px 13px;}
+  .case .scene{font-family:var(--serif); font-size:13.5px; font-weight:600; margin-bottom:8px;} .case .scene b{color:var(--seal);}
+  .case .two{display:flex; gap:10px; flex-wrap:wrap;}
+  .case .two .c{flex:1; min-width:180px; border-radius:9px; padding:8px 11px; font-size:12.5px; line-height:1.5;}
+  .case .two .ans{background:var(--calm-soft); border:1px solid var(--calm); color:var(--ink);}
+  .case .two .conc{background:var(--heat-soft); border:1px solid var(--heat); color:var(--ink);}
+  .case .two .k{display:block; font-size:11px; font-weight:700; letter-spacing:.06em; margin-bottom:2px;}
+  .case .two .ans .k{color:var(--calm);} .case .two .conc .k{color:var(--heat);}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 9%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .halves{display:flex; gap:12px; flex-wrap:wrap; margin-top:16px;}
+  .halves .col{flex:1; min-width:150px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .halves .col .h{font-size:12.5px; font-weight:700; display:flex; gap:7px; align-items:center; color:var(--seal);}
+  .halves .col .ic{font-size:17px;}
+  .halves .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .halves .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(18px,3.4vw,24px); font-weight:600; line-height:1.24;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>四日間の道具は、<br>一本の線でつながる。</h1>
+      <p class="dek">今夜は法廷。現代からの三つの批判に、スミスが逃げずに答える。答えの底には、一本の線が通っている——<b>共感（素材）→公平な観察者（調理）→称賛に値する（味の基準）</b>。共感だけでは身内びいき、観察者だけでは冷たい理屈、称賛に値するだけでは独善。三つが順に働いて、初めて人はまともに生きられる。</p>
+      <div class="source"><span class="seal">道徳感情論</span><span>アダム・スミス ・ Day5「公開質問」第3部・第4部の一節を回想</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">道具は三つで<span class="em">一本の線</span>。素材を、料理人が調理し、味の基準で確かめる。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 560 150" role="img" aria-label="共感（素材）から矢印で公平な観察者（調理）へ、さらに矢印で称賛に値する（味の基準）へと続く一本の流れ">
+          <rect class="n-seal" x="16" y="40" width="150" height="70" rx="12"/>
+          <text class="lab s" x="91" y="72">共感</text>
+          <text class="sub" x="91" y="94">＝ 素材</text>
+
+          <path class="flowln" d="M172 75 L198 75"/>
+          <path class="ah" d="M204 75 l-8 -5 l0 10 z"/>
+
+          <rect class="n-calm" x="205" y="40" width="150" height="70" rx="12"/>
+          <text class="lab g" x="280" y="72">公平な観察者</text>
+          <text class="sub" x="280" y="94">＝ 調理</text>
+
+          <path class="flowln" d="M361 75 L387 75"/>
+          <path class="ah" d="M393 75 l-8 -5 l0 10 z"/>
+
+          <rect class="n-heat" x="394" y="40" width="150" height="70" rx="12"/>
+          <text class="lab h" x="469" y="72">称賛に値する</text>
+          <text class="sub" x="469" y="94">＝ 味の基準</text>
+        </svg>
+        <div class="cap"><b>共感で映した生の素材を、公平な観察者が調理し、称賛に値するかで味を確かめる。</b><span class="r">どれか一つが欠けても、料理は成り立たない。</span></div>
+      </div>
+
+      <div class="cases">
+        <div class="cap">今夜の3問 — スミスの答えと、譲った点</div>
+        <div class="case">
+          <div class="scene"><b>Q1</b> 共感は近い・似た・成功者に偏る。それを道徳の土台にして大丈夫か</div>
+          <div class="two"><div class="c ans"><span class="k">答え</span>偏りは認める（自分で書いた）。偏った共感のまま裁かず、公平な観察者を挟む。共感は素材、観察者は料理人</div><div class="c conc"><span class="k">譲った点</span>その観察者も時代の常識でできている。奴隷制など「居眠りしていた箇所」がある。完成品でなく、世代をまたいで育て直される</div></div>
+        </div>
+        <div class="case">
+          <div class="scene"><b>Q2</b> 『道徳感情論』の共感の人と、『国富論』の自己利益の人は矛盾では（アダム・スミス問題）</div>
+          <div class="two"><div class="c ans"><span class="k">答え</span>矛盾しない。市場は見知らぬ他人が取引を回す仕組みの設計。共感と観察者は、その市場が成り立つ土台（信頼・公正）。二階建ての一階と二階</div><div class="c conc"><span class="k">譲った点</span>二冊が別人の本に見える書き方をした責任は、著者にある（半分譲る）</div></div>
+        </div>
+        <div class="case">
+          <div class="scene"><b>Q3</b> 「世間より、称賛に値することを求めよ」は独善・開き直りの入口では</div>
+          <div class="two"><div class="c ans"><span class="k">答え</span>処方は対称性。不当な非難に耐える権利を主張するなら、不当な称賛を返上する義務も引き受ける。片方だけ使う者は、自分の弁護人に話しかけているだけ</div><div class="c conc"><span class="k">試金石</span>過去に過大評価されたことを、思い出せるか。片側だけの帳簿は、たいてい逆恨み</div></div>
+        </div>
+      </div>
+
+      <div class="band">
+        <div class="tag">なぜ三つで一本か — 単体では、壊れる</div>
+        <div class="q">共感だけは身内びいき。観察者だけは冷たい理屈。値することだけは独善。</div>
+        <div class="cite">三つが順に噛み合って、初めて回る——完全な中立は無理でも、剥き出しの身内びいきよりは、ましになる</div>
+        <div class="halves">
+          <div class="col"><div class="h"><span class="ic">🥬</span>共感だけ</div><p>身内には甘く、他人には冷たい、<b>偏った善人</b>に。</p></div>
+          <div class="col"><div class="h"><span class="ic">🍳</span>観察者だけ</div><p>正しいが、誰も温めない<b>冷たい裁判官</b>に。</p></div>
+          <div class="col"><div class="h"><span class="ic">🥄</span>値することだけ</div><p>他人を裁いてばかりの<b>独りよがり</b>に。</p></div>
+        </div>
+        <div class="band-foot">道徳とは、完璧になることではなく、少しでもましになろうと努めること。だから『完成論』ではなく『感情論』。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">素材 → 調理<br>→ 味の基準</div><div class="lb">共感（素材）を、公平な観察者（調理）が仕立て、称賛に値する（味の基準）で確かめる。三つで一本。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>タイムライン</em></div>
+          <p>世論が一斉にある人物を叩き、TLが非難で埋まる。<span class="now">まず自分の共感が今どちらに偏っているかを疑い、事情を知る観察者の目で見直す</span>。群衆の共感は素材のまま過熱しやすい。素材を生で飲み込まない——多数だから正しい、にはならない。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 一本の線（素材→調理→味の基準）と3問の法廷マップで、四日間の道具の関係を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

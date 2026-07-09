@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 セネカDay2 — 二つの蔵（金庫と時間の蔵）</title>
+<style>
+  :root{
+    --ground:#E9E1D0; --panel:#F4EDDC; --panel-2:#EDE4D0;
+    --ink:#211E15; --muted:#6B6250; --faint:#8C8370; --line:#CCC0A6; --line-soft:#DBD1B8;
+    --seal:#9A6A2E; --calm:#4A7A5E; --heat:#A5462F;
+    --seal-soft:#EFE3CB; --calm-soft:#DCE7DE; --heat-soft:#F0DDD3;
+    --shadow:0 1px 2px rgba(33,29,22,.06), 0 8px 24px -12px rgba(33,29,22,.18);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#14120C; --panel:#1F1C13; --panel-2:#232016; --ink:#E9E1CE; --muted:#A79D82; --faint:#8B826A; --line:#39352A; --line-soft:#2D2A20;
+      --seal:#D2A45C; --calm:#7FAB8C; --heat:#D2714F; --seal-soft:#2A2114; --calm-soft:#1A2620; --heat-soft:#291812;
+      --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);}
+  }
+  :root[data-theme="dark"]{ --ground:#14120C; --panel:#1F1C13; --panel-2:#232016; --ink:#E9E1CE; --muted:#A79D82; --faint:#8B826A; --line:#39352A; --line-soft:#2D2A20;
+    --seal:#D2A45C; --calm:#7FAB8C; --heat:#D2714F; --seal-soft:#2A2114; --calm-soft:#1A2620; --heat-soft:#291812;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 30px -14px rgba(0,0,0,.6);}
+  :root[data-theme="light"]{ --ground:#E9E1D0; --panel:#F4EDDC; --panel-2:#EDE4D0; --ink:#211E15; --muted:#6B6250; --faint:#8C8370; --line:#CCC0A6; --line-soft:#DBD1B8;
+    --seal:#9A6A2E; --calm:#4A7A5E; --heat:#A5462F; --seal-soft:#EFE3CB; --calm-soft:#DCE7DE; --heat-soft:#F0DDD3;
+    --shadow:0 1px 2px rgba(33,29,22,.06), 0 8px 24px -12px rgba(33,29,22,.18);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--heat);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:580px; margin:0 auto;}
+  .art .vfill{fill:var(--panel);}
+  .art .vsafe{fill:none; stroke:var(--calm); stroke-width:1.8;}
+  .art .vopen{fill:none; stroke:var(--heat); stroke-width:1.8;}
+  .art .lockbody{fill:var(--calm);}
+  .art .shackle{fill:none; stroke:var(--calm); stroke-width:3.4;}
+  .art .keyhole{fill:var(--panel);}
+  .art .fence{stroke:var(--calm); stroke-width:2.2; stroke-linecap:round;}
+  .art .person{fill:var(--faint);}
+  .art .coin{fill:var(--heat); opacity:.30;}
+  .art .arw{fill:none; stroke:var(--heat); stroke-width:1.8;} .art .arwh{fill:var(--heat);}
+  .art .vt{font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle;}
+  .art .vt.g{fill:var(--calm);} .art .vt.r{fill:var(--heat);}
+  .art .flow{font-family:var(--sans); font-size:11px; fill:var(--muted);}
+  .art .vcap{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--muted);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--calm);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--heat) 9%, var(--panel)), var(--panel)); border:1px solid var(--heat); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--heat);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .halves{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .halves .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .halves .col .h{font-size:12.5px; font-weight:700; display:flex; gap:7px; align-items:center; color:var(--heat);}
+  .halves .col .ic{font-size:17px;}
+  .halves .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .halves .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--heat); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--calm); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--calm);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>金庫には鍵。<br>時間の蔵は、開けっ放し。</h1>
+      <p class="dek">人は財産の侵害には激怒し<b>鍵も柵もかける</b>のに、時間は自分から配って歩く。理由は時間が<b>「見えない資産」</b>だから——盗まれても財布は軽くならない。処方は、時間を金と同じ帳簿に載せ、<b>支払い先を自分の署名で決める</b>こと。</p>
+      <div class="source"><span class="seal">人生の短さについて</span><span>セネカ ・ Day2「時間の帳簿」第3章・第7章・第20章</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">金は誰も配らないのに、<span class="em">人生は皆が配って歩く</span>。差は「見えるか、見えないか」。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 600 244" role="img" aria-label="左は鍵と柵と見張りで守られた金の蔵。右は扉のない時間の蔵から、他人の用事・形だけの付き合い・上の空が時間を持ち出していく">
+          <!-- LEFT : money vault, locked -->
+          <text class="vt g" x="99" y="52">金の蔵 — 守る</text>
+          <rect class="vfill" x="24" y="74" width="150" height="122" rx="6"/>
+          <rect class="vsafe" x="24" y="74" width="150" height="122" rx="6"/>
+          <!-- padlock -->
+          <path class="shackle" d="M84 120 v-9 a15 15 0 0 1 30 0 v9"/>
+          <rect class="lockbody" x="79" y="118" width="40" height="36" rx="6"/>
+          <circle class="keyhole" cx="99" cy="132" r="3.6"/>
+          <rect class="keyhole" x="97.4" y="132" width="3.2" height="11" rx="1"/>
+          <!-- fence in front -->
+          <line class="fence" x1="40"  y1="168" x2="40"  y2="192"/>
+          <line class="fence" x1="66"  y1="168" x2="66"  y2="192"/>
+          <line class="fence" x1="92"  y1="168" x2="92"  y2="192"/>
+          <line class="fence" x1="118" y1="168" x2="118" y2="192"/>
+          <line class="fence" x1="144" y1="168" x2="144" y2="192"/>
+          <line class="fence" x1="34" y1="180" x2="150" y2="180"/>
+          <text class="vcap" x="99" y="214">鍵・柵・見張りで守る</text>
+
+          <!-- RIGHT : time vault, open on the right (no door) -->
+          <text class="vt r" x="310" y="52">時間の蔵 — 配って歩く</text>
+          <rect class="vfill" x="250" y="74" width="120" height="122"/>
+          <path class="vopen" d="M370 74 L250 74 L250 196 L370 196"/>
+          <!-- time spilling out -->
+          <circle class="coin" cx="342" cy="150" r="9"/>
+          <circle class="coin" cx="356" cy="168" r="7"/>
+          <circle class="coin" cx="330" cy="176" r="6"/>
+          <text class="vcap" x="310" y="214">扉がなく、持ち出し放題</text>
+
+          <!-- three takers leaving through the open side -->
+          <!-- row 1 -->
+          <path class="arw" d="M374 100 h22"/><path class="arwh" d="M396 96 l8 4 l-8 4 z"/>
+          <path class="person" d="M414 92 a5 5 0 1 1 .01 0 z"/>
+          <path class="person" d="M406 108 q8 -12 16 0 z"/>
+          <text class="flow" x="428" y="104">他人の用事</text>
+          <!-- row 2 -->
+          <path class="arw" d="M374 138 h22"/><path class="arwh" d="M396 134 l8 4 l-8 4 z"/>
+          <path class="person" d="M414 130 a5 5 0 1 1 .01 0 z"/>
+          <path class="person" d="M406 146 q8 -12 16 0 z"/>
+          <text class="flow" x="428" y="142">形だけの付き合い</text>
+          <!-- row 3 -->
+          <path class="arw" d="M374 176 h22"/><path class="arwh" d="M396 172 l8 4 l-8 4 z"/>
+          <path class="person" d="M414 168 a5 5 0 1 1 .01 0 z"/>
+          <path class="person" d="M406 184 q8 -12 16 0 z"/>
+          <text class="flow" x="428" y="180">上の空</text>
+        </svg>
+        <div class="cap"><b>金は鍵・柵・見張りで守り、時間は扉なしで持ち出し放題。</b><span class="r">処方＝時間にも金と同じ審査を通し、支払い先を自分で選ぶ。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">贈与と流出の、見分け方</div>
+        <div class="wu fix"><div class="gi">流</div><div class="txt"><div class="nm">流出＝奪われた時間</div><div class="ex">あなたの<b>署名がない</b>支払い。「一応、出ておいて」——請求書が来ないから、金なら通す審査を素通しにして無審査で払っている。＝浪費。</div></div></div>
+        <div class="wu hit"><div class="gi">贈</div><div class="txt"><div class="nm">贈与＝贈った時間</div><div class="ex">あなたが<b>自分で選んで差し出した</b>時間。友のための夜、家族といる時間。＝浪費ではなく最良の投資で、審査の対象外。</div></div></div>
+        <div class="wu miss"><div class="gi">問</div><div class="txt"><div class="nm">見分ける三つの問い</div><div class="ex">「これは<b>誰の用事</b>か」「私が出す意味はあるか」「この支払いに、私は<b>署名する</b>か」。守るのは、出し惜しみでなく<b>贈るため</b>の原資。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">多忙の解剖 — 最も惨めな忙しさ（第20章）</div>
+        <div class="q">自分の用事ですらないことに追われ、愛することと憎むことまで、命じられて行う。</div>
+        <div class="cite">第20章（番組訳）— 「忙しい」の中身を開けると、多くは他人の用事だ</div>
+        <div class="halves">
+          <div class="col"><div class="h"><span class="ic">🛌</span>他人の眠りで、眠る</div><p>他人の予定に自分の一日を明け渡す。動いてはいるが、<b>自分の人生ではなく他人の人生</b>を代わりに生きている。</p></div>
+          <div class="col"><div class="h"><span class="ic">🎭</span>他人の顔で、笑う</div><p>上が嫌う相手を嫌い、好む相手に愛想を使う。<b>好き嫌いという最も自由なはずの心</b>まで、指図で動いている。</p></div>
+        </div>
+        <div class="band-foot">こうして配り続けた人生は、長く存在しただけ——長くは生きていない。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">五時間の会議は<br>五万円より<br>高い買い物</div><div class="lb">五万円は三日悩むのに、五時間は即OK。しかも金は稼げるが、時間は戻らない。順序が逆。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>カレンダー</em></div>
+          <p>「一応、入っといて」で週の三割が埋まっていないか。<span class="now">全部を断る話ではない</span>。一件ずつ、金と同じ審査——誰の用事か・自分が出す意味は——を通し、支払い先を自分の署名で選び直す。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 守られる金庫と扉のない時間の蔵で、「見えない資産は守れない」を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

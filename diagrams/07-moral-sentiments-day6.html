@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 スミスDay6 — 6日間の使いどころマップ</title>
+<style>
+  :root{
+    --ground:#E7E5DE; --panel:#F2F0E8; --panel-2:#EAE8DE;
+    --ink:#1E2024; --muted:#5A5E66; --faint:#83868C; --line:#C6C4BA; --line-soft:#D8D6CC;
+    --seal:#4A6A80; --calm:#5E7E64; --heat:#A86B3C;
+    --seal-soft:#DEE5EA; --calm-soft:#DFE7DF; --heat-soft:#EDE0CF;
+    --shadow:0 1px 2px rgba(30,32,36,.06), 0 8px 24px -12px rgba(30,32,36,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#101318; --panel:#191D23; --panel-2:#1F242B; --ink:#E5E8ED; --muted:#9AA0A9; --faint:#7B818A; --line:#323841; --line-soft:#262C34;
+      --seal:#89ADC6; --calm:#8FB08C; --heat:#CBA267; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#101318; --panel:#191D23; --panel-2:#1F242B; --ink:#E5E8ED; --muted:#9AA0A9; --faint:#7B818A; --line:#323841; --line-soft:#262C34;
+    --seal:#89ADC6; --calm:#8FB08C; --heat:#CBA267; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E7E5DE; --panel:#F2F0E8; --panel-2:#EAE8DE; --ink:#1E2024; --muted:#5A5E66; --faint:#83868C; --line:#C6C4BA; --line-soft:#D8D6CC;
+    --seal:#4A6A80; --calm:#5E7E64; --heat:#A86B3C; --seal-soft:#DEE5EA; --calm-soft:#DFE7DF; --heat-soft:#EDE0CF;
+    --shadow:0 1px 2px rgba(30,32,36,.06), 0 8px 24px -12px rgba(30,32,36,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .n1{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.7;}
+  .art .n2{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.7;}
+  .art .n3{fill:var(--heat-soft); stroke:var(--heat); stroke-width:1.7;}
+  .art .n4{fill:var(--panel-2); stroke:var(--ink); stroke-width:1.7;}
+  .art .flowln{fill:none; stroke:var(--faint); stroke-width:2;}
+  .art .ah{fill:var(--faint);}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:14px; text-anchor:middle; fill:var(--ink);}
+  .art .lab.s{fill:var(--seal);} .art .lab.g{fill:var(--calm);} .art .lab.h{fill:var(--heat);}
+  .art .sub{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--muted);}
+  .art .step{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--faint); font-weight:700;}
+
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .tools{margin-top:16px;}
+  .tools .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 10px;}
+  .tools .grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .tool{border:1px solid var(--line); border-radius:12px; padding:12px 13px; background:var(--panel);}
+  .tool .t{font-family:var(--serif); font-size:13.5px; font-weight:700; margin-bottom:6px; color:var(--seal);}
+  .tool .t .rl{font-family:var(--sans); font-size:11px; font-weight:600; color:var(--muted);}
+  .tool .r{font-size:12px; line-height:1.5; margin:3px 0;}
+  .tool .r .k{display:inline-block; min-width:3.2em; font-weight:700; font-size:11px;}
+  .tool .ok .k{color:var(--calm);} .tool .ng .k{color:var(--heat);}
+  .tool .ok{color:var(--ink);} .tool .ng{color:var(--muted);}
+
+  .cases{margin-top:16px; display:flex; flex-direction:column; gap:10px;}
+  .cases .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 2px;}
+  .case{border:1px solid var(--line); border-radius:12px; background:var(--panel); padding:11px 13px; display:flex; gap:12px; flex-wrap:wrap; align-items:baseline;}
+  .case .scene{flex:1; min-width:200px; font-family:var(--serif); font-size:13px; font-weight:600;} .case .scene b{color:var(--seal);}
+  .case .pick{flex:none; font-size:12.5px; font-weight:700; color:var(--ground); background:var(--calm); border-radius:20px; padding:4px 13px;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 9%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .halves{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .halves .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .halves .col .h{font-size:12.5px; font-weight:700; display:flex; gap:7px; align-items:center; color:var(--seal);}
+  .halves .col .ic{font-size:17px;}
+  .halves .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .halves .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(20px,3.8vw,28px); font-weight:600; line-height:1.2;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>四つの道具を、<br>場面が呼び出す。</h1>
+      <p class="dek">六日間の四つの道具は、道具箱だ。<b>他人と向き合う→自分を裁く→目標を置く→野心の会計</b>。外から内へ、浅いところから深いところへ。使う頻度も、この順に減る。フルコースは要らない——場面が、道具を呼ぶ。そして、専門知識で解くべき領域には持ち込まない、という線引きまでで、インストール完了。</p>
+      <div class="source"><span class="seal">道徳感情論</span><span>アダム・スミス ・ Day6「使い分けマップ・卒業回」全6話の一節を回想</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">外から内へ、浅から深へ。<span class="em">場面が、道具を呼ぶ</span>。一場面、一道具で十分。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 560 150" role="img" aria-label="四つの道具が左から右へ流れる。他人と向き合う（共感）、自分を裁く（公平な観察者）、目標を置く（称賛に値する）、野心の会計（想像の欺き）">
+          <rect class="n1" x="8" y="42" width="122" height="68" rx="11"/>
+          <text class="step" x="69" y="60">① 他人と向き合う</text>
+          <text class="lab s" x="69" y="88">共感</text>
+
+          <path class="flowln" d="M132 76 L142 76"/>
+          <path class="ah" d="M146 76 l-7 -4 l0 8 z"/>
+
+          <rect class="n2" x="146" y="42" width="122" height="68" rx="11"/>
+          <text class="step" x="207" y="60">② 自分を裁く</text>
+          <text class="lab g" x="207" y="88">公平な観察者</text>
+
+          <path class="flowln" d="M270 76 L280 76"/>
+          <path class="ah" d="M284 76 l-7 -4 l0 8 z"/>
+
+          <rect class="n3" x="284" y="42" width="122" height="68" rx="11"/>
+          <text class="step" x="345" y="60">③ 目標を置く</text>
+          <text class="lab h" x="345" y="88">称賛に値する</text>
+
+          <path class="flowln" d="M408 76 L418 76"/>
+          <path class="ah" d="M422 76 l-7 -4 l0 8 z"/>
+
+          <rect class="n4" x="422" y="42" width="122" height="68" rx="11"/>
+          <text class="step" x="483" y="60">④ 野心の会計</text>
+          <text class="lab" x="483" y="88">想像の欺き</text>
+
+          <text class="sub" x="69" y="128">摩擦は毎日</text>
+          <text class="sub" x="207" y="128">裁きは節目</text>
+          <text class="sub" x="345" y="128">置き直しは年数回</text>
+          <text class="sub" x="483" y="128">会計は人生に数回</text>
+        </svg>
+        <div class="cap"><b>他人を映す→自分を裁く→目標を置く→欲望を会計する。毎日使う道具が手前、人生の大工事の道具が奥。</b><span class="r">大工は釘一本に道具箱を全部ひっくり返さない。</span></div>
+      </div>
+
+      <div class="tools">
+        <div class="cap">四つの道具 — 効く場と、効かない場</div>
+        <div class="grid">
+          <div class="tool"><div class="t">① 共感 <span class="rl">他人を映す</span></div><div class="r ok"><span class="k">効く</span>対立・交渉・接客。説得の前工程として相手を胸に映す</div><div class="r ng"><span class="k">効かない</span>事情を知らない遠い相手（偏る・曇る）。生で飲み込む時</div></div>
+          <div class="tool"><div class="t">② 公平な観察者 <span class="rl">自分を裁く</span></div><div class="r ok"><span class="k">効く</span>自己評価、世評に不当に叩かれた時の支え</div><div class="r ng"><span class="k">効かない</span>裁判官が育たず「応援団」の時＝ただの自己正当化</div></div>
+          <div class="tool"><div class="t">③ 称賛に値する <span class="rl">目標を置く</span></div><div class="r ok"><span class="k">効く</span>数字・評価に一喜一憂し始めた時、順序の立て直し</div><div class="r ng"><span class="k">効かない</span>未熟な裁判官に判定を委ねる時＝独善に転ぶ</div></div>
+          <div class="tool"><div class="t">④ 想像の欺き <span class="rl">野心の会計</span></div><div class="r ok"><span class="k">効く</span>支出・昇進・拡大の前。便利さと美しさへの恋の仕分け</div><div class="r ng"><span class="k">効かない</span>生存に必要な便宜まで「幻想」と切り捨てる時</div></div>
+        </div>
+      </div>
+
+      <div class="cases">
+        <div class="cap">卒業クイズ — どの道具を呼ぶか</div>
+        <div class="case"><div class="scene"><b>Q1</b> 評価面談で、自分の貢献が正当に評価されていないと強い不満</div><div class="pick">② 公平な観察者</div></div>
+        <div class="case"><div class="scene"><b>Q2</b> きょうだいの介護分担がこじれ、互いに不満をぶつけ合う</div><div class="pick">① 共感</div></div>
+        <div class="case"><div class="scene"><b>Q3</b> 投資ブームに乗り遅れる焦りで、理解しないまま大きく張ろうとする</div><div class="pick">④ 想像の欺き ＋ 共感の偏り</div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">効かない場所の、線引き</div>
+        <div class="q">病は、共感では治せない。橋の強度は、公平な観察者では計算できない。</div>
+        <div class="cite">この四つは、人が人と生きる場面の道具。専門の領域に持ち込むと、道徳が専門知識を踏みつぶす凶器になる</div>
+        <div class="halves">
+          <div class="col"><div class="h"><span class="ic">🧭</span>効く場（人と人）</div><p>他人との摩擦、自分の裁き、目標の置き直し、野心の会計。<b>一場面、一道具で十分</b>。フルコースは要らない。</p></div>
+          <div class="col"><div class="h"><span class="ic">⛔</span>効かない場（専門）</div><p>医学・法律・工学など、専門知識で解くべき問題。<b>そこは専門家に任せる</b>。世界のすべてを解く鍵ではない。</p></div>
+        </div>
+        <div class="band-foot">道具は、使われて初めて道具。飾っておくだけなら、ただの教養という置き物。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">「私は、私の<br>裁判官には、<br>なれない」</div><div class="lb">作者は最後まで自分を賢者にしなかった。判決は、あなたがたの公平な観察者が下してください、と言い残して。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>道具箱</em></div>
+          <p>この本は、正しさの体系ではない。<span class="now">直しながら使う道具箱</span>——他人と向き合うとき、自分を裁くとき、目標を置くとき、欲望に向かうとき、四つを自分の手で選ぶ。合わなければ直せばいい。スミスが本書を31年、そうし続けたように。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 四つの道具の流れと効く場／効かない場で、6日間の使いどころを一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

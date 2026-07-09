@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 方法序説Day1 — 同じ良識、違う道筋</title>
+<style>
+  :root{
+    --ground:#E5E4DF; --panel:#F1F0EA; --panel-2:#E9E8E1;
+    --ink:#1C1F24; --muted:#585D64; --faint:#80858C; --line:#C5C4BB; --line-soft:#D6D5CC;
+    --seal:#3E5670; --calm:#4F7A64; --heat:#A8703A;
+    --seal-soft:#DDE2E8; --calm-soft:#DDE6DF; --heat-soft:#ECE1CF;
+    --shadow:0 1px 2px rgba(28,31,36,.06), 0 8px 24px -12px rgba(28,31,36,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#101317; --panel:#181C22; --panel-2:#1E232B; --ink:#E3E6EB; --muted:#9AA0A9; --faint:#7B818A; --line:#31363F; --line-soft:#262B33;
+      --seal:#82A6C6; --calm:#83AE8E; --heat:#CBA163; --seal-soft:#162430; --calm-soft:#18261D; --heat-soft:#271F12;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#101317; --panel:#181C22; --panel-2:#1E232B; --ink:#E3E6EB; --muted:#9AA0A9; --faint:#7B818A; --line:#31363F; --line-soft:#262B33;
+    --seal:#82A6C6; --calm:#83AE8E; --heat:#CBA163; --seal-soft:#162430; --calm-soft:#18261D; --heat-soft:#271F12;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E5E4DF; --panel:#F1F0EA; --panel-2:#E9E8E1; --ink:#1C1F24; --muted:#585D64; --faint:#80858C; --line:#C5C4BB; --line-soft:#D6D5CC;
+    --seal:#3E5670; --calm:#4F7A64; --heat:#A8703A; --seal-soft:#DDE2E8; --calm-soft:#DDE6DF; --heat-soft:#ECE1CF;
+    --shadow:0 1px 2px rgba(28,31,36,.06), 0 8px 24px -12px rgba(28,31,36,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:580px; margin:0 auto;}
+  .art .div{stroke:var(--line-soft); stroke-width:1; stroke-dasharray:5 5;}
+  .art .post{stroke:var(--muted); stroke-width:2; stroke-linecap:round;}
+  .art .lampglow{fill:var(--calm); opacity:.16;}
+  .art .lampbulb{fill:var(--calm); stroke:var(--calm);}
+  .art .roadg{fill:none; stroke:var(--calm); stroke-width:5; stroke-linecap:round;}
+  .art .roadb{fill:none; stroke:var(--heat); stroke-width:5; stroke-linecap:round; stroke-dasharray:2 9;}
+  .art .flag{fill:var(--calm);} .art .flag.bad{fill:var(--heat);}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle;}
+  .art .lab.g{fill:var(--calm);} .art .lab.f{fill:var(--faint);} .art .lab.b{fill:var(--heat);}
+  .art .sub{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--muted);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .duo{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px;}
+  @media (max-width:520px){ .duo{grid-template-columns:1fr;} }
+  .du{border:1px solid var(--line); border-radius:12px; padding:13px 15px; box-shadow:var(--shadow);}
+  .du.good{background:var(--calm-soft);} .du.bad{background:var(--panel);}
+  .du .h{font-family:var(--serif); font-weight:600; font-size:15px;} .du.good .h{color:var(--calm);} .du.bad .h{color:var(--heat);}
+  .du p{margin:4px 0 0; font-size:12.5px; color:var(--muted);} .du p b{color:var(--ink);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.a1 .gi{background:var(--calm-soft);color:var(--calm);} .wu.a2 .gi{background:var(--seal-soft);color:var(--seal);} .wu.a3 .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--calm) 9%, var(--panel)), var(--panel)); border:1px solid var(--calm); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--calm);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:16px;}
+  @media (max-width:640px){ .steps{grid-template-columns:1fr 1fr;} }
+  .stp{background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:11px 12px;}
+  .stp .n{font-family:var(--serif); font-weight:700; color:var(--calm); font-size:13px;}
+  .stp p{margin:3px 0 0; font-size:12.5px; color:var(--muted); line-height:1.5;} .stp p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s} .diagram>*:nth-child(5){animation-delay:.18s} .diagram>*:nth-child(6){animation-delay:.24s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>差がつくのは、<br>「道の引き方」。</h1>
+      <p class="dek">良識（判断力）は、この世で最も公平に配られている——<b>ランプの性能は、みな同じ</b>。だが同じランプを持っても、<b>整った道を通る者と、絡まった道を通る者では、着く場所が変わる</b>。ランプが暗いのではない。道が、絡まっているのだ。だから<b>「地頭のせい」をやめて「道筋のせい」に切り替える</b>と、初めて直せる場所が見えてくる。</p>
+      <div class="source"><span class="seal">方法序説</span><span>デカルト ・ Day1「頭の良さは配られている」第1部</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">ランプ（良識）は同じ。着く場所を分けるのは、<span class="em">道の引き方</span>。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 560 250" role="img" aria-label="同じ良識のランプを持つ二人。整った道筋を歩く者は遠くまで進み、絡まった道筋を歩く者は同じ所で足踏みする。差は光の強さでなく、道の引き方">
+          <line class="div" x1="24" y1="128" x2="536" y2="128"/>
+          <text class="lab f" x="62" y="132">良識＝同じ</text>
+
+          <!-- lamp A (top) -->
+          <line class="post" x1="55" y1="60" x2="55" y2="95"/>
+          <circle class="lampglow" cx="55" cy="52" r="15"/>
+          <circle class="lampbulb" cx="55" cy="52" r="8"/>
+          <!-- good road -->
+          <path class="roadg" d="M78 92 C190 86 340 70 486 58"/>
+          <line class="post" x1="486" y1="40" x2="486" y2="66"/>
+          <polygon class="flag" points="486,40 512,47 486,54"/>
+          <text class="lab g" x="250" y="44">整った道筋</text>
+          <text class="sub" x="486" y="88">遠くまで進む</text>
+
+          <!-- lamp B (bottom) -->
+          <line class="post" x1="55" y1="176" x2="55" y2="211"/>
+          <circle class="lampglow" cx="55" cy="168" r="15"/>
+          <circle class="lampbulb" cx="55" cy="168" r="8"/>
+          <!-- tangled road -->
+          <path class="roadb" d="M78 190 C132 150 176 236 236 196 C286 164 250 226 300 202"/>
+          <polygon class="flag bad" points="300,193 316,202 300,211"/>
+          <text class="lab b" x="182" y="240">絡まった道筋</text>
+          <text class="sub" x="380" y="200">同じ所で足踏み</text>
+        </svg>
+        <div class="cap"><b>ランプ（良識）は同じ。違うのは、道の引き方。</b><span class="r">処方＝差を「性能」でなく「手順」に帰属し直すと、直せる場所が見える。</span></div>
+      </div>
+
+      <div class="duo">
+        <div class="du bad"><div class="h">✕ 「地頭が違う」で止まる</div><p><b>変えられないもの</b>への帰属。生まれつきの頭は変えられないから、そこで<b>打つ手が消え、思考が止まる</b>。楽になった気がしたら、止まった証拠。</p></div>
+        <div class="du good"><div class="h">◯ 「道筋が違う」に切り替える</div><p><b>変えられるもの</b>への帰属。道は引き直せるから、<b>次の一手が具体化する</b>。着手点と組み立ての順序を、見て、真似られる。</p></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">使いどころ — 「才能」で足が止まったら</div>
+        <div class="wu a1"><div class="gi">才</div><div class="txt"><div class="nm">人の成果に「才能が違う」と感じた時</div><div class="ex">性能への帰属をやめ、相手の<b>手順・順序</b>（何から始め、どう組み立てているか）に帰属し直して観察する。</div></div></div>
+        <div class="wu a2"><div class="gi">伸</div><div class="txt"><div class="nm">自分の伸び悩みを「向いてない」で説明したい時</div><div class="ex">同じやり方の<b>反復量を足す前</b>に、通っている道筋そのものを一本、引き直せないか点検する。</div></div></div>
+        <div class="wu a3"><div class="gi">差</div><div class="txt"><div class="nm">チームの結果のばらつきを議論する時</div><div class="ex">「地頭の差」で片づけず、成果を出す人が踏んでいる<b>手順を可視化</b>し、共有できる形にする。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">現代適用 — 「あの人はセンスが違う」を分解する</div>
+        <div class="q">「地頭が違う」で止まると、そこで終わる。「道の引き方が違う」なら、続きがある。</div>
+        <div class="cite">Day1 現代適用（資料作りのうまい同僚を、半分あきらめている場面）</div>
+        <div class="steps">
+          <div class="stp"><div class="n">1. 止めない</div><p>「センス」という便利な言葉で、<b>思考を止めない</b>。</p></div>
+          <div class="stp"><div class="n">2. 着手点</div><p>同僚が<b>何から書き始める</b>かを、まず見る。</p></div>
+          <div class="stp"><div class="n">3. 順序</div><p>どの順で<b>組み立てている</b>かを、追う。</p></div>
+          <div class="stp"><div class="n">4. 手順化</div><p>観察を、自分が<b>真似られる手順</b>に落とす。</p></div>
+        </div>
+        <div class="band-foot">「才能」への帰属を、手順の観察に変える。それだけで、続きが始まる。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">地頭を嘆く時間で、<br>道を一本、引き直せ。</div><div class="lb">足の遅い者が正しい道をまっすぐ行けば、才ある者が横道にそれるより、ずっと先へ進む。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>「センスが違う」</em></div>
+          <p>資料作りのうまい同僚を見て「あの人はセンスが違う」と半分あきらめているなら——<span class="now">その言葉で止まらず</span>、同僚の着手点と組み立ての順序を観察して分解する。ランプは同じ、違うのは道筋だ。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 同じランプ・違う道筋で、「差は頭でなく方法」を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

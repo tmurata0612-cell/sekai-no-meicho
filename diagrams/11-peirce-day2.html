@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 パースDay2 — 4つの固定法の審判</title>
+<style>
+  :root{
+    --ground:#E5E7E2; --panel:#F1F2ED; --panel-2:#E8EAE4;
+    --ink:#1C2027; --muted:#586069; --faint:#828A93; --line:#C2C6BF; --line-soft:#D5D8D1;
+    --seal:#356B7A; --calm:#587B54; --heat:#AE7134;
+    --seal-soft:#D6E4E7; --calm-soft:#DEE7DA; --heat-soft:#EEE1CD;
+    --shadow:0 1px 2px rgba(28,32,39,.06), 0 8px 24px -12px rgba(28,32,39,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0E1114; --panel:#171B1F; --panel-2:#1D2228; --ink:#E3E7EA; --muted:#98A0A8; --faint:#79828B; --line:#2F353B; --line-soft:#242A30;
+      --seal:#71A9BA; --calm:#8AAE80; --heat:#C9A25E; --seal-soft:#14262B; --calm-soft:#17251A; --heat-soft:#271F12;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0E1114; --panel:#171B1F; --panel-2:#1D2228; --ink:#E3E7EA; --muted:#98A0A8; --faint:#79828B; --line:#2F353B; --line-soft:#242A30;
+    --seal:#71A9BA; --calm:#8AAE80; --heat:#C9A25E; --seal-soft:#14262B; --calm-soft:#17251A; --heat-soft:#271F12;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E5E7E2; --panel:#F1F2ED; --panel-2:#E8EAE4; --ink:#1C2027; --muted:#586069; --faint:#828A93; --line:#C2C6BF; --line-soft:#D5D8D1;
+    --seal:#356B7A; --calm:#587B54; --heat:#AE7134; --seal-soft:#D6E4E7; --calm-soft:#DEE7DA; --heat-soft:#EEE1CD;
+    --shadow:0 1px 2px rgba(28,32,39,.06), 0 8px 24px -12px rgba(28,32,39,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .zone{fill:var(--panel-2); stroke:var(--line-soft); stroke-width:1.2;}
+  .art .door{fill:var(--panel); stroke:var(--seal); stroke-width:1.6;}
+  .art .door-sci{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.8;}
+  .art .anchor{fill:var(--calm); stroke:var(--calm); stroke-width:1;}
+  .art .wall{stroke:var(--heat); stroke-width:1.6; stroke-dasharray:6 4;}
+  .art .flow{stroke:var(--calm); stroke-width:2.2; fill:none;}
+  .art .flow-h{fill:var(--calm);}
+  .art .grp{font-family:var(--sans); font-size:12px; text-anchor:middle; fill:var(--muted); font-weight:600;}
+  .art .grp-sci{fill:var(--calm);}
+  .art .nm{font-family:var(--serif); font-weight:700; font-size:15px; text-anchor:middle; fill:var(--ink);}
+  .art .jd{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--seal); font-weight:600;}
+  .art .jd-in{fill:var(--faint);}
+  .art .an-l{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--calm); font-weight:600;}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:34px;height:34px;flex:none;border-radius:9px;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:16px; font-weight:700;}
+  .wu.sci .gi{background:var(--calm-soft);color:var(--calm);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;} .wu .txt .nm span{font-family:var(--sans); font-size:11px; color:var(--faint); font-weight:500; margin-left:6px;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 9%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .halves{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .halves .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .halves .col .h{font-size:12.5px; font-weight:700; display:flex; gap:7px; align-items:center;}
+  .halves .col.bad .h{color:var(--faint);} .halves .col.good .h{color:var(--seal);}
+  .halves .col .ic{font-size:17px;}
+  .halves .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .halves .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>審判は、内にいるか。<br>外にいるか。</h1>
+      <p class="dek">人が疑いを鎮め、信念を固めるやり方は4つ。固執・権威・ア・プリオリ——前の3つは、間違いを裁く審判が<b>内側にいる（自分・組織・趣味）</b>から、心地よく間違い続けられる。科学だけが審判を<b>外</b>——自分の思考が触れられない恒常性——に置く。違いは、その一点だけ。</p>
+      <div class="source"><span class="seal">科学の論理の例解</span><span>パース ・ Day2「信念を固める4つの方法」「信念の固定」1877年</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">4つの方法の本当の違いは、<span class="em">間違いを裁く審判の、位置</span>だけ。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 250" role="img" aria-label="4つの固定法。固執・権威・ア・プリオリの3つは審判が内側の部屋にいる。壁の外に、科学だけが外部の恒常性という外の審判に信念を委ねる">
+          <!-- inner-judge zone (methods 1-3) -->
+          <text class="grp" x="176" y="26">前の3つ ── 審判は内側（自分・組織・趣味）</text>
+          <rect class="zone" x="14" y="36" width="322" height="176" rx="12"/>
+
+          <rect class="door" x="26" y="70" width="92" height="118" rx="9"/>
+          <text class="nm" x="72" y="118">固執</text>
+          <text class="jd jd-in" x="72" y="160">審判＝自分</text>
+
+          <rect class="door" x="126" y="70" width="92" height="118" rx="9"/>
+          <text class="nm" x="172" y="118">権威</text>
+          <text class="jd jd-in" x="172" y="160">審判＝組織</text>
+
+          <rect class="door" x="226" y="70" width="92" height="118" rx="9"/>
+          <text class="nm" x="272" y="112">ア・</text>
+          <text class="nm" x="272" y="132">プリオリ</text>
+          <text class="jd jd-in" x="272" y="164">審判＝趣味</text>
+
+          <!-- wall -->
+          <line class="wall" x1="348" y1="40" x2="348" y2="210"/>
+
+          <!-- outer-judge zone (science) -->
+          <text class="grp grp-sci" x="432" y="26">科学だけ ── 外へ</text>
+          <rect class="door-sci" x="360" y="70" width="86" height="118" rx="9"/>
+          <text class="nm" x="403" y="124">科学</text>
+          <text class="jd" x="403" y="150">審判＝外</text>
+
+          <!-- arrow out to external anchor -->
+          <line class="flow" x1="447" y1="112" x2="470" y2="112"/>
+          <path class="flow-h" d="M474 112 l-9 -5 l0 10 Z"/>
+          <rect class="anchor" x="478" y="74" width="30" height="110" rx="5"/>
+          <text class="an-l" x="432" y="204">外部の恒常性（思考が触れない）</text>
+        </svg>
+        <div class="cap"><b>前の3つは、間違いを教えてくれる者が、内側にいない。</b><span class="r">処方＝結論を、思考が触れられない外の何か（実測・試用データ）に殴らせる。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">4つの方法 ── 強みと、折れ方</div>
+        <div class="wu"><div class="gi">固</div><div class="txt"><div class="nm">固執<span>審判＝自分</span></div><div class="ex">強み＝速い・迷わない（荒野で一方向に進み続ける者が生き延びる）。折れ方＝<b>都合の悪い報せを見ない</b>。直す必要のない場面に限る。</div></div></div>
+        <div class="wu"><div class="gi">権</div><div class="txt"><div class="nm">権威<span>審判＝組織</span></div><div class="ex">強み＝平和・秩序（争いが起きない）。折れ方＝<b>全員で同じ間違いへ行進</b>する。皆が向いているから、崖が見えない。</div></div></div>
+        <div class="wu"><div class="gi">ア</div><div class="txt"><div class="nm">ア・プリオリ<span>審判＝趣味</span></div><div class="ex">強み＝上品・非暴力（話し合いで決まる）。折れ方＝<b>心地よさは真理でない</b>。天体は完全な円のはず→実は楕円だった。</div></div></div>
+        <div class="wu sci"><div class="gi">科</div><div class="txt"><div class="nm">科学<span>審判＝外</span></div><div class="ex">強みは一つだけ＝<b>間違いを、自分で見つけられる</b>。速さでも平和でも美しさでもない。だから他の3つと目的が違う。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">見分け方 — 看板の科学と、設計の科学</div>
+        <div class="q">我々の疑いを鎮めるには、外部の恒常的なもの——思考が影響を及ぼせない何か——によって信念が定まる方法が、要る。</div>
+        <div class="cite">「信念の固定」1877年（番組訳）— 「科学」は看板の名前ではなく、殴られる余地を残す設計のこと</div>
+        <div class="halves">
+          <div class="col bad"><div class="h"><span class="ic">🏷️</span>看板の科学</div><p>「科学的に証明された」で相手を黙らせる。<b>それは、白衣を着たお上</b>。「科学が言うんだから黙れ」は「お上が言うんだから黙れ」と寸分違わない＝権威の方法。</p></div>
+          <div class="col good"><div class="h"><span class="ic">🥊</span>設計の科学</div><p>「この主張は、<b>どうなったら間違いだと分かるのか</b>」を自分で言える。外の何かに殴られる余地を、自分で残しておく。それが言えない主張は、中身は権威。</p></div>
+        </div>
+        <div class="band-foot">殴られる余地のない「科学」は、白衣を着た、ただの権威。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">この結論、<br>審判は<br>内か、外か?</div><div class="lb">「ずっとこう」「上がそう言う」「普通こう」——全部、内側の審判。外の審判が一つでも付いているか。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>調達会議</em></div>
+          <p>備品の選定で「ずっとこれを使ってきた（固執）」「役員の推しだ（権威）」「高い方がいいに決まってる（ア・プリオリ）」が並んだら——<span class="now">教科書のように内側の審判ばかりで、外の審判だけがいない</span>。使用条件を揃えた試用データという「外の審判」に決めさせるのが、欠けた4つ目の一手。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 内側の審判と外の審判で、4つの固定法の違いを一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

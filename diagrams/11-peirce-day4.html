@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 パースDay4 — 言葉の篩</title>
+<style>
+  :root{
+    --ground:#E5E7E2; --panel:#F1F2ED; --panel-2:#E8EAE4;
+    --ink:#1C2027; --muted:#586069; --faint:#828A93; --line:#C2C6BF; --line-soft:#D5D8D1;
+    --seal:#356B7A; --calm:#587B54; --heat:#AE7134;
+    --seal-soft:#D6E4E7; --calm-soft:#DEE7DA; --heat-soft:#EEE1CD;
+    --shadow:0 1px 2px rgba(28,32,39,.06), 0 8px 24px -12px rgba(28,32,39,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0E1114; --panel:#171B1F; --panel-2:#1D2228; --ink:#E3E7EA; --muted:#98A0A8; --faint:#79828B; --line:#2F353B; --line-soft:#242A30;
+      --seal:#71A9BA; --calm:#8AAE80; --heat:#C9A25E; --seal-soft:#14262B; --calm-soft:#17251A; --heat-soft:#271F12;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0E1114; --panel:#171B1F; --panel-2:#1D2228; --ink:#E3E7EA; --muted:#98A0A8; --faint:#79828B; --line:#2F353B; --line-soft:#242A30;
+    --seal:#71A9BA; --calm:#8AAE80; --heat:#C9A25E; --seal-soft:#14262B; --calm-soft:#17251A; --heat-soft:#271F12;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E5E7E2; --panel:#F1F2ED; --panel-2:#E8EAE4; --ink:#1C2027; --muted:#586069; --faint:#828A93; --line:#C2C6BF; --line-soft:#D5D8D1;
+    --seal:#356B7A; --calm:#587B54; --heat:#AE7134; --seal-soft:#D6E4E7; --calm-soft:#DEE7DA; --heat-soft:#EEE1CD;
+    --shadow:0 1px 2px rgba(28,32,39,.06), 0 8px 24px -12px rgba(28,32,39,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .word{fill:var(--panel); stroke:var(--faint); stroke-width:1.4;}
+  .art .stay{fill:var(--panel); stroke:var(--faint); stroke-width:1.4; stroke-dasharray:4 3;}
+  .art .sieve{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.8;}
+  .art .mesh{stroke:var(--seal); stroke-width:1; opacity:.6;}
+  .art .tray{fill:var(--panel-2); stroke:var(--line); stroke-width:1.4;}
+  .art .chip{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.4;}
+  .art .grain{fill:var(--calm);}
+  .art .drop{stroke:var(--faint); stroke-width:1.6; fill:none;}
+  .art .drop-h{fill:var(--faint);}
+  .art .wl{font-family:var(--sans); font-size:12px; text-anchor:middle; fill:var(--muted); font-weight:600;}
+  .art .sl{font-family:var(--serif); font-size:12.5px; text-anchor:middle; fill:var(--seal); font-weight:700;}
+  .art .stl{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--faint); font-weight:600;}
+  .art .tt{font-family:var(--serif); font-size:12.5px; text-anchor:middle; fill:var(--calm); font-weight:700;}
+  .art .cl{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--calm); font-weight:600;}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:34px;height:34px;flex:none;border-radius:9px;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 9%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .map{display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; align-items:stretch; justify-content:center;}
+  .map .mstep{flex:1; min-width:118px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:11px 12px; text-align:center;}
+  .map .mstep .d{font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); font-weight:700;}
+  .map .mstep .f{font-family:var(--serif); font-size:14px; font-weight:600; color:var(--ink); margin-top:3px;}
+  .map .marr{align-self:center; color:var(--seal); font-weight:700; font-size:16px;}
+  @media (max-width:560px){ .map .marr{display:none;} }
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>その言葉は、<br>粒になるか。音か。</h1>
+      <p class="dek">「品質」「本気」「持続可能」——立派だが掴めない言葉を、格率という篩にかける。<b>「本当なら、実践に何が変わるか」</b>を数え、落ちた粒（具体的な違い）だけが、そのまま検証項目になる。効果が一つも挙がらない言葉は、篩の上に残って消える——それは思考ではなく、ただの音。</p>
+      <div class="source"><span class="seal">科学の論理の例解</span><span>パース ・ Day4「プラグマティズムの格率」「観念を明晰にする方法」1878年</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">言葉を篩にかけ、<span class="em">実践的効果の粒だけ</span>を、検証項目として下に落とす。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 260" role="img" aria-label="立派な言葉が上から格率の篩に落ちる。実践的効果の粒だけが下のトレイに検証項目として落ち、効果ゼロの言葉は篩の上に残って消える">
+          <!-- incoming words -->
+          <rect class="word" x="30" y="24" width="104" height="24" rx="7"/><text class="wl" x="82" y="40">品質が高い</text>
+          <rect class="word" x="168" y="24" width="80" height="24" rx="7"/><text class="wl" x="208" y="40">本気度</text>
+          <rect class="word" x="286" y="24" width="96" height="24" rx="7"/><text class="wl" x="334" y="40">寄り添う</text>
+
+          <!-- word stays on sieve (no effect) -->
+          <rect class="stay" x="372" y="80" width="132" height="24" rx="7"/><text class="stl" x="438" y="96">効果ゼロ ＝ 音</text>
+
+          <!-- drop arrows into sieve -->
+          <line class="drop" x1="82" y1="50" x2="82" y2="96"/><path class="drop-h" d="M82 100 l-5 -9 l10 0 Z"/>
+          <line class="drop" x1="208" y1="50" x2="208" y2="96"/><path class="drop-h" d="M208 100 l-5 -9 l10 0 Z"/>
+          <line class="drop" x1="334" y1="50" x2="334" y2="96"/><path class="drop-h" d="M334 100 l-5 -9 l10 0 Z"/>
+
+          <!-- sieve -->
+          <polygon class="sieve" points="44,104 476,104 452,138 68,138"/>
+          <line class="mesh" x1="110" y1="104" x2="102" y2="138"/>
+          <line class="mesh" x1="170" y1="104" x2="164" y2="138"/>
+          <line class="mesh" x1="230" y1="104" x2="226" y2="138"/>
+          <line class="mesh" x1="290" y1="104" x2="288" y2="138"/>
+          <line class="mesh" x1="350" y1="104" x2="350" y2="138"/>
+          <line class="mesh" x1="410" y1="104" x2="412" y2="138"/>
+          <text class="sl" x="260" y="126">格率の篩 ── 本当なら、実践に何が変わる?</text>
+
+          <!-- grains falling -->
+          <rect class="grain" x="131" y="152" width="6" height="6" rx="1"/>
+          <rect class="grain" x="180" y="164" width="6" height="6" rx="1"/>
+          <rect class="grain" x="257" y="150" width="6" height="6" rx="1"/>
+          <rect class="grain" x="300" y="166" width="6" height="6" rx="1"/>
+          <rect class="grain" x="383" y="154" width="6" height="6" rx="1"/>
+          <line class="drop" x1="134" y1="142" x2="134" y2="172"/><path class="drop-h" d="M134 176 l-5 -9 l10 0 Z"/>
+          <line class="drop" x1="260" y1="142" x2="260" y2="172"/><path class="drop-h" d="M260 176 l-5 -9 l10 0 Z"/>
+          <line class="drop" x1="386" y1="142" x2="386" y2="172"/><path class="drop-h" d="M386 176 l-5 -9 l10 0 Z"/>
+
+          <!-- tray of verification items -->
+          <text class="tt" x="260" y="186">落ちた粒 ＝ 実践的効果 ＝ 検証項目</text>
+          <rect class="tray" x="64" y="192" width="392" height="54" rx="10"/>
+          <rect class="chip" x="76" y="206" width="116" height="30" rx="7"/><text class="cl" x="134" y="225">不良品 月-3個</text>
+          <rect class="chip" x="202" y="206" width="116" height="30" rx="7"/><text class="cl" x="260" y="225">締切遅れ 0件</text>
+          <rect class="chip" x="328" y="206" width="116" height="30" rx="7"/><text class="cl" x="386" y="225">確認 ＋1回</text>
+        </svg>
+        <div class="cap"><b>効果の粒に割れない言葉は、篩の上に残って消える。</b><span class="r">処方＝立派な言葉を、いつ・何が・どれだけ変わるか、へ翻訳する。翻訳できなければ、それは音。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">プラグマティズムの格率 ── 考えの解像度チェッカー</div>
+        <div class="wu"><div class="gi">意</div><div class="txt"><div class="nm">意味 ＝ 実践的効果の総体</div><div class="ex">概念の意味は、それが真なら実際に何がどう変わるか、の全リストに等しい。<b>効果がゼロなら、意味もゼロ（＝音）</b>。「品質が高い」を「不良品が月何個減るか」へ。</div></div></div>
+        <div class="wu"><div class="gi">習</div><div class="txt"><div class="nm">思考は、行動の習慣を作る道具</div><div class="ex">思考の機能の全体は、行動の習慣を生み出すことにある。<b>何の習慣も変えない思考は、飾り</b>。意味は「振る舞いがどう変わるか」で測る。</div></div></div>
+        <div class="wu"><div class="gi">出</div><div class="txt"><div class="nm">篩は、四日間の出口</div><div class="ex">篩にかけて挙がった実践的効果は、<b>そのままDay3の仮説の検証項目になる</b>。疑い→外の審判→跳躍→格率で、一つの道具が閉じる。</div></div></div>
+      </div>
+
+      <div class="band">
+        <div class="tag">四日間は、一つの道具だった</div>
+        <div class="q">思考の機能の全体は、行動の習慣を生み出すことにある。何の行動も変えない思考は、ただの音だ。</div>
+        <div class="cite">「観念を明晰にする方法」1878年（番組訳）— 疑いから始まり、格率で言葉を検証項目に変えるまで、全部つながっている</div>
+        <div class="map">
+          <div class="mstep"><div class="d">Day1</div><div class="f">本物の疑い</div></div>
+          <div class="marr">→</div>
+          <div class="mstep"><div class="d">Day2</div><div class="f">外の審判</div></div>
+          <div class="marr">→</div>
+          <div class="mstep"><div class="d">Day3</div><div class="f">跳躍（仮説）</div></div>
+          <div class="marr">→</div>
+          <div class="mstep"><div class="d">Day4</div><div class="f">言葉の篩</div></div>
+        </div>
+        <div class="band-foot">縦糸：ベーコン（1620）── パース ── その先へ。私は、川の途中だ。</div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">その言葉、<br>粒になるか?<br>ただの音か?</div><div class="lb">実践的効果に割れなければ、それは意味ではなく音。割れた粒は、そのまま検証項目。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>「本気度が足りない」</em></div>
+          <p>後輩に「本気度が足りない」と言う前に、篩にかける——本当なら「締切に遅れる」「確認せず出す」。<span class="now">渡すべきは"本気度"ではなく、「提出前に確認を一つ入れて」</span>。音を投げつけられた相手は、何を直せばいいか分からない。効果の粒まで割ってから渡す。それが、格率の優しさ。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 言葉の篩で、立派な言葉から実践的効果の粒を落とし、検証項目に変えると一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

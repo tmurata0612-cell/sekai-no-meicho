@@ -27,7 +27,7 @@ export function avatarSVG(role, speaker) {
 // ジャンル装丁色キー → 日本語ラベル（本のタグ表示用）
 export const GENRE_LABEL = {
   philosophy: "哲学", strategy: "歴史", science: "科学",
-  literature: "文学", sciphil: "科学哲学",
+  literature: "文学", sciphil: "科学哲学", economy: "経済",
 };
 
 // 本を開く演出の紙面に敷く写本テキスト＝実在のパブリックドメイン文章
