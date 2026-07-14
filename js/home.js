@@ -3,6 +3,8 @@
 // 棚はジャンルごとに分かれ、木の棚板の上に本が立つ。
 import { store } from "./store.js";
 import { esc, GENRE_LABEL, openBook } from "./ui.js";
+import { plateHTML, plateStats } from "./plates.js";
+import { hasPlate } from "./emblems.js";
 
 // ジャンルの既定表示順（棚の並び）。ユーザーが並べ替えたら store.order を優先。
 const GENRE_ORDER = ["philosophy", "strategy", "science", "sciphil", "literature"];
@@ -120,6 +122,26 @@ function shelfUnit(group, counts, gi, gcount) {
   </div>`;
 }
 
+// 蔵書票への入口。直近に手に入れた票が数枚だけ覗く。0枚のときは「これから」を見せる
+function platesCard(app) {
+  const { got, total } = plateStats(app);
+  const recent = store.platesEarned().slice(-4)
+    .map(p => app.seriesBySlug(p.slug)).filter(s => s && hasPlate(s.slug));
+  const cells = recent.map(s => plateHTML(s));
+  while (cells.length < 4) cells.push(`<span class="plate-empty" aria-hidden="true"></span>`);
+  return `<section class="plates-entry">
+    <button class="entry" id="toPlates" aria-label="蔵書票を見る（${got} / ${total} 枚）">
+      <span class="entry-top">
+        <span class="entry-ttl">蔵書票</span>
+        <span class="entry-n">${got}<span class="slash">/</span>${total} 枚</span>
+      </span>
+      <span class="collection-bar"><i style="width:${total ? (got / total * 100).toFixed(1) : 0}%"></i></span>
+      <span class="entry-row">${cells.join("")}<span class="entry-go">ひらく ›</span></span>
+      <span class="entry-note">${got ? "1冊を聴き終えるごとに、1枚。" : "1冊を最後まで聴き終えると、最初の1枚が押されます。"}</span>
+    </button>
+  </section>`;
+}
+
 export function renderHome(el, app) {
   const counts = store.countsBySeries(app.index);
   const all = counts._all;
@@ -164,6 +186,8 @@ export function renderHome(el, app) {
         <span class="resume-sub">${esc(last.title)}${lastResume > 5 ? `　·　${fmtTime(lastResume)}から` : ""}</span>
       </button>
     </section>` : ""}
+
+    ${platesCard(app)}
 
     <section class="shelf">
       <div class="shelf-top">
@@ -235,6 +259,9 @@ export function renderHome(el, app) {
       rerender();
     });
   });
+
+  const tp = el.querySelector("#toPlates");
+  if (tp) tp.addEventListener("click", () => app.navigate("plates"));
 
   const ts = el.querySelector("#toSettings");
   if (ts) ts.addEventListener("click", () => app.navigate("settings"));

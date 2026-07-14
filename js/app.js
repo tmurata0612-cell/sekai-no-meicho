@@ -7,6 +7,8 @@ import { renderHome } from "./home.js";
 import { renderSeries } from "./series.js";
 import { renderEpisode } from "./episode.js";
 import { renderSettings } from "./settings.js";
+import { renderPlates, stampRitual } from "./plates.js";
+import { hasPlate } from "./emblems.js";
 
 const app = {
   store, player,
@@ -70,9 +72,38 @@ function loadIntoPlayer(ep) {
     onComplete: (id) => {
       store.markListened(id);
       if (current.name === "episode") navigate("episode", { id }, { replace: true });
+      checkSeriesComplete(id);
     },
   });
   store.setLastPlayed(ep.id);
+}
+
+// 蔵書票の実装より前に完走していた本を、起動時に静かに遡って記録する。
+// これが無いと、既に聴き終えた本は onComplete が二度と発火しないので永久に0枚のままになる。
+// 過去の出来事なので儀式は出さない。完走日は聴了記録の最終更新から復元する。
+function backfillPlates() {
+  for (const s of app.index?.series || []) {
+    if (!hasPlate(s.slug) || store.hasPlate(s.slug)) continue;
+    if (!s.days.every(d => store.isListened(d.id))) continue;
+    if (!store.earnPlate(s.slug)) continue;
+    const when = s.days
+      .map(d => store.getProgress(d.id)?.updated)
+      .filter(Boolean).sort().pop();
+    if (when) store.update(st => { st.plates[s.slug].earned = when; });
+  }
+}
+
+// 1冊を最後まで聴き終えた瞬間＝蔵書票を1枚押す。押印の儀式のあと蔵書票の画面へ送る。
+// 判定は聴了状態から取るので、聴く順序は問わない（最後の1話がDay1でも成立する）。
+function checkSeriesComplete(epId) {
+  const day = app.dayById(epId);
+  if (!day) return;
+  const s = day.series;
+  if (!hasPlate(s.slug)) return;                       // 紋章が未用意の本は押さない
+  if (store.hasPlate(s.slug)) return;                  // すでに持っている
+  if (!s.days.every(d => store.isListened(d.id))) return;  // まだ全話が揃っていない
+  if (!store.earnPlate(s.slug)) return;                // 競合時の二重押し止め
+  stampRitual(app, s, () => navigate("plates"));
 }
 
 // エピソードを開く（本棚/シリーズから）: ロード→画面遷移
@@ -82,7 +113,8 @@ async function openEpisode(id) {
 }
 
 // ---- ナビゲーション ----
-const views = { home: renderHome, series: renderSeries, episode: renderEpisode, settings: renderSettings };
+const views = { home: renderHome, series: renderSeries, episode: renderEpisode,
+                settings: renderSettings, plates: renderPlates };
 let current = { name: "home", params: {} };
 let history = [];
 
@@ -186,6 +218,7 @@ async function boot() {
       `<p style="padding:40px;text-align:center;color:var(--ink-faint)">蔵書を読み込めませんでした。<br>content/index.json を確認してください。</p>`;
     return;
   }
+  backfillPlates();
   navigate("home", {}, { replace: true });
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js").catch(() => {});

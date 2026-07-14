@@ -1,5 +1,40 @@
 {
   "show": "世界の名著",
+  "plan": {
+    "totalBooks": 66,
+    "genres": [
+      {
+        "key": "philosophy",
+        "label": "哲学・政治思想",
+        "books": 16
+      },
+      {
+        "key": "strategy",
+        "label": "歴史・戦略",
+        "books": 8
+      },
+      {
+        "key": "economy",
+        "label": "経済・社会",
+        "books": 10
+      },
+      {
+        "key": "science",
+        "label": "科学",
+        "books": 6
+      },
+      {
+        "key": "sciphil",
+        "label": "科学哲学",
+        "books": 15
+      },
+      {
+        "key": "literature",
+        "label": "文学",
+        "books": 11
+      }
+    ]
+  },
   "series": [
     {
       "slug": "01-kunshuron",

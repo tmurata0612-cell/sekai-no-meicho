@@ -14,6 +14,7 @@ const DEFAULTS = {
   progress: {},          // {epId: {listened:bool, resumeSec:num, updated:iso, quiz:{choice, correct}}}
   lastPlayedId: null,    // 「続きから」用
   order: { genres: null, books: {} },  // 本棚の並び順。genres=[genreKey...]、books={genreKey:[slug...]}。nullは既定順
+  plates: {},            // 蔵書票: {slug: {earned: iso}}。1冊完走で1枚
 };
 
 let state = load();
@@ -28,6 +29,7 @@ function load() {
       settings: { ...DEFAULTS.settings, ...(p.settings || {}) },
       progress: p.progress || {},
       order: { genres: p.order?.genres ?? null, books: p.order?.books || {} },
+      plates: p.plates || {},
     };
   } catch { return structuredClone(DEFAULTS); }
 }
@@ -86,6 +88,25 @@ export const store = {
     return out;
   },
 
+  // ---- 蔵書票（1冊完走＝1枚） ----
+  hasPlate(slug) { return !!state.plates?.[slug]; },
+  getPlate(slug) { return state.plates?.[slug] || null; },
+  // 未取得なら記録して true（＝いま押した）。既取得なら false。押印演出の発火判定に使う
+  earnPlate(slug) {
+    if (!state.plates) state.plates = {};
+    if (state.plates[slug]) return false;
+    state.plates[slug] = { earned: new Date().toISOString() };
+    save();
+    return true;
+  },
+  plateCount() { return Object.keys(state.plates || {}).length; },
+  // 取得順（古い順）。ホームの「直近の数枚」表示に使う
+  platesEarned() {
+    return Object.entries(state.plates || {})
+      .sort((a, b) => String(a[1].earned).localeCompare(String(b[1].earned)))
+      .map(([slug, v]) => ({ slug, earned: v.earned }));
+  },
+
   // ---- 本棚の並び順（ユーザーがジャンル・本を並べ替え可能） ----
   getGenreOrder() { return state.order?.genres || null; },
   setGenreOrder(keys) { state.order.genres = keys.slice(); save(); },
@@ -105,6 +126,7 @@ export const store = {
       settings: { ...DEFAULTS.settings, ...(p.settings || {}) },
       progress: p.progress || {},
       order: { genres: p.order?.genres ?? null, books: p.order?.books || {} },
+      plates: p.plates || {},
     };
     save();
   },

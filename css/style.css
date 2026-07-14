@@ -637,3 +637,117 @@ table.usemap td{color:var(--ink-soft)}
   *{transition:none!important;animation:none!important}
   .book-opening{display:none}
 }
+
+/* ================= 蔵書票（Ex Libris） =================
+   1冊完走で1枚。押印の儀式 → 別画面「蔵書票」にジャンル別で溜まる。
+   紙の色トークンはここで自給（既存トークンに紙が無いため）。金・装丁色は既存のものを使う。 */
+:root{ --paper:#f4ebd6; --paper-2:#e6d8b8; --paper-ink:#5b4526; }
+@media (prefers-color-scheme:dark){
+  :root{ --paper:#e9ddc2; --paper-2:#d6c69f; --paper-ink:#4a3719; }
+}
+:root[data-theme="light"]{ --paper:#f4ebd6; --paper-2:#e6d8b8; --paper-ink:#5b4526; }
+:root[data-theme="dark"]{ --paper:#e9ddc2; --paper-2:#d6c69f; --paper-ink:#4a3719; }
+
+/* ---- 票そのもの ---- */
+.plate{border-radius:2px;background:linear-gradient(168deg,var(--paper),var(--paper-2));
+  color:var(--paper-ink);box-shadow:0 2px 5px rgba(60,42,18,.32),inset 0 0 0 1px rgba(91,69,38,.42),
+  inset 0 0 0 3px rgba(91,69,38,.1);padding:6px 5px 5px;display:flex;flex-direction:column;
+  align-items:center;gap:2px;overflow:hidden;width:100%;height:100%}
+.plate .exl{font-family:var(--serif);font-size:5.5px;letter-spacing:.3em;opacity:.62;line-height:1;padding-left:.3em}
+.plate svg{width:100%;flex:1;min-height:0}
+.plate .pt{font-family:var(--serif);font-size:8.5px;font-weight:600;line-height:1.15;text-align:center;
+  border-top:.5px solid rgba(91,69,38,.42);padding-top:3px;width:100%}
+.plate .cap{font-family:var(--serif);font-size:7.5px;line-height:1.25;text-align:center;opacity:.82;letter-spacing:-.01em}
+
+.big-plate{width:198px;border-radius:3px;color:var(--paper-ink);
+  background:linear-gradient(168deg,#fcf6e6,var(--paper-2));
+  box-shadow:0 4px 12px rgba(60,42,18,.42),inset 0 0 0 1.5px rgba(91,69,38,.52),inset 0 0 0 5px rgba(91,69,38,.11);
+  padding:14px 12px 12px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.big-plate .exl{font-family:var(--serif);font-size:8px;letter-spacing:.34em;opacity:.66;padding-left:.34em}
+.big-plate svg{width:112px;height:92px;flex:0 0 auto}
+.big-plate .pt{font-family:var(--serif);font-size:13.5px;font-weight:600;text-align:center;line-height:1.3;
+  border-top:1px solid rgba(91,69,38,.45);padding-top:7px;width:100%}
+.big-plate .cap{font-family:var(--serif);font-size:10.5px;line-height:1.5;text-align:center;opacity:.86}
+
+/* ---- ホームの入口カード ---- */
+.plates-entry{margin:0 0 26px}
+.plates-entry .entry{width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);
+  border-radius:10px;padding:16px;cursor:pointer;box-shadow:var(--shadow);display:flex;flex-direction:column;
+  gap:11px;color:inherit;font-family:var(--sans)}
+.plates-entry .entry:hover{border-color:var(--gold)}
+.plates-entry .entry:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.entry-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.entry-ttl{font-family:var(--serif);font-size:16px;font-weight:600;letter-spacing:.08em}
+.entry-n{font-family:var(--mono);font-size:12px;color:var(--gold);font-variant-numeric:tabular-nums}
+.entry-row{display:flex;gap:7px;align-items:center}
+.entry-row .plate{width:44px;flex:0 0 auto;aspect-ratio:.72;height:auto}
+.entry-row .plate .pt,.entry-row .plate .cap,.entry-row .plate .exl{display:none}
+.plate-empty{width:44px;aspect-ratio:.72;border-radius:2px;flex:0 0 auto;
+  border:1px dashed color-mix(in srgb,var(--ink-faint) 36%,transparent)}
+.entry-go{font-size:12.5px;color:var(--accent);margin-left:auto;white-space:nowrap}
+.entry-note{font-size:12px;color:var(--ink-faint);line-height:1.7}
+
+/* ---- 蔵書票の画面 ---- */
+/* 戻るは既存の .crumb-solo を使う（.crumb はエピソード画面のパンくずナビ用なので触らない）。
+   既存に欠けていたフォーカスリングだけ足す。 */
+.crumb-solo:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.plates-head{margin:0 0 22px}
+.plates-title{font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:.1em;margin:6px 0 8px}
+.plates-n{font-family:var(--mono);font-size:13px;color:var(--gold);font-variant-numeric:tabular-nums;
+  display:flex;align-items:center;gap:10px;margin:0 0 12px}
+.plates-n .of{color:var(--ink-faint)}
+.plates-n .collection-bar{flex:1}
+.plates-lead{font-size:13.5px;color:var(--ink-soft);line-height:1.85;margin:0}
+.plates-foot{font-size:12px;color:var(--ink-faint);line-height:1.8;border-left:2px solid var(--line);
+  padding:2px 0 2px 12px;margin:22px 0 0}
+
+.genre-sec{margin:0 0 22px}
+.genre-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:0 0 8px}
+.genre-name{font-family:var(--serif);font-size:14px;font-weight:600;letter-spacing:.06em}
+.genre-name::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:7px;
+  background:linear-gradient(140deg,var(--dress-1),var(--dress-2));vertical-align:middle}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.slot{aspect-ratio:.72;border-radius:2px;border:1px dashed color-mix(in srgb,var(--ink-faint) 34%,transparent);
+  background:color-mix(in srgb,var(--ink-faint) 5%,transparent);display:flex;align-items:center;
+  justify-content:center;font-family:var(--serif);font-size:10px;color:var(--ink-faint);opacity:.45;letter-spacing:.1em}
+.slot.filled{border:0;opacity:1;background:none;padding:0;cursor:pointer}
+.slot.filled:hover .plate{box-shadow:0 5px 14px rgba(60,42,18,.42),inset 0 0 0 1px rgba(91,69,38,.5),
+  inset 0 0 0 3px rgba(91,69,38,.1)}
+.slot.filled:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ---- 押印の儀式 ---- */
+.stamp-ov{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;
+  background:rgba(8,6,3,.74);backdrop-filter:blur(3px);padding:20px;cursor:pointer}
+.endpaper{background:linear-gradient(165deg,var(--paper),var(--paper-2));border-radius:3px;
+  padding:30px 26px;box-shadow:0 24px 60px rgba(0,0,0,.6),inset 0 0 44px rgba(120,92,48,.24);
+  display:flex;align-items:center;justify-content:center;animation:st-fade .3s ease both}
+.endpaper .big-plate{transform-origin:50% 42%;animation:st-stamp .62s cubic-bezier(.3,1.7,.4,1) both}
+@keyframes st-stamp{0%{transform:scale(2.5) rotate(-6deg);opacity:0;filter:blur(4px)}
+  55%{opacity:1;filter:blur(0)}72%{transform:scale(.94) rotate(.6deg)}100%{transform:none;opacity:1}}
+@keyframes st-fade{from{opacity:0}to{opacity:1}}
+.stamp-cap{text-align:center;margin-top:18px;animation:st-fade .4s .35s ease both}
+.stamp-cap .k{font-family:var(--serif);font-size:16px;color:#f3e7cf;letter-spacing:.06em;margin:0 0 3px}
+.stamp-cap .s{font-family:var(--mono);font-size:11px;color:rgba(243,231,207,.62);
+  font-variant-numeric:tabular-nums;margin:0}
+.stamp-cap .s.first{font-family:var(--serif);font-size:12.5px;margin-top:10px;color:rgba(243,231,207,.8);
+  line-height:1.7}
+
+/* ---- 票の詳細シート ---- */
+.sheet{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;
+  background:rgba(8,6,3,.6);backdrop-filter:blur(3px);padding:20px}
+.sheet-in{background:var(--panel);border-radius:12px;padding:22px 20px;box-shadow:var(--shadow-lg);
+  max-width:330px;width:100%;display:flex;flex-direction:column;align-items:center;gap:13px;
+  animation:st-pop .3s cubic-bezier(.2,1.3,.4,1) both;max-height:100%;overflow-y:auto}
+@keyframes st-pop{from{transform:scale(.9);opacity:0}to{transform:none;opacity:1}}
+.sheet-frame{font-family:var(--serif);font-size:14px;font-weight:600;text-align:center;line-height:1.6;
+  color:var(--ink);text-wrap:balance;margin:0}
+.sheet-meta{font-family:var(--mono);font-size:11px;color:var(--ink-faint);font-variant-numeric:tabular-nums;margin:0}
+.sheet-src{font-size:11px;color:var(--ink-faint);text-align:center;margin:-6px 0 0;line-height:1.6}
+.sheet-close{background:var(--panel-2);border:1px solid var(--line);color:var(--ink-soft);border-radius:999px;
+  padding:8px 22px;cursor:pointer;font-family:var(--sans);font-size:13px}
+.sheet-close:hover{border-color:var(--accent);color:var(--ink)}
+.sheet-close:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+@media (prefers-reduced-motion:reduce){
+  .endpaper,.endpaper .big-plate,.stamp-cap,.sheet-in{animation:none!important}
+}
