@@ -1,7 +1,7 @@
 {
   "show": "世界の名著",
   "plan": {
-    "totalBooks": 66,
+    "totalBooks": 61,
     "genres": [
       {
         "key": "philosophy",
@@ -26,7 +26,7 @@
       {
         "key": "sciphil",
         "label": "科学哲学",
-        "books": 15
+        "books": 10
       },
       {
         "key": "literature",
