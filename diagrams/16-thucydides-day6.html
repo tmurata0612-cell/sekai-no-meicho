@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 トゥキュディデスDay6 — 利益の言葉で、人道を通す</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .card-l{fill:var(--heat-soft); stroke:var(--heat); stroke-width:1.4;}
+  .art .card-r{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.4;}
+  .art .res-l{fill:var(--panel); stroke:var(--heat); stroke-width:1.4;}
+  .art .res-r{fill:var(--panel); stroke:var(--calm); stroke-width:1.4;}
+  .art .flow{fill:none; stroke:var(--faint); stroke-width:1.6;}
+  .art .flowhead{fill:var(--faint);}
+  .art .ctitle{font-family:var(--serif); font-weight:700; font-size:12.5px; text-anchor:middle; fill:var(--ink);}
+  .art .stage-l{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--heat);}
+  .art .stage-r{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--calm);}
+  .art .grk{font-family:var(--serif); font-style:italic; font-size:10px; text-anchor:middle; fill:var(--calm);}
+  .art .res{font-family:var(--serif); font-weight:700; font-size:12.5px; text-anchor:middle; fill:var(--ink);}
+  .art .flip{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--seal);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>議題を、すり替える</h1>
+      <p class="dek">怒りに満ちた議場で「情けをかけろ」と正義を訴えても勝てない——<b>怒りは、正義の言葉のほうが上手い</b>から。ディオドトスは議題そのものを取り替えた:「彼らは罪深いか」→「我々は、うまく決められるか（εὐβουλία）」。「その方が得だ」と論じて勝ち、結果として人が助かった。</p>
+      <div class="source"><span class="seal">戦史</span><span>トゥキュディデス ・ Day6「利益の言葉で、人道を通す」第3巻44章</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">怒りの議場で人を救ったのは、<span class="em">情け</span>ではなく——その方が得だ、という一手。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 268" role="img" aria-label="同じ議場・翌日・違う議題札で結論が反転する図。左＝クレオンの議題『彼らは罪深いか』→正義の土俵→怒りが勝つ→処刑（前427年可決）。右＝ディオドトスの議題『我々はうまく決められるか（εὐβουλία）』→利益の土俵→計算が勝つ→助命">
+          <rect class="card-l" x="46" y="34" width="184" height="38" rx="6"/>
+          <text class="ctitle" x="138" y="58">彼らは、罪深いか?</text>
+          <rect class="card-r" x="290" y="34" width="192" height="38" rx="6"/>
+          <text class="ctitle" x="386" y="58">我々は、決められるか?</text>
+          <path class="flow" d="M138 72 L138 100"/><path class="flowhead" d="M138 108 L133 98 L143 98 Z"/>
+          <path class="flow" d="M386 72 L386 100"/><path class="flowhead" d="M386 108 L381 98 L391 98 Z"/>
+          <text class="stage-l" x="138" y="126">正義の土俵</text>
+          <text class="stage-r" x="386" y="120">利益の土俵</text>
+          <text class="grk" x="386" y="136">εὐβουλία</text>
+          <path class="flow" d="M138 138 L138 160"/><path class="flowhead" d="M138 168 L133 158 L143 158 Z"/>
+          <path class="flow" d="M386 148 L386 160"/><path class="flowhead" d="M386 168 L381 158 L391 158 Z"/>
+          <text class="stage-l" x="138" y="188">怒りが勝つ</text>
+          <text class="stage-r" x="386" y="188">計算が勝つ</text>
+          <path class="flow" d="M138 198 L138 214"/><path class="flowhead" d="M138 222 L133 212 L143 212 Z"/>
+          <path class="flow" d="M386 198 L386 214"/><path class="flowhead" d="M386 222 L381 212 L391 212 Z"/>
+          <rect class="res-l" x="58" y="224" width="160" height="34" rx="6"/>
+          <text class="res" x="138" y="246">処刑（前427年・可決）</text>
+          <rect class="res-r" x="306" y="224" width="160" height="34" rx="6"/>
+          <text class="res" x="386" y="246">助命</text>
+        </svg>
+        <div class="cap"><b>同じ人々・同じ議場・翌日・違う議題札 → 結論が反転する。</b><span class="r">処方＝正しさの土俵を降り、「その方が得だ」で通す。通したい中身が人道でも、通す言葉は利益でよい。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">ディオドトスの一手と、その代償</div>
+        <div class="wu fix"><div class="gi">替</div><div class="txt"><div class="nm">議題のすり替え</div><div class="ex">「彼らは罪深いか（正義）」→「我々は賢く決められるか（εὐβουλία）」。<b>堂々と宣言してから</b>替えた。</div></div></div>
+        <div class="wu hit"><div class="gi">得</div><div class="txt"><div class="nm">利益で勝つ</div><div class="ex">皆殺しにすれば以後どの同盟市も最後まで抵抗する（＝損）。<b>一言も「かわいそう」と言わず、皆殺しを止めた</b>。</div></div></div>
+        <div class="wu hit"><div class="gi">船</div><div class="txt"><div class="nm">二隻目の船</div><div class="ex">たまたま逆風がなく、<b>パケスが決議を読み終えたところに到着</b>。ミュティレネはこれだけの差で助かった。</div></div></div>
+        <div class="wu miss"><div class="gi">刃</div><div class="txt"><div class="nm">この手の代償</div><div class="ex"><b>「得なら殺す」という理屈でもある</b>。翌年、メロスで逆に働く（→Day7）。</div></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">通す言葉は、<br>利益でよい</div><div class="lb">通したい中身が人道でも、怒りの議場では「情けをかけろ」は勝てない。土俵を降りる。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>提案</em></div>
+          <p>時短勤務への配慮を制度化したいが「甘えだ」「不公平だ」の声が強い。<span class="now">正しさの土俵を降り、離職と再採用にいくらかかるかを出して、得だからやる、と論じ切る</span>。正義の土俵は、クレオンが待っている場所だ。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 二枚の議題札で、結論が反転する仕組みを一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

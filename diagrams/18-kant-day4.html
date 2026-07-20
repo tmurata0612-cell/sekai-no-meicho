@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 カントDay4 — 外せない眼鏡</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .blob{fill:var(--panel-2); stroke:var(--faint); stroke-width:1.4; stroke-dasharray:4 4;}
+  .art .lens{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.8;}
+  .art .frame{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.8;}
+  .art .cat{fill:var(--panel); stroke:var(--faint); stroke-width:1;}
+  .art .cat-on{fill:var(--heat-soft); stroke:var(--heat); stroke-width:1.6;}
+  .art .ray{stroke:var(--faint); stroke-width:1.4; fill:none;}
+  .art .flow{stroke:var(--seal); stroke-width:2.2; fill:none;}
+  .art .flow-h{fill:var(--seal);}
+  .art .hand{fill:none; stroke:var(--ink); stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;}
+  .art .icon{fill:none; stroke:var(--calm); stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round;}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle; fill:var(--ink);}
+  .art .lab-seal{fill:var(--seal);} .art .lab-calm{fill:var(--calm);}
+  .art .sub{font-family:var(--sans); font-size:11.5px; text-anchor:middle; fill:var(--muted);}
+  .art .sub-heat{fill:var(--heat); font-weight:700;}
+  .art .note{font-family:var(--sans); font-size:12px; text-anchor:middle; fill:var(--faint); font-weight:600;}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--heat);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>眼鏡は、<br>外して見比べられない。</h1>
+      <p class="dek">我々は<b>必ず</b>、時間・空間という形式と、因果を含む枠を通してしか経験できない。この眼鏡は、外して世界と見比べることができない——<b>外そうとする手も、外した先を見る目も、すべて眼鏡の内側にある</b>から。だから「先入観のない、まっさらな目」は、原理的に存在しない。外せるのは、枠ではなく中身の偏見だけ。</p>
+      <div class="source"><span class="seal">純粋理性批判</span><span>カント ・ Day4「外せない眼鏡」超越論的感性論 A51/B75</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">空間・時間・因果は、世界の性質ではなく、<span class="em">こちらの装備</span>。外そうとする手も、レンズの内側。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 300" role="img" aria-label="左の物自体（あえて描かない塊）からの光が、レンズ1（感性の形式＝空間・時間）とレンズ2（悟性のカテゴリー。12個のうち原因と結果だけが光る）を通り、右にくっきりした経験を結ぶ。眼鏡を外そうとする手も、レンズの内側にある">
+          <!-- thing-in-itself (undrawn) -->
+          <path class="blob" d="M40 130 q-8 -22 16 -26 q22 -10 30 8 q14 -2 12 18 q6 18 -14 22 q-10 16 -28 4 q-20 2 -16 -18 q-8 -6 -2 -8 Z"/>
+          <text class="lab" x="62" y="200">物自体</text>
+          <text class="sub" x="62" y="216">描かない</text>
+          <!-- rays -->
+          <line class="ray" x1="92" y1="118" x2="150" y2="128"/>
+          <line class="ray" x1="94" y1="140" x2="150" y2="150"/>
+          <line class="ray" x1="90" y1="160" x2="150" y2="172"/>
+
+          <!-- lens 1: forms of sensibility -->
+          <text class="lab lab-seal" x="176" y="82">レンズ1：感性の形式</text>
+          <path class="lens" d="M176 96 q30 54 0 108 q-30 -54 0 -108 Z"/>
+          <text class="sub" x="176" y="228">空間＝外向き</text>
+          <text class="sub" x="176" y="244">時間＝内向き</text>
+          <!-- hand reaching to the temple, inside the lens area -->
+          <path class="hand" d="M150 150 q-16 -4 -26 6 q-8 4 -14 2"/>
+          <path class="hand" d="M124 156 l-6 6 M132 158 l-5 7"/>
+
+          <!-- arrow lens1 -> lens2 -->
+          <line class="flow" x1="204" y1="150" x2="284" y2="150"/>
+          <path class="flow-h" d="M288 150 l-9 -5 l0 10 Z"/>
+
+          <!-- lens 2: categories of understanding -->
+          <text class="lab lab-seal" x="316" y="82">レンズ2：悟性の枠</text>
+          <path class="lens" d="M316 96 q30 54 0 108 q-30 -54 0 -108 Z"/>
+          <rect class="cat" x="300" y="112" width="9" height="9" rx="1.5"/>
+          <rect class="cat" x="312" y="112" width="9" height="9" rx="1.5"/>
+          <rect class="cat" x="324" y="112" width="9" height="9" rx="1.5"/>
+          <rect class="cat-on" x="300" y="128" width="9" height="9" rx="1.5"/>
+          <rect class="cat" x="312" y="128" width="9" height="9" rx="1.5"/>
+          <rect class="cat" x="324" y="128" width="9" height="9" rx="1.5"/>
+          <rect class="cat" x="300" y="144" width="9" height="9" rx="1.5"/>
+          <rect class="cat" x="312" y="144" width="9" height="9" rx="1.5"/>
+          <rect class="cat" x="324" y="144" width="9" height="9" rx="1.5"/>
+          <rect class="cat" x="300" y="160" width="9" height="9" rx="1.5"/>
+          <rect class="cat" x="312" y="160" width="9" height="9" rx="1.5"/>
+          <rect class="cat" x="324" y="160" width="9" height="9" rx="1.5"/>
+          <text class="sub sub-heat" x="316" y="228">「原因と結果」だけが光る</text>
+          <text class="sub" x="316" y="244">他の11個は、今夜は暗いまま</text>
+
+          <!-- arrow lens2 -> experience -->
+          <line class="flow" x1="344" y1="150" x2="386" y2="150"/>
+          <path class="flow-h" d="M390 150 l-9 -5 l0 10 Z"/>
+
+          <!-- experience (crisp) -->
+          <rect class="frame" x="398" y="112" width="86" height="76" rx="8"/>
+          <path class="icon" d="M416 152 l10 11 l20 -24"/>
+          <text class="lab lab-calm" x="441" y="206">経験＝くっきり</text>
+
+          <!-- bottom lane -->
+          <rect class="cat" x="20" y="256" width="480" height="30" rx="8" style="fill:var(--panel-2);stroke:var(--line-soft)"/>
+          <text class="note" x="260" y="275">眼鏡を外そうとする手も、外した先を見る目も、すべてレンズの内側にある</text>
+        </svg>
+        <div class="cap"><b>内容のない思考は空虚であり、概念のない直観は盲目である。</b><span class="r">処方＝「まっさらな目で」と言われたら、外せるのは中身の偏見だけで、枠は残る、と補正する。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">枠と中身を、分ける</div>
+        <div class="wu miss"><div class="gi">感</div><div class="txt"><div class="nm">感性＝受け取る側（材料を与える）</div><div class="ex">直観という<b>中身</b>を供給する。これが無ければ、思考は<b>空虚</b>——型だけで、盛るものが無い。</div></div></div>
+        <div class="wu miss"><div class="gi">悟</div><div class="txt"><div class="nm">悟性＝繋ぐ側（型を与える）</div><div class="ex">因果などの<b>型</b>で繋ぐ。これが無ければ、直観は<b>盲目</b>——光だけで、意味を結べない。</div></div></div>
+        <div class="wu hit"><div class="gi">脱</div><div class="txt"><div class="nm">外せるもの</div><div class="ex">中身の偏見・思い込み・文化的な色眼鏡。<b>これは洗える</b>。カントは枠を確定して、この仕事を可能にした。</div></div></div>
+        <div class="wu fix"><div class="gi">固</div><div class="txt"><div class="nm">外せないもの</div><div class="ex">時間・空間・因果という<b>形式そのもの</b>。外そうとする手も、外した先を見る目も、内側にある。</div></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">「まっさらな目」は、<br>存在しない。</div><div class="lb">外に出て見比べた人はいない。カントは外さず、部屋の中の矛盾から部屋の形を当てた（＝超越論的）。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>まっさらな目</em></div>
+          <p>「先入観を捨てて、まっさらな目で新しい人を見よう」という方針——<span class="now">まっさらな目は無い。外せるのは中身の偏見だけ</span>。「枠は外せないと認めた上で、中身の偏見を洗う」に直すと機能する。「どうせ無理」は、フレームの帰結ではなくニヒリズム。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 外せないレンズ2枚で、感性の形式とカテゴリーを一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

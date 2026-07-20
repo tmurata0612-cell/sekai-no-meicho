@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 ポアンカレDay4 — 仮説の一生</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .desk{stroke:var(--muted); stroke-width:2;}
+  .art .hyp{fill:var(--heat-soft); stroke:var(--heat); stroke-width:1.6;}
+  .art .fork{fill:none; stroke:var(--ink); stroke-width:1.6;}
+  .art .thin{fill:none; stroke:var(--calm); stroke-width:2;}
+  .art .thick{fill:none; stroke:var(--heat); stroke-width:5.5;}
+  .art .headc{fill:var(--calm);}
+  .art .headh{fill:var(--heat);}
+  .art .boxs{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.4;}
+  .art .boxb{fill:var(--heat-soft); stroke:var(--heat); stroke-width:1.8;}
+  .art .ghost{fill:var(--panel); stroke:var(--faint); stroke-width:1.6; stroke-dasharray:4 3;}
+  .art .ghostline{stroke:var(--faint); stroke-width:1.2; stroke-dasharray:3 3;}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle; fill:var(--ink);}
+  .art .lab-calm{fill:var(--calm);} .art .lab-heat{fill:var(--heat);} .art .lab-faint{fill:var(--faint);}
+  .art .sub{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--muted);}
+  .art .qm{font-family:var(--serif); font-weight:700; font-size:11px; text-anchor:middle; fill:var(--faint);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>仮説は、早く出して、<br>早く殺せ。</h1>
+      <p class="dek">一般化はすべて仮説であり、仮説には必要な役割がある。<b>ただし、できるだけ早く、できるだけ何度も、検証にかけよ</b>。覆された仮説は、当たった仮説よりも働く——仮説が無ければ、驚くべき事実は、驚くべきものとして見えないからだ。危険なのは、暗黙で無意識な仮説だけ。</p>
+      <div class="source"><span class="seal">科学と仮説</span><span>ポアンカレ ・ Day4「仮説は、早く出して、早く殺せ」第4部 第9章</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">仮説は<span class="em">一つだけ</span>放つ。当たれば小さな箱。だが、覆されたときの箱のほうが、ずっと大きい。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 272" role="img" aria-label="机から仮説を一つ放つ。分岐して、上の細い道＝当たる（事実が一つ増えるだけ）、下の太い道＝覆される（思いがけない発見の機会）。机の下には暗黙・無意識の仮説が点線の亡霊として潜む">
+          <!-- 机 -->
+          <line class="desk" x1="26" y1="112" x2="96" y2="112"/>
+          <line class="desk" x1="36" y1="112" x2="36" y2="142"/>
+          <line class="desk" x1="86" y1="112" x2="86" y2="142"/>
+          <text class="sub" x="61" y="158">机（考える）</text>
+          <!-- 仮説を放つ -->
+          <circle class="hyp" cx="120" cy="106" r="14"/>
+          <text class="lab lab-heat" x="120" y="110.5">仮</text>
+          <line class="thin" x1="136" y1="106" x2="214" y2="106" stroke="var(--ink)" stroke-width="2.2"/>
+          <polygon points="214,100 228,106 214,112" fill="var(--ink)"/>
+          <circle class="fork" cx="236" cy="106" r="9"/>
+          <text class="qm" x="236" y="111">?</text>
+
+          <!-- 上枝：当たる（細い） -->
+          <path class="thin" d="M245 100 C288 84 300 74 322 68"/>
+          <polygon class="headc" points="318,62 334,66 320,74"/>
+          <rect class="boxs" x="326" y="44" width="176" height="46" rx="8"/>
+          <text class="lab lab-calm" x="414" y="63">① 当たる</text>
+          <text class="sub" x="414" y="81">事実が一つ、目録に増えるだけ</text>
+
+          <!-- 下枝：覆される（太い） -->
+          <path class="thick" d="M244 116 C286 138 296 150 318 162"/>
+          <polygon class="headh" points="312,152 330,166 308,166"/>
+          <rect class="boxb" x="320" y="150" width="186" height="62" rx="8"/>
+          <text class="lab lab-heat" x="413" y="172">② 覆される</text>
+          <text class="sub" x="413" y="190">思いがけない発見の機会</text>
+          <text class="sub" x="413" y="206" style="fill:var(--heat);">＝当たった仮説より、多く働く</text>
+
+          <!-- 亡霊：暗黙の仮説 -->
+          <line class="ghostline" x1="61" y1="142" x2="76" y2="196"/>
+          <circle class="ghost" cx="74" cy="214" r="15"/>
+          <text class="qm" x="74" y="218.5">?</text>
+          <text class="sub" x="170" y="238" style="fill:var(--faint);">暗黙・無意識の仮説</text>
+          <text class="sub" x="170" y="254" style="fill:var(--faint);">＝式に落として暴く</text>
+        </svg>
+        <div class="cap"><b>覆された道が、太い。仮説を捨てた者は、発見の機会を手に入れている。</b><span class="r">処方＝一つずつ、早く出して早く検証。外れたら喜んで捨てる。そして暗黙の仮説は、式・数字・期日に落として暴く。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">仮説の扱い方、四手</div>
+        <div class="wu hit"><div class="gi">早</div><div class="txt"><div class="nm">早く出す</div><div class="ex">軽々しく採ってはいかんが、抱えていてもいかん。<b>できるだけ早く、できるだけ何度も検証にかける</b>。出さない仮説は、間違えることも、実ることもない。</div></div></div>
+        <div class="wu miss"><div class="gi">一</div><div class="txt"><div class="nm">一度に、一つずつ</div><div class="ex">複数の仮説を同時に立てて実験に咎められると、<b>どの前提を変えればいいか分からなくなる</b>。一つの方程式で、いくつもの未知数は決まらない。</div></div></div>
+        <div class="wu hit"><div class="gi">喜</div><div class="txt"><div class="nm">覆されたら、喜ぶ</div><div class="ex">自分の仮説を捨てたばかりの物理学者は、むしろ喜びに満ちているべきだ。<b>思いがけない発見の機会を、いま手に入れた</b>のだから。</div></div></div>
+        <div class="wu fix"><div class="gi">式</div><div class="txt"><div class="nm">暗黙を、式に落とす</div><div class="ex">危険なのは、暗黙で無意識な仮説——知らずに立てているから捨てようがない。<b>式に書け・数字を入れろ・期日を切れと言われた瞬間、隠れ場所が無くなる</b>。</div></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">「仮説が無ければ、<br>驚きは、見えない」</div><div class="lb">仮説を立てずに偶然その実験をしても、異常なものは何も見えない。ただ事実が一つ、目録に増えるだけ。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>打ち手</em></div>
+          <p>売上が落ちて、値下げ・開店前倒し・看板刷新・新商品を<span class="now">同じ週に全部やった</span>。翌月、戻った——だが、何が効いたかは、もう分からない。四つ同時に動かせば、次に落ちたとき、何を繰り返せばいいか読めない。失ったのは金ではなく、知識だ。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 仮説の一生で、「当たり」より「覆され」のほうが太い道だと一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 プラトンDay4 — ソクラテス問題／借りられた名前</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .face{fill:var(--panel-2); stroke:var(--seal); stroke-width:2.2;}
+  .art .ink{stroke:var(--faint); stroke-width:1.3; stroke-linecap:round; opacity:.7;}
+  .art .word{font-family:var(--serif); font-style:italic; font-size:11px; fill:var(--muted); opacity:.85;}
+  .art .brush{stroke:var(--heat); stroke-width:3.4; stroke-linecap:round;}
+  .art .tip{fill:var(--heat);}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:14px; text-anchor:middle;}
+  .art .lab-s{fill:var(--seal);} .art .lab-p{fill:var(--heat);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s} .diagram>*:nth-child(5){animation-delay:.18s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>その顔は、<br>書かれた言葉でできている。</h1>
+      <p class="dek">ソクラテスは一行も書かなかった。私たちが知る彼の顔は、<b>輪郭も中身も、プラトンの筆が書いた言葉</b>でできている。神は「彼の名を借りて例に使った」（23a）——そして<b>プラトンは、彼の名を借りて書いた</b>。どこまでが本人か。二千四百年、決着していない。</p>
+      <div class="source"><span class="seal">ソクラテスの弁明・パイドン</span><span>プラトン ・ Day4「ソクラテス問題」38b・59b</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">伝えた人の手を経ていない言葉は、<span class="em">存在しない</span>。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 250" role="img" aria-label="ソクラテスの横顔の輪郭線。その内側は書かれた言葉の行で埋まっている。右下から一本の筆が伸びて輪郭線そのものを描いており、筆の柄にプラトンとある">
+          <defs>
+            <clipPath id="faceClip"><path d="M300,42 C232,26 150,58 140,112 C136,124 152,130 148,142 L120,152 L150,164 C150,178 160,180 150,192 C150,208 176,214 192,236 L300,236 C316,180 320,92 300,42 Z"/></clipPath>
+          </defs>
+          <!-- face outline -->
+          <path class="face" d="M300,42 C232,26 150,58 140,112 C136,124 152,130 148,142 L120,152 L150,164 C150,178 160,180 150,192 C150,208 176,214 192,236 L300,236 C316,180 320,92 300,42 Z"/>
+          <!-- interior filled with lines of "written words" (clipped to the face) -->
+          <g clip-path="url(#faceClip)">
+            <line class="ink" x1="150" y1="96" x2="286" y2="96"/>
+            <line class="ink" x1="150" y1="112" x2="290" y2="112"/>
+            <line class="ink" x1="160" y1="128" x2="292" y2="128"/>
+            <line class="ink" x1="150" y1="158" x2="292" y2="158"/>
+            <line class="ink" x1="152" y1="174" x2="290" y2="174"/>
+            <line class="ink" x1="170" y1="190" x2="292" y2="190"/>
+            <line class="ink" x1="176" y1="206" x2="290" y2="206"/>
+            <line class="ink" x1="196" y1="222" x2="288" y2="222"/>
+            <text class="word" x="206" y="145">ソクラテスは、こう言った——</text>
+          </g>
+          <!-- brush drawing the outline; tip on the back of the head -->
+          <line class="brush" x1="440" y1="222" x2="308" y2="70"/>
+          <path class="tip" d="M308,70 L322,80 L316,88 Z"/>
+          <text class="lab lab-p" x="452" y="212">プラトン</text>
+          <!-- labels -->
+          <text class="lab lab-s" x="150" y="24">ソクラテス</text>
+        </svg>
+        <div class="cap"><b>顔の輪郭も、中の言葉も、描いているのはプラトンの筆。</b><span class="r">処方＝「誰の手を経て届いた言葉か」を確かめる。伝えた人がいなければ、その言葉は存在しない。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">ソクラテス問題 — 三つの事実</div>
+        <div class="wu miss"><div class="gi">無</div><div class="txt"><div class="nm">一行も書かなかった</div><div class="ex">ソクラテスの言葉として残るものは、<b>すべて他人が書いたもの</b>。本人の筆跡は、一行も存在しない。</div></div></div>
+        <div class="wu miss"><div class="gi">三</div><div class="txt"><div class="nm">三者の像が、食い違う</div><div class="ex">伝えるのはプラトン・クセノフォン・アリストファネスの三人。<b>三者の描くソクラテスは一致しない</b>。</div></div></div>
+        <div class="wu fix"><div class="gi">境</div><div class="txt"><div class="nm">境界は、未確定</div><div class="ex">初期対話篇＝実像に近い／後期のイデア論＝プラトン自身、が学術的コンセンサス。<b>どこまでが本人かは、二千四百年決着していない</b>。</div></div></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">原典二箇所の対比 — 書き込み と 消し</div>
+        <div class="wu hit"><div class="gi">書</div><div class="txt"><div class="nm">『弁明』38b — 自分を書き込んだ</div><div class="ex"><b>「ここにいるプラトンが、三十ムナと」</b>。金を出す側として、自分を作中に登場させた。</div></div></div>
+        <div class="wu fix"><div class="gi">消</div><div class="txt"><div class="nm">『パイドン』59b — 自分を消した</div><div class="ex"><b>「プラトンは、思うに、病気でした」</b>。師の最期に、自分だけ不在。しかも「思うに」と、他人事のように。</div></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">借りられた名前が、<br>二千四百年、喋り続けている。</div><div class="lb">神は、彼の名を借りて例に使った（23a）。プラトンは、彼の名を借りて書いた。それが、私にできた、たった一つのことだった。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたが読む<em>発言</em></div>
+          <p>切り抜き・要約・“〜が言ったらしい”引用——<span class="now">伝えた人の手を経ていない言葉は、存在しない</span>。何と言ったかの前に、誰の手を何回経て、どこを削られて届いたのかを、まず確かめる。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 書かれた言葉でできた横顔と、それを描く筆で、ソクラテス問題を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

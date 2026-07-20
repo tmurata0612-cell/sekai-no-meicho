@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 デュルケームDay5 — 過少と過剰／2軸の地図</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .axis{stroke:var(--line); stroke-width:1.6;}
+  .art .axis-head{fill:var(--faint);}
+  .art .cell{fill:var(--panel); stroke:var(--line); stroke-width:1.3;}
+  .art .cell-ill{fill:var(--heat-soft); stroke:var(--heat); stroke-width:1.3;}
+  .art .cell-note{fill:none; stroke:var(--heat); stroke-width:1.5; stroke-dasharray:5 4;}
+  .art .opt{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.5;}
+  .art .type{font-family:var(--serif); font-weight:700; font-size:14px; text-anchor:middle; fill:var(--ink);}
+  .art .type-note{fill:var(--heat); opacity:.85;}
+  .art .type-opt{fill:var(--calm);}
+  .art .sub{font-family:var(--sans); font-size:10.5px; text-anchor:middle; fill:var(--muted);}
+  .art .axlab{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--seal); font-weight:700;}
+  .art .fn{font-family:var(--serif); font-size:14px; text-anchor:middle; fill:var(--heat); font-weight:700;}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>足りない側だけでなく、<br>多すぎる側にも病がある。</h1>
+      <p class="dek">結びつき（統合）の軸と、枠（規制）の軸は、<b>別の軸</b>である。そして<b>どちらの軸にも、「足りない」側と「多すぎる」側の両方に病がある</b>。つまり、真ん中に最適点がある。生けるものの秩序において、度を越して良いものは何もない——<b>過剰な個人化が人を追い込むなら、不十分な個人化もまた、同じ結果を生む。</b></p>
+      <div class="source"><span class="seal">自殺論</span><span>デュルケーム ・ Day5「過少と過剰・2軸の地図」第2篇第4〜5章</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">二本の軸、四つの升目。<span class="em">四つ目</span>は、一行の脚注で済まされた。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 320" role="img" aria-label="二本の軸で切った地図。横軸は統合、両端に利己的と集団本位的。縦軸は規制、両端にアノミー的と宿命的。真ん中が最適点。宿命的の升目だけが点線で描かれ、脚注記号がついている">
+          <!-- axes -->
+          <line class="axis" x1="60" y1="160" x2="460" y2="160"/>
+          <line class="axis" x1="260" y1="46" x2="260" y2="280"/>
+          <polygon class="axis-head" points="460,160 448,154 448,166"/>
+          <polygon class="axis-head" points="60,160 72,154 72,166"/>
+          <polygon class="axis-head" points="260,46 254,58 266,58"/>
+          <polygon class="axis-head" points="260,280 254,268 266,268"/>
+          <text class="axlab" x="430" y="128">統合の軸</text>
+          <text class="axlab" x="300" y="62">規制の軸</text>
+
+          <!-- top end: anomic (regulation too little) -->
+          <rect class="cell-ill" x="206" y="20" width="108" height="34" rx="6"/>
+          <text class="type" x="260" y="42">アノミー的</text>
+          <text class="sub" x="260" y="72">枠が、ゆるい</text>
+
+          <!-- bottom end: fatalistic (regulation too much) — DASHED + footnote -->
+          <rect class="cell-note" x="206" y="272" width="108" height="34" rx="6"/>
+          <text class="type type-note" x="256" y="294">宿命的</text>
+          <text class="fn" x="298" y="290">※</text>
+          <text class="sub" x="260" y="256">枠が、きつすぎる</text>
+
+          <!-- left end: egoistic (integration too little) -->
+          <rect class="cell-ill" x="26" y="143" width="92" height="34" rx="6"/>
+          <text class="type" x="72" y="165">利己的</text>
+          <text class="sub" x="72" y="196">結びつき薄い</text>
+
+          <!-- right end: altruistic (integration too much) -->
+          <rect class="cell-ill" x="386" y="143" width="108" height="34" rx="6"/>
+          <text class="type" x="440" y="165">集団本位的</text>
+          <text class="sub" x="440" y="196">結びつき過剰</text>
+
+          <!-- center: optimum -->
+          <rect class="opt" x="220" y="146" width="80" height="28" rx="14"/>
+          <text class="type type-opt" x="260" y="165">最適点</text>
+        </svg>
+        <div class="cap"><b>両端が病で、真ん中に健康。四つ目の升目だけが、点線＝脚注で済まされた。</b><span class="r">処方＝「足りているか」だけでなく「多すぎないか」も同時に問う。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">別の二軸・両端の病</div>
+        <div class="wu hit"><div class="gi">軸</div><div class="txt"><div class="nm">結びつきと枠は、別の軸</div><div class="ex">統合の軸＝<b>利己的（薄い）↔集団本位的（濃すぎ）</b>。規制の軸＝<b>アノミー的（ゆるい）↔宿命的（きつすぎ）</b>。度を越して良いものは何もない——最適点は、真ん中にある。</div></div></div>
+        <div class="wu miss"><div class="gi">軍</div><div class="txt"><div class="nm">過剰統合の証拠＝軍隊</div><div class="ex">軍務が嫌なら勤務が長いほど下がるはず。<b>事実は逆</b>——勤務が長いほど高く、志願兵と再入隊者が高く、将校と下士官が高く、精鋭部隊で最大。効くのは嫌悪ではなく、<b>集団への献身が過剰になった状態</b>。</div></div></div>
+        <div class="wu fix"><div class="gi">名</div><div class="txt"><div class="nm">名前は、社会の状態から採った</div><div class="ex">「その起源にちなんで」名付けた——人柄ではなく環境に付いている。離婚の多い社会で率が上がるのは<b>「悪い夫や悪い妻が多いから」ではない</b>。四つ目は脚注：例が難しいので、立ち止まるのは無益、と。</div></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">「多すぎ」<br>ないか?</div><div class="lb">過少だけでなく過剰にも病がある。強すぎる結束は、集団に不利益な行動を取れなくする。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>2軸</em></div>
+          <p>結束が非常に強く成果も高いチームで、<span class="now">このチームだけ重大な不具合の報告が異様に遅い</span>——誰も隠しておらず、全員が「迷惑をかけたくない」と本気で思っている。これは統合が多すぎる側。集団への献身が強すぎて、集団の不利益になる行動が取れなくなっている。軍隊で見つけた型と同じだ。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 二軸四升の地図で、過少と過剰の両側の病を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

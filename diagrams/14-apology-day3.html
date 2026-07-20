@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 プラトンDay3 — 暗黙の合意／三つの扉と壁</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .frame{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.8;}
+  .art .jamb{fill:none; stroke:var(--calm); stroke-width:1.8;}
+  .art .leaf{fill:var(--panel-2); stroke:var(--calm); stroke-width:1.4;}
+  .art .wall{fill:var(--panel); stroke:var(--line); stroke-width:1.6;}
+  .art .shut{fill:var(--panel-2); stroke:var(--faint); stroke-width:1.6;}
+  .art .cross{stroke:var(--heat); stroke-width:2.6; stroke-linecap:round;}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:14px; text-anchor:middle;}
+  .art .lab-o{fill:var(--calm);} .art .lab-x{fill:var(--heat);}
+  .art .sub{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--muted);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--heat); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--heat);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>留まったことが、<br>すでにサインである。</h1>
+      <p class="dek">制度に文句があるなら、道は三つ——<b>説得する・従う・出て行く</b>（財産を持って好きな土地へ）。三つとも開いている。だが四つ目、壁の中の<b>「黙って破る」だけは選べない</b>。それを選んだ瞬間、判決が私人の手で無効にされ、国そのものが立っていられなくなるから。</p>
+      <div class="source"><span class="seal">クリトン</span><span>プラトン ・ Day3「暗黙の合意」51d-52a</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">開いた扉が三つある。それでも<span class="em">四つ目</span>を選ぶと、制度が消える。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 272" role="img" aria-label="正面に三枚の開いた扉。左は出て行く、中央は説得する、右は従う。三枚とも開いている。下の壁の中に小さな四つ目の扉があり、黙って破ると書かれ、閉じてバツ印が付いている">
+          <!-- Door 1: LEAVE -->
+          <text class="lab lab-o" x="102" y="30">出て行く</text>
+          <rect class="frame" x="42" y="40" width="120" height="130" rx="4"/>
+          <line class="jamb" x1="70" y1="40" x2="70" y2="170"/>
+          <polygon class="leaf" points="42,40 70,52 70,158 42,170"/>
+          <text class="sub" x="118" y="106">財産を持って</text>
+          <!-- Door 2: PERSUADE -->
+          <text class="lab lab-o" x="260" y="30">説得する</text>
+          <rect class="frame" x="200" y="40" width="120" height="130" rx="4"/>
+          <line class="jamb" x1="228" y1="40" x2="228" y2="170"/>
+          <polygon class="leaf" points="200,40 228,52 228,158 200,170"/>
+          <text class="sub" x="276" y="106">国を変える</text>
+          <!-- Door 3: OBEY -->
+          <text class="lab lab-o" x="418" y="30">従う</text>
+          <rect class="frame" x="358" y="40" width="120" height="130" rx="4"/>
+          <line class="jamb" x1="386" y1="40" x2="386" y2="170"/>
+          <polygon class="leaf" points="358,40 386,52 386,158 358,170"/>
+          <text class="sub" x="434" y="106">判決に服す</text>
+
+          <!-- Wall band with the shut 4th door -->
+          <rect class="wall" x="42" y="204" width="436" height="56" rx="6"/>
+          <text class="lab lab-x" x="130" y="238">黙って破る</text>
+          <rect class="shut" x="226" y="210" width="68" height="44" rx="3"/>
+          <line class="cross" x1="234" y1="216" x2="286" y2="248"/>
+          <line class="cross" x1="286" y1="216" x2="234" y2="248"/>
+          <text class="lab lab-x" x="392" y="238">＝判決が力を失う</text>
+        </svg>
+        <div class="cap"><b>三つの扉は開いている。壁の中の四つ目だけが、閉じている。</b><span class="r">処方＝不満があるとき、まず「説得の窓」と「出口」が本当に開いているかを確かめる。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">国法が立ち上がって言う、三つの言い分</div>
+        <div class="wu hit"><div class="gi">生</div><div class="txt"><div class="nm">生み・育て・教育した</div><div class="ex">父母の結婚も、お前の教育も、我々の下にある。判決を無効にするのは、<b>親に暴力を振るうより悪い</b>（50e-51c）。</div></div></div>
+        <div class="wu hit"><div class="gi">行</div><div class="txt"><div class="nm">留まったのは、行いによる同意</div><div class="ex">我々の裁き方を見たうえで留まった者は、<b>言葉ではなく行い（エルゴー）によって同意した</b>、と我々は言う（51d-e）。</div></div></div>
+        <div class="wu hit"><div class="gi">択</div><div class="txt"><div class="nm">乱暴に命じてはいない</div><div class="ex"><b>「説得するか、従うか」の二択を差し出している</b>。盲従の要求ではない。説得の窓は開いている（52a）。</div></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">扉が本当に開いている、<br>あいだ、だけ。</div><div class="lb">限界＝出口と説得の窓、どちらかが閉じていたら「留まった＝同意」は、ただの脅しになる。七十歳の男に、言葉も通じぬ土地へ行けと言うのは、本当に選択肢か（52e）。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたが<em>居続けている場所</em></div>
+          <p>会社や組織のルールに不満。黙って自分だけ運用を変えるのは<span class="now">“四つ目の扉”——議論を経ずに、ルールを空文にする行い</span>。手を打つ前に、説得の窓（総会・提案）と出口（退会・転職）が、自分にとって本当に開いているかを確かめる。閉じていたなら、話は変わる。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 三つの開いた扉と閉じた四つ目で、暗黙の合意とその限界を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

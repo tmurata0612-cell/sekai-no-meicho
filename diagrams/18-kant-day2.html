@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 カントDay2 — コペルニクス的転回</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .lane{fill:var(--panel-2); stroke:var(--line-soft); stroke-width:1;}
+  .art .div{stroke:var(--line); stroke-width:1.2; stroke-dasharray:4 4;}
+  .art .orbit-bad{fill:none; stroke:var(--heat); stroke-width:1.8;}
+  .art .orbit-good{fill:none; stroke:var(--calm); stroke-width:1.8;}
+  .art .center{fill:var(--panel); stroke:var(--seal); stroke-width:2;}
+  .art .planet{fill:var(--panel); stroke:var(--muted); stroke-width:1.6;}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:14px; text-anchor:middle; fill:var(--ink);}
+  .art .lab-good{font-family:var(--serif); font-weight:700; font-size:13.5px; text-anchor:middle; fill:var(--calm);}
+  .art .lab-bad{font-family:var(--serif); font-weight:700; font-size:13.5px; text-anchor:middle; fill:var(--heat);}
+  .art .cn{font-family:var(--serif); font-weight:700; font-size:12.5px; text-anchor:middle; fill:var(--seal);}
+  .art .sub{font-family:var(--sans); font-size:11.5px; text-anchor:middle; fill:var(--muted);}
+  .art .mid{font-family:var(--serif); font-weight:700; font-size:13.5px; text-anchor:middle; fill:var(--ink);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--heat);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--heat-soft);color:var(--heat);} .wu.fix .gi{background:var(--seal-soft);color:var(--seal);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>回っていたのは、<br>こちらだった。</h1>
+      <p class="dek">天文学者は「星が我々を回る」を「<b>我々のほうが回る</b>」に反転させ、継ぎ足しだらけの軌道を一手で単純にした。カントは「認識が対象を写し取る」を「<b>こちらの構造が世界の見え方を作る</b>」に反転させた。<b>上の絵と下の絵は、同じ形</b>——やったことは、コペルニクスと同じ一手。</p>
+      <div class="source"><span class="seal">純粋理性批判</span><span>カント ・ Day2「コペルニクス的転回」第2版序文 B XVI</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">説明を足すのをやめ、<span class="em">どちらが中心か</span>を反転させる。上と下は、同じ一手。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 348" role="img" aria-label="上段は天動説（観測者が中心・周転円だらけ）と地動説（観測者が回る・単純）の対比。下段はまったく同じ形の図で、ラベルだけ「認識が対象に従う／対象が認識に従う」に差し替えてある。上下が同じ絵であることが要点">
+          <!-- ROW 1: astronomy -->
+          <rect class="lane" x="20" y="30" width="480" height="132" rx="10"/>
+          <line class="div" x1="260" y1="44" x2="260" y2="148"/>
+          <text class="lab-bad" x="135" y="50">天動説＝観測者が中心</text>
+          <text class="lab-good" x="385" y="50">地動説＝観測者が回る</text>
+          <!-- left: messy geocentric -->
+          <path class="orbit-bad" d="M101 104 A34 34 0 1 1 169 104 A34 34 0 1 1 101 104 Z"/>
+          <path class="orbit-bad" d="M162 90 A9 9 0 1 1 180 90 A9 9 0 1 1 162 90 Z"/>
+          <path class="orbit-bad" d="M118 74 A8 8 0 1 1 134 74 A8 8 0 1 1 118 74 Z"/>
+          <circle class="center" cx="135" cy="104" r="8"/>
+          <text class="cn" x="135" y="90">地球</text>
+          <text class="sub" x="135" y="154">周転円を継ぎ足す＝ゴチャゴチャ</text>
+          <!-- right: clean heliocentric -->
+          <path class="orbit-good" d="M351 104 A34 34 0 1 1 419 104 A34 34 0 1 1 351 104 Z"/>
+          <circle class="center" cx="385" cy="104" r="8"/>
+          <circle class="planet" cx="419" cy="104" r="6"/>
+          <text class="cn" x="385" y="90">太陽</text>
+          <text class="sub" x="385" y="154">軌道はなめらか＝単純</text>
+
+          <!-- MIDDLE note: same picture -->
+          <text class="mid" x="260" y="182">＝ 上下は同じ絵。ラベルを入れ替えただけ。</text>
+
+          <!-- ROW 2: cognition -->
+          <rect class="lane" x="20" y="194" width="480" height="132" rx="10"/>
+          <line class="div" x1="260" y1="208" x2="260" y2="312"/>
+          <text class="lab-bad" x="135" y="214">認識が対象に従う</text>
+          <text class="lab-good" x="385" y="214">対象が認識に従う</text>
+          <!-- left: messy -->
+          <path class="orbit-bad" d="M101 268 A34 34 0 1 1 169 268 A34 34 0 1 1 101 268 Z"/>
+          <path class="orbit-bad" d="M162 254 A9 9 0 1 1 180 254 A9 9 0 1 1 162 254 Z"/>
+          <path class="orbit-bad" d="M118 238 A8 8 0 1 1 134 238 A8 8 0 1 1 118 238 Z"/>
+          <circle class="center" cx="135" cy="268" r="8"/>
+          <text class="cn" x="135" y="254">対象</text>
+          <text class="sub" x="135" y="318">説明を継ぎ足す＝ゴチャゴチャ</text>
+          <!-- right: clean -->
+          <path class="orbit-good" d="M351 268 A34 34 0 1 1 419 268 A34 34 0 1 1 351 268 Z"/>
+          <circle class="center" cx="385" cy="268" r="8"/>
+          <circle class="planet" cx="419" cy="268" r="6"/>
+          <text class="cn" x="385" y="254">認識</text>
+          <text class="sub" x="385" y="318">単純になる</text>
+        </svg>
+        <div class="cap"><b>同じ絵を、ラベルだけ入れ替えた。</b><span class="r">処方＝何十年も説明が合わないなら、説明を足すのをやめ、どちらが中心かを反転させてみる。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">転回の前と後で、説明できること</div>
+        <div class="wu miss"><div class="gi">前</div><div class="txt"><div class="nm">対象を見る前に、それを確実に言えるのはなぜか</div><div class="ex">転回前は<b>説明できない</b>／転回後は<b>当然</b>——対象がこちらの形に従うなら、見る前に言えて当たり前。</div></div></div>
+        <div class="wu miss"><div class="gi">数</div><div class="txt"><div class="nm">なぜ数学は、世界にこれほど当たるのか</div><div class="ex">転回前は<b>謎</b>／転回後は<b>当然</b>——数学もこちらの枠なら、世界の見え方に当たるのは当たり前。</div></div></div>
+        <div class="wu hit"><div class="gi">因</div><div class="txt"><div class="nm">因果の必然性は、どこから来たのか</div><div class="ex">転回前は<b>どこにも無い</b>（ヒュームの宿題）／転回後は<b>こちらから</b>来ている、と答えが立つ。</div></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">転回は、<br>それ自体では<br>証明ではない。</div><div class="lb">審判はただ一つ——転回した後、前より多くのことが説明できるようになったかどうか。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>合わない調査</em></div>
+          <p>「うちは品揃えが良いのに客が買わない」と、品揃え調査を何度も重ね、商品も増やした——<span class="now">「良い品揃え」の物差しを店が握ったまま調べるのは、周転円の継ぎ足し</span>。物差しを客の側の見え方に移し、そこから品揃えの意味を測り直すのが、転回の一手。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 上下で同じ絵をラベルだけ替え、コペルニクス的転回を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

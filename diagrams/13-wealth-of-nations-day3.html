@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 スミスDay3 — 市場の大きさ／輪と工程の数</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .ring{fill:none; stroke:var(--seal); stroke-width:1.6;}
+  .art .ring-2{fill:none; stroke:var(--calm); stroke-width:1.6;}
+  .art .ring-3{fill:none; stroke:var(--faint); stroke-width:1.4; stroke-dasharray:4 3;}
+  .art .pill{stroke:var(--calm); stroke-width:3; stroke-linecap:round;}
+  .art .pill-f{stroke:var(--faint); stroke-width:3; stroke-linecap:round;}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle;}
+  .art .lab-vis{fill:var(--calm);} .art .lab-inv{fill:var(--seal);} .art .lab-ink{fill:var(--ink);} .art .lab-f{fill:var(--faint);}
+  .art .sub{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--muted);}
+  .art .subL{font-family:var(--sans); font-size:11px; text-anchor:start; fill:var(--muted);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>専門化は、腕ではなく<br>相手の人数が決める。</h1>
+      <p class="dek">分業をどこまで細かく割れるかは、腕でも意志でも技術でもない。<b>交換の相手が何人いるか</b>で頭打ちになる。専門化とは「自分の作った余りを、他人の物と交換できる」ことが前提であり、その相手がいなければ、人は何でも自分でやる<b>村の何でも屋</b>に戻るしかない。だから専門特化は、能力の問題ではなく市場の問題だ。</p>
+      <div class="source"><span class="seal">国富論</span><span>スミス ・ Day3「市場の大きさ」第1篇第3章</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">市場の<span class="em">輪</span>が大きいほど、その中に立てられる専門職が増える。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 250" role="img" aria-label="左は同心の三つの輪。小さな村の輪、中くらいの町の輪、大きな港町の輪。右はそれぞれに対応する専門職の柱の数。村は一本の何でも屋、町は数本、港町は十八工程に荷担ぎ人足まで。輪の大きさと柱の本数が連動する">
+          <!-- concentric rings -->
+          <circle class="ring-3" cx="150" cy="128" r="118"/>
+          <circle class="ring-2" cx="150" cy="128" r="80"/>
+          <circle class="ring" cx="150" cy="128" r="42"/>
+          <text class="lab lab-inv" x="150" y="124">村</text>
+          <text class="sub" x="150" y="140" style="fill:var(--seal)">20戸</text>
+          <text class="lab lab-vis" x="150" y="80">町・数千</text>
+          <text class="lab lab-f" x="150" y="26">港町・数万</text>
+
+          <!-- pillars on the right, count grows with the ring -->
+          <text class="subL" x="316" y="52">村（20戸）</text>
+          <line class="pill-f" x1="316" y1="62" x2="316" y2="82"/>
+          <text class="subL" x="336" y="78" style="fill:var(--faint)">＝何でも屋 1本</text>
+
+          <text class="subL" x="316" y="118">町（数千）</text>
+          <g class="pill"><line x1="316" y1="128" x2="316" y2="148"/><line x1="330" y1="128" x2="330" y2="148"/><line x1="344" y1="128" x2="344" y2="148"/><line x1="358" y1="128" x2="358" y2="148"/></g>
+          <text class="subL" x="378" y="144" style="fill:var(--calm)">＝専門 数本</text>
+
+          <text class="subL" x="316" y="184">港町（数万）</text>
+          <g class="pill"><line x1="316" y1="194" x2="316" y2="214"/><line x1="326" y1="194" x2="326" y2="214"/><line x1="336" y1="194" x2="336" y2="214"/><line x1="346" y1="194" x2="346" y2="214"/><line x1="356" y1="194" x2="356" y2="214"/><line x1="366" y1="194" x2="366" y2="214"/><line x1="376" y1="194" x2="376" y2="214"/><line x1="386" y1="194" x2="386" y2="214"/><line x1="396" y1="194" x2="396" y2="214"/><line x1="406" y1="194" x2="406" y2="214"/><line x1="416" y1="194" x2="416" y2="214"/><line x1="426" y1="194" x2="426" y2="214"/></g>
+          <text class="subL" x="316" y="232" style="fill:var(--calm)">＝18工程＋荷担ぎ人足</text>
+        </svg>
+        <div class="cap"><b>20戸の村にピン専門はいない。荷担ぎ人足はロンドンにしかいない。</b><span class="r">処方＝専念できるかは、腕ではなく相手の数（市場の輪の大きさ）で測る。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">輪の大きさが、専門の数を決める</div>
+        <div class="wu hit"><div class="gi">輪</div><div class="txt"><div class="nm">輪が大きいほど、柱が増える</div><div class="ex">市場（交換の相手の数）が広いほど、その中に立てられる<b>専門職の柱が増える</b>。職業のリストは、町の大きさの関数。</div></div></div>
+        <div class="wu miss"><div class="gi">村</div><div class="txt"><div class="nm">村では、専念できない</div><div class="ex">20戸の村にピン専門がいたら、村中のピンは三日で足り、四日目から飢える。<b>だから畑も耕し屋根も葺く何でも屋に戻る</b>。</div></div></div>
+        <div class="wu fix"><div class="gi">逆</div><div class="txt"><div class="nm">狭い専門ほど、広い市場が要る</div><div class="ex">荷担ぎ人足は大きな町にしかいない。あなたの時代は<b>市場が桁違いに広い</b>から、ごく狭い専門でも食える（逆比例）。</div></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">専門化は、<br>能力ではなく、<br>相手の人数で<br>決まる。</div><div class="lb">分業がどこまで進むかは、常に交換する力の大きさ＝市場の大きさに限られる。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>専門店</em></div>
+          <p>人口8千人の町で「フランス菓子だけの専門店」を開きたい。腕は確か——<span class="now">最初に見るのは腕ではなく、その菓子だけを買う客が何人いるか</span>。市場は町の人口だけでなく、通販・観光・近隣の町でも広がる。輪の大きさを測る。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 輪の面積と柱の本数の連動で、市場が分業の上限を決める仕組みを一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -100,6 +100,62 @@ export const EMBLEM = {
     <line x1="33" y1="30" x2="21" y2="47"/>
     <g stroke-dasharray="3 2.5"><path d="M46 28l9 17"/><path d="M23 55h29"/></g>
     <g fill="currentColor" stroke="none"><path d="M56.5 47.5l-3.4-4.4 5.3 1z"/><path d="M55.5 55l-5-2.2v4.4z"/></g></g>`,
+
+  /* 星界の報告 Day1 図解「同じ空、違う数」— 裸眼では六つ、筒ごしでは四十二。見える数は道具が決める。
+     左＝裸眼の疎らな星、右＝筒ごしの密な星、間に筒 */
+  "12-sidereus": `<g ${S}><rect x="16" y="40" width="30" height="8" rx="2" transform="rotate(-38 31 44)"/>
+    <g fill="currentColor" stroke="none"><circle cx="11" cy="55" r="1.4"/><circle cx="18" cy="61" r="1.4"/><circle cx="7" cy="62" r="1.4"/></g>
+    <g fill="currentColor" stroke="none" opacity=".85"><circle cx="52" cy="13" r="1.2"/><circle cx="58" cy="11" r="1.2"/><circle cx="64" cy="14" r="1.2"/><circle cx="55" cy="19" r="1.2"/><circle cx="61" cy="21" r="1.2"/><circle cx="67" cy="19" r="1.2"/><circle cx="59" cy="27" r="1.2"/><circle cx="65" cy="28" r="1.2"/><circle cx="72" cy="24" r="1.2"/></g></g>`,
+
+  /* 国富論 Day1 図解「一本の針が十八に割れる」— 左＝一人一本、右＝工程分割で多数。分業＝工程の切り方 */
+  "13-wealth-of-nations": `<g ${S}><circle cx="13" cy="24" r="3.4"/><line x1="13" y1="27.4" x2="13" y2="47"/>
+    <path d="M20 35h12m-3-3l3 3-3 3"/>
+    <g stroke-width="1.2"><circle cx="42" cy="16" r="1.8"/><line x1="42" y1="17.8" x2="42" y2="27"/>
+      <circle cx="49" cy="16" r="1.8"/><line x1="49" y1="17.8" x2="49" y2="27"/><circle cx="56" cy="16" r="1.8"/><line x1="56" y1="17.8" x2="56" y2="27"/>
+      <circle cx="63" cy="16" r="1.8"/><line x1="63" y1="17.8" x2="63" y2="27"/><circle cx="70" cy="16" r="1.8"/><line x1="70" y1="17.8" x2="70" y2="27"/>
+      <circle cx="45.5" cy="36" r="1.8"/><line x1="45.5" y1="37.8" x2="45.5" y2="47"/><circle cx="52.5" cy="36" r="1.8"/><line x1="52.5" y1="37.8" x2="52.5" y2="47"/>
+      <circle cx="59.5" cy="36" r="1.8"/><line x1="59.5" y1="37.8" x2="59.5" y2="47"/><circle cx="66.5" cy="36" r="1.8"/><line x1="66.5" y1="37.8" x2="66.5" y2="47"/></g></g>`,
+
+  /* ソクラテスの弁明 Day1 図解「二つの箱」— 中身は同じ、違うのはラベル。左＝封じた箱（知っていると思う）、
+     右＝開いた箱＋問い（知らないと知る） */
+  "14-apology": `<g ${S}><rect x="8" y="30" width="26" height="24" rx="2"/><line x1="8" y1="30" x2="34" y2="30" stroke-width="2.4"/>
+    <circle cx="21" cy="44" r="3"/>
+    <rect x="47" y="30" width="26" height="24" rx="2"/><path d="M47 30l7-8h25"/><circle cx="58" cy="45" r="3"/>
+    <path d="M62 20c0-3.2 6-3.2 6 0 0 2.6-3 2.4-3 4.4" stroke-width="1.2"/><circle cx="65" cy="28" r="1" fill="currentColor" stroke="none"/></g>`,
+
+  /* 人間知性研究 Day2 図解「輪になった橋」— 橋板「未来は過去に似る」の柱をたどると出発点の岸へ戻る循環 */
+  "15-hume": `<g ${S}><circle cx="40" cy="40" r="23"/>
+    <line x1="16" y1="27" x2="64" y2="27"/><g stroke-width="1.2"><line x1="26" y1="27" x2="26" y2="33"/><line x1="40" y1="27" x2="40" y2="18"/><line x1="54" y1="27" x2="54" y2="33"/></g>
+    <g fill="currentColor" stroke="none"><path d="M64 27l-4 2v-4z"/></g></g>`,
+
+  /* 戦史 Day3 図解「三段の階段（恐怖→名誉→利益）」— 恐怖で始まり名誉で降りられなくなる */
+  "16-thucydides": `<g ${S}><path d="M12 22h18v12h18v12h18v12h4"/>
+    <g fill="currentColor" stroke="none" opacity=".85"><circle cx="21" cy="18" r="1.6"/><circle cx="39" cy="30" r="1.6"/><circle cx="57" cy="42" r="1.6"/></g></g>`,
+
+  /* 変身 Day1 図解「値段の計器」— 虫になった時ではなく稼げなくなった時に針が落ちる */
+  "17-metamorphosis": `<g ${S}><path d="M14 46a26 26 0 0 1 52 0"/><line x1="14" y1="46" x2="66" y2="46"/>
+    <g stroke-width="1"><line x1="17" y1="40" x2="20.5" y2="38"/><line x1="40" y1="20" x2="40" y2="24"/><line x1="63" y1="40" x2="59.5" y2="38"/></g>
+    <line x1="40" y1="46" x2="21" y2="37"/><circle cx="40" cy="46" r="2.6" fill="currentColor" stroke="none"/></g>`,
+
+  /* 純粋理性批判 Day4 図解「外せない眼鏡」— 認識は必ず感性と悟性のレンズを通る。外して見比べられない */
+  "18-kant": `<g ${S}><circle cx="26" cy="38" r="12"/><circle cx="54" cy="38" r="12"/>
+    <path d="M38 36q2-3.5 4 0"/><path d="M14.5 34l-8-4"/><path d="M65.5 34l8-4"/></g>`,
+
+  /* 自由論 Day1 図解「危害原理の関所」— 通す唯一の問いは「他人に危害が及ぶか」 */
+  "19-on-liberty": `<g ${S}><line x1="20" y1="20" x2="20" y2="54"/><line x1="60" y1="20" x2="60" y2="54"/><path d="M20 26h40"/>
+    <line x1="20" y1="35" x2="52" y2="29"/>
+    <line x1="12" y1="56" x2="68" y2="56" stroke-width="1.6"/>
+    <path d="M37 12c0-3.2 6-3.2 6 0 0 2.6-3 2.4-3 4.4" stroke-width="1.2"/><circle cx="40" cy="20" r="1" fill="currentColor" stroke="none"/></g>`,
+
+  /* 自殺論 Day4 図解「目盛りの消えた物差し」— 物差しは縮んでいない、目盛り（規制）が消えた＝アノミー */
+  "20-suicide": `<g ${S}><rect x="8" y="30" width="64" height="12" rx="1.5"/>
+    <g stroke-width="1"><line x1="16" y1="30" x2="16" y2="38"/><line x1="24" y1="30" x2="24" y2="35"/><line x1="32" y1="30" x2="32" y2="38"/><line x1="40" y1="30" x2="40" y2="35"/></g>
+    <g stroke-width="1" stroke-dasharray="1.4 3" opacity=".4"><line x1="48" y1="30" x2="48" y2="36"/><line x1="56" y1="30" x2="56" y2="36"/><line x1="64" y1="30" x2="64" y2="36"/></g></g>`,
+
+  /* 科学と仮説 Day3 図解「同じ棒を、二つの物差しで」— 幾何は真偽ではなく便利さで選ぶ規約 */
+  "21-poincare": `<g ${S}><rect x="14" y="30" width="52" height="8" rx="1.5"/>
+    <line x1="14" y1="20" x2="66" y2="20"/><g stroke-width="1"><line x1="20" y1="20" x2="20" y2="15"/><line x1="30" y1="20" x2="30" y2="15"/><line x1="40" y1="20" x2="40" y2="15"/><line x1="50" y1="20" x2="50" y2="15"/><line x1="60" y1="20" x2="60" y2="15"/></g>
+    <line x1="14" y1="48" x2="66" y2="48"/><g stroke-width="1"><line x1="22" y1="48" x2="22" y2="54"/><line x1="44" y1="48" x2="44" y2="54"/><line x1="66" y1="48" x2="66" y2="54"/></g></g>`,
 };
 
 // cap = 紋章が何を描いているかの一言（票の面に出す）
@@ -126,6 +182,26 @@ export const PLATE = {
     src: "Day 3 の図解「疑いの解体工事」より" },
   "11-peirce": { cap: "袋と、ひとつかみ。出どころへは点線で跳ぶ", frame: "アブダクション——驚きから、最良の説明への跳躍",
     src: "Day 3 の図解「豆袋の三角形」より" },
+  "12-sidereus": { cap: "裸眼で六つ、筒で四十二——見える数は道具が決める", frame: "見える範囲は、道具が決める",
+    src: "Day 1 の図解「同じ空、違う数」より" },
+  "13-wealth-of-nations": { cap: "一本の針が、十八の工程に割れる", frame: "分業——富を生むのは、腕ではなく「工程の切り方」",
+    src: "Day 1 の図解「一本の針が十八に割れる」より" },
+  "14-apology": { cap: "中身は同じ、違うのはラベル——知らないと、知る", frame: "無知の知——「知らない」と知っている者だけが、探し始められる",
+    src: "Day 1 の図解「二つの箱」より" },
+  "15-hume": { cap: "橋板の柱をたどると、出発点の岸へ戻る", frame: "帰納の問題",
+    src: "Day 2 の図解「輪になった橋」より" },
+  "16-thucydides": { cap: "恐怖で始まり、名誉で降りられなくなる", frame: "恐怖・名誉・利益",
+    src: "Day 3 の図解「三段の階段（恐怖→名誉→利益）」より" },
+  "17-metamorphosis": { cap: "虫になった時ではなく、稼げなくなった時、針が落ちる", frame: "役割が、人間の値段を決めている",
+    src: "Day 1 の図解「値段の計器」より" },
+  "18-kant": { cap: "認識は必ずレンズを通る。外して見比べられない", frame: "外せない眼鏡",
+    src: "Day 4 の図解「外せない眼鏡」より" },
+  "19-on-liberty": { cap: "通す唯一の問い——他人に危害が及ぶか", frame: "危害原理",
+    src: "Day 1 の図解「危害原理の関所」より" },
+  "20-suicide": { cap: "物差しは縮んでいない。目盛りが、消えた", frame: "アノミー",
+    src: "Day 4 の図解「目盛りの消えた物差し」より" },
+  "21-poincare": { cap: "同じ棒を、二つの物差しで。問いは「真か」でなく「便利か」", frame: "規約主義",
+    src: "Day 3 の図解「同じ棒を、二つの物差しで」より" },
 };
 
 export function hasPlate(slug) { return !!EMBLEM[slug] && !!PLATE[slug]; }

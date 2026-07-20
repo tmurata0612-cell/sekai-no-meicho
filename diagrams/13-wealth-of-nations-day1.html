@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 スミスDay1 — 分業／一本の針が十八に割れる</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .boxa{fill:var(--panel); stroke:var(--line); stroke-width:1.4;}
+  .art .boxk{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.4;}
+  .art .pin1{stroke:var(--faint); stroke-width:2.2; stroke-linecap:round;}
+  .art .pin{stroke:var(--calm); stroke-width:2; stroke-linecap:round;}
+  .art .fork{stroke:var(--line); stroke-width:1.4; fill:none;}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle;}
+  .art .lab-vis{fill:var(--calm);} .art .lab-inv{fill:var(--seal);} .art .lab-ink{fill:var(--ink);} .art .lab-f{fill:var(--faint);}
+  .art .sub{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--muted);}
+  .art .num{font-family:var(--serif); font-weight:700; font-size:19px; text-anchor:middle; fill:var(--calm);}
+  .art .arw{stroke:var(--seal); stroke-width:2; fill:none;}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>一人1本が、<br>一人4,800本になる。</h1>
+      <p class="dek">同じ十人。腕も勤勉さも機械も変わっていない。<b>変わったのは、仕事の切り目だけ</b>。訓練を受けていない職人は一日1本すら危うい。だがピン作りを<b>十八の工程に割り、十人で分担</b>すると、一日48,000本を超える。富の源泉は「誰がやるか」ではなく「<b>どう割るか</b>」にある。</p>
+      <div class="source"><span class="seal">国富論</span><span>スミス ・ Day1「分業」第1篇第1章</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">富を生むのは、腕でも勤勉でもない。<span class="em">工程の切り方</span>だ。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 250" role="img" aria-label="左の小さな箱＝訓練なしの職人一人が作れるのは一日一本。右の大きな箱＝分業した十人が十八工程で一日四万八千本を超えるピンの束を生む。左右の量の差が絵の面積で示される">
+          <!-- LEFT: untrained one worker, 1 pin -->
+          <rect class="boxa" x="26" y="60" width="118" height="150" rx="8"/>
+          <text class="lab lab-f" x="85" y="50">訓練なし・一人</text>
+          <line class="pin1" x1="85" y1="96" x2="85" y2="150"/>
+          <text class="num" x="85" y="184" style="fill:var(--faint)">1本/日</text>
+
+          <!-- divide -->
+          <path class="arw" d="M154 135 h30 m-9 -7 l9 7 l-9 7"/>
+          <text class="sub" x="169" y="118" style="fill:var(--seal); font-weight:700">工程を割る</text>
+
+          <!-- RIGHT: division of labour, flood -->
+          <rect class="boxk" x="200" y="40" width="294" height="178" rx="8"/>
+          <text class="lab lab-vis" x="347" y="30">分業・十人＝十八工程</text>
+          <!-- pin flood: many short lines -->
+          <g class="pin">
+            <line x1="216" y1="56" x2="216" y2="92"/><line x1="230" y1="56" x2="230" y2="92"/><line x1="244" y1="56" x2="244" y2="92"/><line x1="258" y1="56" x2="258" y2="92"/><line x1="272" y1="56" x2="272" y2="92"/><line x1="286" y1="56" x2="286" y2="92"/><line x1="300" y1="56" x2="300" y2="92"/><line x1="314" y1="56" x2="314" y2="92"/><line x1="328" y1="56" x2="328" y2="92"/><line x1="342" y1="56" x2="342" y2="92"/><line x1="356" y1="56" x2="356" y2="92"/><line x1="370" y1="56" x2="370" y2="92"/><line x1="384" y1="56" x2="384" y2="92"/><line x1="398" y1="56" x2="398" y2="92"/><line x1="412" y1="56" x2="412" y2="92"/><line x1="426" y1="56" x2="426" y2="92"/><line x1="440" y1="56" x2="440" y2="92"/><line x1="454" y1="56" x2="454" y2="92"/><line x1="468" y1="56" x2="468" y2="92"/><line x1="482" y1="56" x2="482" y2="92"/>
+            <line x1="216" y1="100" x2="216" y2="136"/><line x1="230" y1="100" x2="230" y2="136"/><line x1="244" y1="100" x2="244" y2="136"/><line x1="258" y1="100" x2="258" y2="136"/><line x1="272" y1="100" x2="272" y2="136"/><line x1="286" y1="100" x2="286" y2="136"/><line x1="300" y1="100" x2="300" y2="136"/><line x1="314" y1="100" x2="314" y2="136"/><line x1="328" y1="100" x2="328" y2="136"/><line x1="342" y1="100" x2="342" y2="136"/><line x1="356" y1="100" x2="356" y2="136"/><line x1="370" y1="100" x2="370" y2="136"/><line x1="384" y1="100" x2="384" y2="136"/><line x1="398" y1="100" x2="398" y2="136"/><line x1="412" y1="100" x2="412" y2="136"/><line x1="426" y1="100" x2="426" y2="136"/><line x1="440" y1="100" x2="440" y2="136"/><line x1="454" y1="100" x2="454" y2="136"/><line x1="468" y1="100" x2="468" y2="136"/><line x1="482" y1="100" x2="482" y2="136"/>
+          </g>
+          <text class="num" x="347" y="180">48,000本/日 超</text>
+          <text class="sub" x="347" y="202">一人あたり 4,800本</text>
+        </svg>
+        <div class="cap"><b>左の1本と、右の奔流。差は240〜4,800倍。</b><span class="r">処方＝腕を上げる前に、工程の切り目を疑う。「誰がやるか」でなく「どう割るか」。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">同じ十人に、何が起きたか</div>
+        <div class="wu hit"><div class="gi">割</div><div class="txt"><div class="nm">工程を、十八に割る</div><div class="ex">一本のピン作りを<b>約十八の別々の作業</b>に分け、十人で分担する。ひとりが同じ作業だけを通しで担う。</div></div></div>
+        <div class="wu hit"><div class="gi">束</div><div class="txt"><div class="nm">束になって、出てくる</div><div class="ex">十人で一日<b>十二ポンド</b>。一ポンド＝中くらいのピン四千本超。掛けて<b>48,000本超/日</b>、一人あたり4,800本。</div></div></div>
+        <div class="wu miss"><div class="gi">独</div><div class="txt"><div class="nm">別々に働いたら、一本すら</div><div class="ex">訓練なしで各自バラバラなら、一人二十本どころか<b>一本も作れない</b>。差は原文の計算で<b>240〜4,800倍</b>。</div></div></div>
+        <div class="wu fix"><div class="gi">目</div><div class="txt"><div class="nm">変わったのは、切り目だけ</div><div class="ex">人も腕も同じ。増やしたのは道具でも意志でもない。<b>工程の割り方</b>だけを変えた。それが富を生む。</div></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">同じ十人。<br>変わったのは<br>切り目だけ。</div><div class="lb">一人1本 → 一人4,800本。腕ではなく、工程の割り方が生産力を跳ね上げた。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>作り置き</em></div>
+          <p>週末の作り置きに毎回4時間。夫婦とも「料理が下手だから遅い」と思っている——<span class="now">まず疑うのは腕ではなく、切り目</span>。洗う・切る・煮る・詰めるを割り振り、各自が同じ作業を通しで担う。人は変えず、工程を変える。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 左の1本と右の奔流で、分業が富を生む仕組みを一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

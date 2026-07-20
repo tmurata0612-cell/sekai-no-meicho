@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 トゥキュディデスDay8 — 過剰拡大・反対が推進力になる</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .flame{fill:var(--heat-soft); stroke:var(--heat); stroke-width:1.6;}
+  .art .core{fill:var(--heat); opacity:.22;}
+  .art .toss{fill:none; stroke:var(--heat); stroke-width:1.6;}
+  .art .tosshead{fill:var(--heat);}
+  .art .out{fill:none; stroke:var(--ink); stroke-width:2;}
+  .art .outhead{fill:var(--ink);}
+  .art .weight{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--ink);}
+  .art .flab{font-family:var(--serif); font-weight:700; font-size:14px; text-anchor:middle; fill:var(--heat);}
+  .art .fgrk{font-family:var(--serif); font-size:10.5px; text-anchor:middle; fill:var(--heat);}
+  .art .silent{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--muted);}
+  .art .end{font-family:var(--serif); font-weight:700; font-size:12.5px; text-anchor:middle; fill:var(--ink);}
+  .art .toplab{font-family:var(--serif); font-weight:700; font-size:12px; text-anchor:middle; fill:var(--seal);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>反対が、<br>燃料になる</h1>
+      <p class="dek">成功体験の後の過剰拡大は、反対が<b>なかったから</b>ではない。反対が、燃料に変換されるから起きる。ニキアスは遠征に反対で、思いとどまらせるため「これほど巨額で、これほど大がかりだ」と規模を並べた。だが民会は「<b>そこまで用意するなら、いよいよ安全だ</b>」と、いっそう激しく駆り立てられた。結果は全滅。</p>
+      <div class="source"><span class="seal">戦史</span><span>トゥキュディデス ・ Day8「過剰拡大——反対の仕方が、推進力になる」第6巻24章</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">過剰拡大は、反対が<span class="em">なかったから</span>ではない。反対が、燃料に変換されるから起きる。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 258" role="img" aria-label="民会の炎。ニキアスが思いとどまらせるために積み上げた重し（巨額の費用・船の数・兵の数）が、そのまま炎に投げ込まれて燃料になり、炎（恋にも似た欲望ἔρως）が大きくなる。脇では反対すれば悪意と見なされるのを恐れて市民が黙る。炎の先は全滅πανωλεθρία">
+          <text class="toplab" x="260" y="26">反対の"重し"が、燃料になる</text>
+          <text class="weight" x="108" y="60">巨額の費用</text>
+          <text class="weight" x="108" y="88">船の数</text>
+          <text class="weight" x="108" y="116">兵の数</text>
+          <path class="toss" d="M150 58 Q200 66 224 108"/><path class="tosshead" d="M226 116 L219 104 L230 102 Z"/>
+          <path class="toss" d="M138 88 Q195 96 220 122"/><path class="tosshead" d="M226 128 L217 118 L227 113 Z"/>
+          <path class="toss" d="M138 116 Q188 122 216 134"/><path class="tosshead" d="M224 138 L214 132 L217 122 Z"/>
+          <path class="core" d="M260 200 Q230 168 258 138 Q252 162 272 156 Q262 132 288 128 Q280 168 300 176 Q288 190 296 200 Z"/>
+          <path class="flame" d="M262 208 Q222 168 256 122 Q250 156 276 148 Q262 116 296 112 Q286 164 312 176 Q296 196 306 208 Z"/>
+          <text class="flab" x="268" y="172">ἔρως</text>
+          <text class="fgrk" x="268" y="190">恋にも似た欲望</text>
+          <text class="silent" x="416" y="106">反対すれば、悪意と</text>
+          <text class="silent" x="416" y="124">見なされる → 黙る</text>
+          <path class="out" d="M260 210 L260 226"/><path class="outhead" d="M260 234 L253 222 L267 222 Z"/>
+          <text class="end" x="260" y="250">πανωλεθρία ＝ 全滅（わずかな者だけ帰還）</text>
+        </svg>
+        <div class="cap"><b>反対の重しが、炎に投げ込まれて燃料になる。黙った者は、数に数えられる。</b><span class="r">処方＝反対したいなら規模を並べず、「どうなったら止めるか」を先に決めさせる。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">反対が推進力に変わる仕組みと、沈黙</div>
+        <div class="wu miss"><div class="gi">変</div><div class="txt"><div class="nm">重しが燃料になる</div><div class="ex">ニキアスの「これほど巨額・大がかりだ」→「<b>そこまで用意するなら、安全だ</b>」。彼にとって、まるきり逆の結果に。</div></div></div>
+        <div class="wu fix"><div class="gi">恋</div><div class="txt"><div class="nm">ἔρως ＝ 恋にも似た欲望</div><div class="ex">国家の意思決定に、この語を使うのは異例。<b>わざと</b>（第6巻24章）。</div></div></div>
+        <div class="wu miss"><div class="gi">黙</div><div class="txt"><div class="nm">沈黙のスパイラル</div><div class="ex">反対すれば国に悪意を持つと見なされるのを恐れ、黙る。<b>議事録の上では、全員一致に見える</b>（→Day2）。</div></div></div>
+        <div class="wu hit"><div class="gi">滅</div><div class="txt"><div class="nm">結果</div><div class="ex">πανωλεθρία＝全滅。歩兵も船も何ひとつ残らず、<b>わずかな者だけが故郷に帰り着いた</b>。</div></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">反対の言葉が、<br>賛成の燃料になる</div><div class="lb">規模を並べると「よく検討された＝安全だ」に化ける。撤退条件を先に決めさせる。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>意思決定</em></div>
+          <p>買い替えに反対して「費用がこれだけ、手続きがこれだけ」と数字を並べたら、相手は「そこまで調べたなら安心だ、進めよう」と乗り気に。<span class="now">反対したいなら規模ではなく、どうなったら止めるかを先に決めさせる</span>——ニキアスと同じ構造だ。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 民会の炎で、反対が推進力に変わる仕組みを一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

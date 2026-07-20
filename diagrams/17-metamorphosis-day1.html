@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 カフカDay1 — 役割が、人間の値段を決めている</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .panel{fill:var(--panel); stroke:var(--line); stroke-width:1.2;}
+  .art .guide{stroke:var(--faint); stroke-width:1.1; stroke-dasharray:4 4; opacity:.6;}
+  .art .axis{stroke:var(--line); stroke-width:1.2;}
+  .art .vhi{fill:none; stroke:var(--seal); stroke-width:2.8; stroke-linecap:round; stroke-linejoin:round;}
+  .art .vlo{fill:none; stroke:var(--faint); stroke-width:2.8; stroke-linecap:round; stroke-dasharray:2 3;}
+  .art .cliff{fill:none; stroke:var(--heat); stroke-width:2.8; stroke-linecap:round;}
+  .art .mk{fill:none; stroke:var(--seal); stroke-width:2.2;}
+  .art .mk-zero{fill:none; stroke:var(--heat); stroke-width:2.2;}
+  .art .axlab{font-family:var(--sans); font-size:11px; fill:var(--muted); text-anchor:end;}
+  .art .evt{font-family:var(--serif); font-weight:700; font-size:12px; text-anchor:middle; fill:var(--ink);}
+  .art .evtsub{font-family:var(--sans); font-size:10.5px; text-anchor:middle; fill:var(--muted);}
+  .art .note{font-family:var(--sans); font-size:11px; fill:var(--seal); text-anchor:middle;}
+  .art .note-h{font-family:var(--sans); font-size:11px; fill:var(--heat); text-anchor:start;}
+  .art .note-f{font-family:var(--sans); font-size:11px; fill:var(--faint); text-anchor:middle;}
+  .art .ttl{font-family:var(--serif); font-weight:700; font-size:12.5px; text-anchor:middle; fill:var(--muted);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>針が落ちるのは、<br>どちらの瞬間か?</h1>
+      <p class="dek">ある朝、グレーゴルの身に二つの事件が起きる。<b>虫になった</b>——だが彼の値段は動かない。そして<b>汽車を逃した</b>——ここで、針がゼロへ落ちる。値段は人格ではなく<b>役割に貼りついている</b>。だから、いちばん異常なことより、遅刻のほうが「事件」になる。</p>
+      <div class="source"><span class="seal">変身</span><span>カフカ ・ Day1「役割が値段を決める」 第1章</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">変身は、針を<span class="em">動かさない</span>。針を壊すのは、遅刻のほう。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 240" role="img" aria-label="グレーゴルの値段を示す折れ線。虫になった時点では値段は満額のまま動かず、六時半に汽車を逃した時点で針がゼロへ落ち、七時過ぎに支配人が扉の前に立つ頃には値段はゼロのまま戻らない">
+          <rect class="panel" x="24" y="34" width="472" height="140" rx="10"/>
+          <text class="ttl" x="260" y="26">会社と家族にとっての、グレーゴルの値段</text>
+
+          <!-- axis + y labels -->
+          <line class="axis" x1="64" y1="62" x2="64" y2="170"/>
+          <line class="axis" x1="64" y1="170" x2="474" y2="170"/>
+          <text class="axlab" x="58" y="66">満額</text>
+          <text class="axlab" x="58" y="162">ゼロ</text>
+
+          <!-- event guides -->
+          <line class="guide" x1="150" y1="46" x2="150" y2="170"/>
+          <line class="guide" x1="258" y1="46" x2="258" y2="170"/>
+          <line class="guide" x1="386" y1="46" x2="386" y2="170"/>
+
+          <!-- value line: flat high -> cliff -> flat low -->
+          <path class="vhi" d="M70,62 L258,62"/>
+          <path class="cliff" d="M258,62 L258,158"/>
+          <path class="vlo" d="M258,158 L472,158"/>
+
+          <!-- markers -->
+          <circle class="mk" cx="150" cy="62" r="5.5"/>
+          <circle class="mk" cx="258" cy="62" r="5.5"/>
+          <circle class="mk-zero" cx="258" cy="158" r="5.5"/>
+          <circle class="mk-zero" cx="386" cy="158" r="5.5"/>
+
+          <!-- notes -->
+          <text class="note" x="150" y="52">変身では、動かない</text>
+          <text class="note-h" x="268" y="112">← 遅刻で、ゼロへ</text>
+          <text class="note-f" x="392" y="150">以後、戻らない</text>
+
+          <!-- event labels -->
+          <text class="evt" x="150" y="192">① 虫になる</text>
+          <text class="evtsub" x="150" y="207">針は、動かない</text>
+          <text class="evt" x="258" y="192">② 汽車を逃す</text>
+          <text class="evtsub" x="258" y="207">六時半・針がゼロへ</text>
+          <text class="evt" x="386" y="192">③ 支配人が扉に</text>
+          <text class="evtsub" x="386" y="207">七時過ぎ</text>
+        </svg>
+        <div class="cap"><b>針を落としたのは、変身ではなく遅刻。</b><span class="r">処方＝自分の信用が「人格」に貼りついているのか「役割」に貼りついているのかを、役割が止まる前に一度だけ切り分ける。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">その朝、誰が最初に、何を心配したか</div>
+        <div class="wu miss"><div class="gi">己</div><div class="txt"><div class="nm">本人が最初に考えたこと</div><div class="ex">五時の汽車と、<b>五年後の返済計画</b>。虫になった自分の体のことは、一言も出てこない。事件は変身ではなく、乗り遅れのほうだった。</div></div></div>
+        <div class="wu miss"><div class="gi">他</div><div class="txt"><div class="nm">まわりが最初に口にしたこと</div><div class="ex">母は「汽車に乗らないの?」、父は<b>会社への言い訳</b>、支配人は<b>売上と横領の疑い</b>。全員、仕事の話。閉じた扉の向こうは虫なのに。</div></div></div>
+        <div class="wu fix"><div class="gi">空</div><div class="txt"><div class="nm">誰も問わなかったこと</div><div class="ex">「<b>なぜ虫になったのか</b>」。この欄だけが、最後まで空白。役割の側から見れば、必要な情報は<b>働けるか否かの一点</b>だけで、理由の欄は要らない。</div></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">五年 →<br>一時間</div><div class="lb">家族に家と暮らしを与えた五年ぶんの信用が、汽車を一本逃してから支配人が玄関に立つまでに、読み直された時間。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>信用</em></div>
+          <p>「この職場で二十年、信頼もある」——その信頼は<span class="now">働けている間だけ計上されている残高</span>かもしれない。二十年という量ではなく、その信用が何に貼りついているかを、止まる前に点検しておく。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 値段の折れ線で、役割が止まった日に残高が読み直されることを一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 ミルDay5 — 線引きの実務、四つのケースと一つの誤り</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .frame{fill:none; stroke:var(--line); stroke-width:1.4;}
+  .art .divider{stroke:var(--faint); stroke-width:1.6;}
+  .art .tag{fill:var(--panel); stroke:var(--line); stroke-width:1.3;}
+  .art .aL{fill:var(--calm);} .art .aR{fill:var(--heat);}
+  .art .outside{fill:none; stroke:var(--faint); stroke-width:1.4; stroke-dasharray:4 3;}
+  .art .rl{font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle;}
+  .art .calm{fill:var(--calm);} .art .heat{fill:var(--heat);} .art .em{fill:var(--seal);}
+  .art .tg{font-family:var(--sans); font-size:12px; text-anchor:middle; fill:var(--ink);}
+  .art .rs{font-family:var(--sans); font-size:11px; text-anchor:middle;}
+  .art .sub{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--muted);}
+  .art .xmk{fill:var(--heat); font-weight:700; font-size:14px; text-anchor:middle;}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:14px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(17px,3vw,22px); font-weight:600; line-height:1.26;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>一本の線と、<br>その外に置かれた人。</h1>
+      <p class="dek">一本の線が、<b>自由の領域</b>と<b>道徳と法の領域</b>を分ける。原典の四つのケースが、線の上に位置づく。同じ「酔う」でも、<b>義務の有無</b>で側が変わり、同じ橋でも<b>確実性</b>で手が変わる。そして線の外側に、五つ目——著者自身が外に置いてしまった「未開人」。<b>原理は正しく、著者は誤った</b>。それが一枚に見える。</p>
+      <div class="source"><span class="seal">自由論</span><span>ミル ・ Day5「線引きの実務」第4章・第5章</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">線を引く問いは<span class="em">損害・義務・確実性</span>。同じ行為でも、これで側が変わる。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 306" role="img" aria-label="一本の線が自由の領域と道徳と法の領域を分ける。酔っているだけの人は自由の側、勤務中に酔った兵士は法の側、危険な橋で時間が無ければ引き戻してよい、確実でなければ警告まで、自分を奴隷として売る契約は本人が同意しても無効。そして線の外側に未開人が置かれ、それが著者自身の誤りとして記録される">
+          <!-- map frame -->
+          <rect class="frame" x="24" y="44" width="472" height="200" rx="12"/>
+          <line class="divider" x1="260" y1="46" x2="260" y2="242"/>
+          <text class="rl calm" x="122" y="64">自由の領域</text>
+          <text class="sub" x="122" y="78">（強制できない）</text>
+          <text class="rl heat" x="398" y="64">道徳と法の領域</text>
+          <text class="sub" x="398" y="78">（介入できる）</text>
+
+          <!-- row 1: drunk only -> 自由 (left) -->
+          <rect class="tag" x="172" y="90" width="176" height="20" rx="10"/>
+          <text class="tg" x="260" y="104">酔っている（だけ）</text>
+          <line x1="170" y1="100" x2="152" y2="100" stroke="var(--calm)" stroke-width="2"/>
+          <polygon class="aL" points="152,96 144,100 152,104"/>
+          <text class="rs calm" x="98" y="104">→ 自由の側</text>
+
+          <!-- row 2: soldier drunk on duty -> 法 (right) -->
+          <rect class="tag" x="172" y="116" width="176" height="20" rx="10"/>
+          <text class="tg" x="260" y="130">勤務中に酔った兵士</text>
+          <line x1="350" y1="126" x2="368" y2="126" stroke="var(--heat)" stroke-width="2"/>
+          <polygon class="aR" points="368,122 376,126 368,130"/>
+          <text class="rs heat" x="432" y="130">→ 法の側（義務違反）</text>
+
+          <!-- row 3: dangerous bridge, no time -> pull back (right) -->
+          <rect class="tag" x="172" y="142" width="176" height="20" rx="10"/>
+          <text class="tg" x="260" y="156">危険な橋・確実で時間なし</text>
+          <line x1="350" y1="152" x2="368" y2="152" stroke="var(--heat)" stroke-width="2"/>
+          <polygon class="aR" points="368,148 376,152 368,156"/>
+          <text class="rs heat" x="428" y="156">→ 引き戻してよい</text>
+
+          <!-- row 4: bridge, not certain -> warn only (left) -->
+          <rect class="tag" x="172" y="168" width="176" height="20" rx="10"/>
+          <text class="tg" x="260" y="182">危険な橋・確実でない</text>
+          <line x1="170" y1="178" x2="152" y2="178" stroke="var(--calm)" stroke-width="2"/>
+          <polygon class="aL" points="152,174 144,178 152,182"/>
+          <text class="rs calm" x="100" y="182">→ 警告まで</text>
+
+          <!-- row 5: slave contract -> void (right), only exception -->
+          <rect class="tag" x="172" y="194" width="176" height="20" rx="10"/>
+          <text class="tg" x="260" y="208">奴隷契約（本人が同意）</text>
+          <line x1="350" y1="204" x2="368" y2="204" stroke="var(--heat)" stroke-width="2"/>
+          <polygon class="aR" points="368,200 376,204 368,208"/>
+          <text class="rs heat" x="432" y="208">→ 無効（唯一の例外）</text>
+
+          <!-- 5th case OUTSIDE the line -->
+          <line class="outside" x1="260" y1="244" x2="260" y2="262"/>
+          <text class="xmk" x="278" y="258">✕</text>
+          <rect class="outside" x="176" y="262" width="168" height="26" rx="13"/>
+          <text class="tg em" x="260" y="279">未開人 ＝ 線の外</text>
+          <text class="sub" x="260" y="301">自由の対象から外された ＝ 著者自身の誤り</text>
+        </svg>
+        <div class="cap"><b>同じ行為が、義務と確実性で、線のどちら側にも落ちる。</b><span class="r">処方＝損害→義務→確実性の順に問う。そして、その線を自分の偏見にも引けているか、を最後に疑う。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">線を引く、三つの問い（と、一つの例外）</div>
+        <div class="wu"><div class="gi">損</div><div class="txt"><div class="nm">① 明確な損害／損害の危険があるか</div><div class="ex">無ければ、そこで終わり。<b>強制はできない</b>（酔っている“だけ”の人は、自由の側）。</div></div></div>
+        <div class="wu"><div class="gi">務</div><div class="txt"><div class="nm">② 名指しできる義務の違反か、行為への嫌悪か</div><div class="ex">罰せられるのは<b>義務違反</b>ゆえで、行為そのものゆえではない。後者なら、それはあなたの好みであって、危害ではない。</div></div></div>
+        <div class="wu"><div class="gi">確</div><div class="txt"><div class="nm">③ 害は確実か、危険があるだけか</div><div class="ex">確実で時間が無いなら<b>引き戻してよい</b>。確実でないなら<b>警告まで</b>——決めるのは本人。</div></div></div>
+        <div class="wu fix"><div class="gi">例</div><div class="txt"><div class="nm">唯一の例外：自由を放棄する自由は、認めない</div><div class="ex">自分を奴隷として売る契約は<b>無効</b>。将来の自由を全部手放すなら、<b>認める理由そのものが消える</b>から。</div></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">「明確な損害、または損害の危険があるとき、自由の領域から外れる」</div><div class="lb">そのとき初めて、道徳または法の領域に置かれる。（第5章）</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>線</em></div>
+          <p>「本人が納得しているなら自由」で片づけたくなる。<span class="now">だがミルは一点だけ、本人の同意に逆らった——将来の自由を丸ごと手放す契約</span>。線を引くときは損害→義務→確実性の順に問い、その原理を自分の偏見にも適用できているかを、最後に疑う。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 一本の線に四つのケースを置き、線の外の「未開人」に著者自身の誤りを刻んで、線引きの実務を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 ポアンカレDay3 — 同じ棒を、二つの物差しで</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .rulerA{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.4;}
+  .art .rulerB{fill:var(--heat-soft); stroke:var(--heat); stroke-width:1.4;}
+  .art .rod{fill:var(--panel-2); stroke:var(--ink); stroke-width:1.8;}
+  .art .tickA{stroke:var(--seal); stroke-width:1.2;}
+  .art .tickB{stroke:var(--heat); stroke-width:1.2;}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle; fill:var(--ink);}
+  .art .lab-seal{fill:var(--seal);} .art .lab-heat{fill:var(--heat);}
+  .art .big{font-family:var(--serif); font-weight:700; font-size:16px; text-anchor:middle; fill:var(--seal);}
+  .art .q{font-family:var(--serif); font-weight:700; font-size:14px; text-anchor:middle; fill:var(--heat);}
+  .art .sub{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--muted);}
+  .art .val{font-family:var(--sans); font-weight:700; font-size:12px; text-anchor:end;}
+  .art .valA{fill:var(--seal);} .art .valB{fill:var(--heat);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>一つの幾何が、<br>他より「真」であることはない。</h1>
+      <p class="dek">メートルで測るかトワーズで測るか——長さも重さも変わらない。<b>幾何もそれと同じ</b>だ。ユークリッドかロバチェフスキーか、どちらが真かは問えない。問えるのは、どちらが<b>便利か</b>だけ。我々は空間の性質を測っているつもりで、じつは測り方を選んでいる。</p>
+      <div class="source"><span class="seal">科学と仮説</span><span>ポアンカレ ・ Day3「一つの幾何学が、他より真であることはありえない」第2部 第3章・第5章</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">一本の棒を、<span class="em">二つの物差し</span>で測る。数字は違う。では、どちらの物差しが「真」なのか?</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 250" role="img" aria-label="同じ一本の棒を、上からメートル尺で測ると1.00、下から昔の尺トワーズで測ると0.51。棒は同じ。どちらの物差しが真かは意味のない問い">
+          <!-- 上：メートル尺 -->
+          <text class="lab lab-seal" x="150" y="50">メートル尺</text>
+          <text class="val valA" x="410" y="50">読み ＝ 1.00</text>
+          <rect class="rulerA" x="110" y="60" width="300" height="20" rx="4"/>
+          <line class="tickA" x1="140" y1="60" x2="140" y2="72"/>
+          <line class="tickA" x1="170" y1="60" x2="170" y2="72"/>
+          <line class="tickA" x1="200" y1="60" x2="200" y2="72"/>
+          <line class="tickA" x1="230" y1="60" x2="230" y2="72"/>
+          <line class="tickA" x1="260" y1="60" x2="260" y2="72"/>
+          <line class="tickA" x1="290" y1="60" x2="290" y2="72"/>
+          <line class="tickA" x1="320" y1="60" x2="320" y2="72"/>
+          <line class="tickA" x1="350" y1="60" x2="350" y2="72"/>
+          <line class="tickA" x1="380" y1="60" x2="380" y2="72"/>
+
+          <!-- 中央：同じ一本の棒 -->
+          <rect class="rod" x="110" y="106" width="300" height="24" rx="5"/>
+          <text class="lab" x="260" y="122" style="fill:var(--ink);">同じ一本の棒</text>
+
+          <!-- 下：昔の尺（トワーズ） -->
+          <rect class="rulerB" x="110" y="156" width="300" height="20" rx="4"/>
+          <line class="tickB" x1="132" y1="164" x2="132" y2="176"/>
+          <line class="tickB" x1="154" y1="164" x2="154" y2="176"/>
+          <line class="tickB" x1="176" y1="164" x2="176" y2="176"/>
+          <line class="tickB" x1="198" y1="164" x2="198" y2="176"/>
+          <line class="tickB" x1="220" y1="164" x2="220" y2="176"/>
+          <line class="tickB" x1="242" y1="164" x2="242" y2="176"/>
+          <line class="tickB" x1="264" y1="164" x2="264" y2="176"/>
+          <line class="tickB" x1="286" y1="164" x2="286" y2="176"/>
+          <line class="tickB" x1="308" y1="164" x2="308" y2="176"/>
+          <line class="tickB" x1="330" y1="164" x2="330" y2="176"/>
+          <line class="tickB" x1="352" y1="164" x2="352" y2="176"/>
+          <line class="tickB" x1="374" y1="164" x2="374" y2="176"/>
+          <text class="lab lab-heat" x="158" y="192">昔の尺（トワーズ）</text>
+          <text class="val valB" x="410" y="192">読み ＝ 0.51</text>
+
+          <!-- 問い -->
+          <text class="big" x="260" y="220">どちらの物差しが真か?</text>
+          <text class="q" x="260" y="240">→ 意味のない問い</text>
+        </svg>
+        <div class="cap"><b>物差しが違えば、読む数字は違う。だが、棒は同じだ。</b><span class="r">処方＝「どちらの幾何が真か」を問うのをやめ、「どちらが便利か」を問う。ただし自由は恣意ではない——実験が選択を導く。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">三つの幾何と、選び方</div>
+        <div class="wu miss"><div class="gi">ユ</div><div class="txt"><div class="nm">ユークリッド（平行線＝1本）</div><div class="ex">我々が日常で当たり前に使う幾何。だが<b>「真だから」ではない</b>——ただ、最も便利だから使っている。</div></div></div>
+        <div class="wu miss"><div class="gi">ロ</div><div class="txt"><div class="nm">ロバチェフスキー（平行線＝無数）</div><div class="ex">平行線が無数に引ける、別の幾何。<b>矛盾なく成り立つ</b>。これが打ち立てられたとき、大事件だった。</div></div></div>
+        <div class="wu miss"><div class="gi">リ</div><div class="txt"><div class="nm">リーマン（平行線＝0本）</div><div class="ex">平行線が一本も引けない幾何。これもまた、<b>いかなる実験とも矛盾しない＝潰せない</b>。</div></div></div>
+        <div class="wu fix"><div class="gi">導</div><div class="txt"><div class="nm">自由だが、恣意ではない</div><div class="ex">どれを選んでもよいが「どれでもいい」ではない。<b>実験的事実が、選択を導く</b>——賢明で、国務院に諮る絶対君主のように（序論）。</div></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">「測っているのは、<br>空間ではない」</div><div class="lb">円の半径と円周を測る——それは空間ではなく、その物質と、使った物差しについての実験だ。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>規約</em></div>
+          <p>「小型犬は何キロまでか」を、図鑑や獣医の資料で争っている——<span class="now">それは事実ではなく、取り決めの争い</span>。「どちらが真か」は問えない。問うべきは「何キロで線を引くと運用しやすいか」。ただし恣意ではない——実際の犬の体重分布や共用部の広さが、線引きを導く。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 同じ棒を二つの物差しで測る絵で、「真か」ではなく「便利か」を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 ヒュームDay4 — 習慣という渡し守</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .box{fill:var(--panel); stroke:var(--line); stroke-width:1.4;}
+  .art .boxc{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.4;}
+  .art .boxs{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.4;}
+  .art .faintdeck{fill:var(--panel); stroke:var(--line-soft); stroke-width:1.3; opacity:.55;}
+  .art .water{fill:var(--seal-soft); opacity:.5;}
+  .art .ln{stroke:var(--line); stroke-width:1.4; fill:none;}
+  .art .arw{stroke:var(--muted); stroke-width:1.6; fill:none;}
+  .art .calmarw{stroke:var(--calm); stroke-width:3; fill:none;}
+  .art .dash{stroke:var(--seal); stroke-width:1.6; fill:none; stroke-dasharray:5 4;}
+  .art .ah-m{fill:var(--muted);} .art .ah-c{fill:var(--calm);} .art .ah-s{fill:var(--seal);}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle; fill:var(--ink);}
+  .art .lab-c{fill:var(--calm);} .art .lab-s{fill:var(--seal);} .art .lab-h{fill:var(--heat);} .art .lab-m{fill:var(--muted);}
+  .art .sub{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--muted);}
+  .art .big{font-family:var(--serif); font-weight:700; font-size:19px; text-anchor:middle; fill:var(--ink);}
+  .art .qm{font-family:var(--serif); font-weight:700; font-size:18px; text-anchor:middle; fill:var(--seal);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>床の無い橋を、<br>渡してくれるのは誰?</h1>
+      <p class="dek">「これまで」から「これから」へ我々を渡しているのは、<b>理性ではなく習慣</b>。繰り返しが、推論を経ずに、心に<b>傾き</b>を作る。そして「必然的な結びつき」とは、外の世界の性質ではなく、<b>一方から他方へ心が滑っていく、その移りを感じている</b>こと——我々は、自分の習慣を、世界の性質と取り違えている。ただし習慣は「<b>よく効く</b>」のであって「<b>正しい</b>」のではない。</p>
+      <div class="source"><span class="seal">人間知性研究</span><span>ヒューム ・ Day4「習慣こそが、人生の偉大な導き手」第5節・第7節</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">理性は岸で立ち往生。<span class="em">習慣という渡し守</span>が、旅人を軽々と運ぶ。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 260" role="img" aria-label="Day2の床の無い橋の続き。理性の人物は岸で立ち往生し、習慣という渡し守が旅人を軽々と向こう岸へ運ぶ。旅人の頭からは点線の矢印『必然』が川の上に伸びている">
+          <defs>
+            <marker id="ah4c" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" class="ah-c"/></marker>
+            <marker id="ah4s" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" class="ah-s"/></marker>
+          </defs>
+
+          <!-- faint bridge (床は無い) -->
+          <rect class="faintdeck" x="102" y="102" width="316" height="22" rx="5"/>
+          <text class="sub" x="260" y="117">未来は過去に似る（床は無い）</text>
+
+          <!-- banks -->
+          <rect class="box" x="8" y="136" width="92" height="100" rx="6"/>
+          <text class="lab" x="54" y="192">これまで</text>
+          <rect class="box" x="420" y="136" width="92" height="100" rx="6"/>
+          <text class="lab" x="466" y="192">これから</text>
+
+          <!-- reason stranded -->
+          <circle class="box" cx="54" cy="126" r="9"/>
+          <line class="ln" x1="54" y1="135" x2="54" y2="140"/>
+          <text class="lab-s sub" x="54" y="112">理性：立ち往生</text>
+
+          <!-- river -->
+          <rect class="water" x="100" y="196" width="320" height="44" rx="4"/>
+          <line class="calmarw" x1="120" y1="226" x2="398" y2="226" marker-end="url(#ah4c)"/>
+
+          <!-- ferry (習慣) carrying traveller -->
+          <path class="boxc" d="M232,206 L288,206 L280,222 L240,222 Z"/>
+          <circle class="box" cx="260" cy="196" r="8"/>
+          <text class="lab lab-c" x="260" y="256">習慣が、軽々と渡す</text>
+
+          <!-- necessity arrow from traveller head -->
+          <line class="dash" x1="266" y1="190" x2="336" y2="156" marker-end="url(#ah4s)"/>
+          <text class="lab-s sub" x="360" y="150">必然＝心の移りの手ざわり</text>
+        </svg>
+        <div class="cap"><b>渡すのは理性ではなく習慣。旅人の頭から伸びる「必然」は、渡された側の心の移り。</b><span class="r">処方＝「なぜそう言えるか」に理屈が無いとき、それは習慣。効くが、正しいとは限らない。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">習慣が渡し、必然を生む</div>
+        <div class="wu hit"><div class="gi">渡</div><div class="txt"><div class="nm">理性は渡せない／習慣が渡す</div><div class="ex"><b>習慣こそが、人生の偉大な導き手</b>。理性はあの橋の前で立ち往生したまま。我々を向こう岸へ運んだのは、理屈を一つも使わない、あの傾き。</div></div></div>
+        <div class="wu miss"><div class="gi">必</div><div class="txt"><div class="nm">必然＝心の移りの手ざわり</div><div class="ex">何度も見るうち、心は一方の球から他方へ<b>するりと滑る</b>。その滑りの手ざわりを「必然」と呼ぶ。<b>世界の性質ではなく、あなたの癖。</b></div></div></div>
+        <div class="wu miss"><div class="gi">定</div><div class="txt"><div class="nm">原因の二つの定義</div><div class="ex"><b>外側から</b>＝似たものには似たものが続く。<b>内側から</b>＝それが現れると、思いはいつも後のものへ運ばれる。<b>「力」そのものの定義は、書けませんでした。</b></div></div></div>
+        <div class="wu fix"><div class="gi">効</div><div class="txt"><div class="nm">効くけれど、正しくはない</div><div class="ex">習慣は正当化されていない。<b>そういう仕組みで動くと報告しただけ</b>。だから、たまに裏切られる。「習慣がそう言うから」は、<b>前例踏襲の弁明にはならない</b>。</div></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">「渡しているのは、<br>理性ではない」</div><div class="lb">埋めるのではなく、橋の下を覗くのをやめて、渡っている自分の足を見る。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>渡し守</em></div>
+          <p>工場のベテランが機械の音で「そろそろ軸受けが傷む」と言い当てる。理由は「<span class="now">長年やってると分かる</span>」だけ——それは理性ではなく習慣の働きで、説明できないのは当然（理屈が通っていない）。勘は当てにしてよいが、<span class="now">外れたときに「長年の勘だ」は弁明にならない</span>。この非対称を落とさない。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 習慣という渡し守で、理性ではなく習慣が我々を運ぶことを一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

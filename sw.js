@@ -1,7 +1,7 @@
 // Service Worker: アプリシェルはキャッシュ優先、エピソードJSONはネットワーク優先。
 // MP3（audio/*.mp3）は同一オリジン配信だが SW 非介在にする＝ブラウザ標準の Range/ストリーミング
 // をそのまま使わせ、iOS の <audio> がシーク・部分取得できるようにする（206をCacheに入れない）。
-const VERSION = "meicho-v20";
+const VERSION = "meicho-v21";
 const SHELL = [
   "./", "index.html", "manifest.json", "icon.svg", "config.js",
   "css/style.css",
@@ -34,6 +34,36 @@ const SHELL = [
   "diagrams/10-discours-day3.html", "diagrams/10-discours-day4.html",
   "diagrams/11-peirce-day1.html", "diagrams/11-peirce-day2.html",
   "diagrams/11-peirce-day3.html", "diagrams/11-peirce-day4.html",
+  // 第3期バッチ（No.12〜21・55話。2026-07-20）
+  "diagrams/12-sidereus-day1.html", "diagrams/12-sidereus-day2.html",
+  "diagrams/12-sidereus-day3.html", "diagrams/12-sidereus-day4.html",
+  "diagrams/13-wealth-of-nations-day1.html", "diagrams/13-wealth-of-nations-day2.html",
+  "diagrams/13-wealth-of-nations-day3.html", "diagrams/13-wealth-of-nations-day4.html",
+  "diagrams/13-wealth-of-nations-day5.html", "diagrams/13-wealth-of-nations-day6.html",
+  "diagrams/13-wealth-of-nations-day7.html", "diagrams/13-wealth-of-nations-day8.html",
+  "diagrams/13-wealth-of-nations-day9.html",
+  "diagrams/14-apology-day1.html", "diagrams/14-apology-day2.html",
+  "diagrams/14-apology-day3.html", "diagrams/14-apology-day4.html",
+  "diagrams/15-hume-day1.html", "diagrams/15-hume-day2.html",
+  "diagrams/15-hume-day3.html", "diagrams/15-hume-day4.html", "diagrams/15-hume-day5.html",
+  "diagrams/16-thucydides-day1.html", "diagrams/16-thucydides-day2.html",
+  "diagrams/16-thucydides-day3.html", "diagrams/16-thucydides-day4.html",
+  "diagrams/16-thucydides-day5.html", "diagrams/16-thucydides-day6.html",
+  "diagrams/16-thucydides-day7.html", "diagrams/16-thucydides-day8.html",
+  "diagrams/17-metamorphosis-day1.html", "diagrams/17-metamorphosis-day2.html",
+  "diagrams/17-metamorphosis-day3.html",
+  "diagrams/18-kant-day1.html", "diagrams/18-kant-day2.html",
+  "diagrams/18-kant-day3.html", "diagrams/18-kant-day4.html",
+  "diagrams/18-kant-day5.html", "diagrams/18-kant-day6.html",
+  "diagrams/19-on-liberty-day1.html", "diagrams/19-on-liberty-day2.html",
+  "diagrams/19-on-liberty-day3.html", "diagrams/19-on-liberty-day4.html",
+  "diagrams/19-on-liberty-day5.html",
+  "diagrams/20-suicide-day1.html", "diagrams/20-suicide-day2.html",
+  "diagrams/20-suicide-day3.html", "diagrams/20-suicide-day4.html",
+  "diagrams/20-suicide-day5.html", "diagrams/20-suicide-day6.html",
+  "diagrams/21-poincare-day1.html", "diagrams/21-poincare-day2.html",
+  "diagrams/21-poincare-day3.html", "diagrams/21-poincare-day4.html",
+  "diagrams/21-poincare-day5.html",
 ];
 
 self.addEventListener("install", (e) => {

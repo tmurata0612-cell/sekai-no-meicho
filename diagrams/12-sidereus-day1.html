@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 ガリレオDay1 — 見える範囲は、道具が決める</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .sky{fill:var(--panel); stroke:var(--line); stroke-width:1.4;}
+  .art .kring{fill:none; stroke:var(--calm); stroke-width:1.6;}
+  .art .kdot{fill:var(--calm);}
+  .art .ndot{fill:var(--seal);}
+  .art .flow{fill:none; stroke:var(--seal); stroke-width:2.4;}
+  .art .arrow{fill:var(--seal);}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle;}
+  .art .lab-a{fill:var(--muted);} .art .lab-b{fill:var(--seal);}
+  .art .tube{font-family:var(--serif); font-weight:700; font-size:12px; text-anchor:middle; fill:var(--seal);}
+  .art .cap-in{font-family:var(--sans); font-size:12px; text-anchor:middle; fill:var(--muted);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 9%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .halves{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .halves .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .halves .col .h{font-size:12.5px; font-weight:700; display:flex; gap:7px; align-items:center; color:var(--seal);}
+  .halves .col .ic{font-size:17px;}
+  .halves .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .halves .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>「六つ」は、空の数か、<br>目の数か?</h1>
+      <p class="dek">プレアデスは肉眼で六つ。筒を向けると三十六増えて四十二になった。だが<b>空は何も変わっていない。変わったのは、こちら側</b>だ。「天の川はもや」「星雲は天の濃い部分」——対象の性質と思われた名は、こちらの<b>解像度の限界</b>に付いていた。</p>
+      <div class="source"><span class="seal">星界の報告</span><span>ガリレオ・ガリレイ ・ Day1「見える範囲は、道具が決める」序文・恒星と天の川</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">「六つ」は<span class="em">空の数</span>ではなく、目の数だった。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 224" role="img" aria-label="プレアデス星団を、左は裸眼で六つ、右は筒ごしで既知の六つに新たな三十六が加わり四十二に。同じ空を、道具が違う数で数えている">
+          <!-- panel titles -->
+          <text class="lab lab-a" x="124" y="34">裸眼 ── 六つ</text>
+          <text class="lab lab-b" x="396" y="34">筒ごし ── 四十二</text>
+
+          <!-- left panel: naked eye -->
+          <rect class="sky" x="26" y="44" width="196" height="150" rx="8"/>
+          <circle class="kring" cx="76" cy="94" r="6"/><circle class="kdot" cx="76" cy="94" r="2.5"/>
+          <circle class="kring" cx="111" cy="82" r="6"/><circle class="kdot" cx="111" cy="82" r="2.5"/>
+          <circle class="kring" cx="146" cy="102" r="6"/><circle class="kdot" cx="146" cy="102" r="2.5"/>
+          <circle class="kring" cx="176" cy="86" r="6"/><circle class="kdot" cx="176" cy="86" r="2.5"/>
+          <circle class="kring" cx="106" cy="132" r="6"/><circle class="kdot" cx="106" cy="132" r="2.5"/>
+          <circle class="kring" cx="146" cy="158" r="6"/><circle class="kdot" cx="146" cy="158" r="2.5"/>
+
+          <!-- tube / transform -->
+          <text class="tube" x="260" y="98">筒</text>
+          <line class="flow" x1="232" y1="112" x2="288" y2="112"/>
+          <polygon class="arrow" points="296,112 285,106 285,118"/>
+
+          <!-- right panel: through the tube (known 6 + new 36) -->
+          <rect class="sky" x="298" y="44" width="196" height="150" rx="8"/>
+          <circle class="ndot" cx="320" cy="62" r="2"/><circle class="ndot" cx="352" cy="62" r="2"/><circle class="ndot" cx="384" cy="62" r="2"/><circle class="ndot" cx="416" cy="62" r="2"/><circle class="ndot" cx="448" cy="62" r="2"/><circle class="ndot" cx="476" cy="62" r="2"/>
+          <circle class="ndot" cx="320" cy="88" r="2"/><circle class="ndot" cx="352" cy="88" r="2"/><circle class="ndot" cx="400" cy="90" r="2"/><circle class="ndot" cx="432" cy="86" r="2"/><circle class="ndot" cx="462" cy="90" r="2"/><circle class="ndot" cx="476" cy="88" r="2"/>
+          <circle class="ndot" cx="320" cy="114" r="2"/><circle class="ndot" cx="358" cy="112" r="2"/><circle class="ndot" cx="392" cy="116" r="2"/><circle class="ndot" cx="428" cy="112" r="2"/><circle class="ndot" cx="460" cy="116" r="2"/><circle class="ndot" cx="478" cy="110" r="2"/>
+          <circle class="ndot" cx="322" cy="140" r="2"/><circle class="ndot" cx="356" cy="146" r="2"/><circle class="ndot" cx="388" cy="140" r="2"/><circle class="ndot" cx="430" cy="144" r="2"/><circle class="ndot" cx="462" cy="138" r="2"/><circle class="ndot" cx="480" cy="146" r="2"/>
+          <circle class="ndot" cx="330" cy="166" r="2"/><circle class="ndot" cx="364" cy="170" r="2"/><circle class="ndot" cx="398" cy="164" r="2"/><circle class="ndot" cx="432" cy="170" r="2"/><circle class="ndot" cx="464" cy="164" r="2"/><circle class="ndot" cx="480" cy="172" r="2"/>
+          <circle class="ndot" cx="316" cy="182" r="2"/><circle class="ndot" cx="348" cy="186" r="2"/><circle class="ndot" cx="382" cy="182" r="2"/><circle class="ndot" cx="418" cy="186" r="2"/><circle class="ndot" cx="450" cy="182" r="2"/><circle class="ndot" cx="478" cy="184" r="2"/>
+          <!-- the same known 6, larger double rings -->
+          <circle class="kring" cx="348" cy="94" r="6"/><circle class="kdot" cx="348" cy="94" r="2.5"/>
+          <circle class="kring" cx="383" cy="82" r="6"/><circle class="kdot" cx="383" cy="82" r="2.5"/>
+          <circle class="kring" cx="418" cy="102" r="6"/><circle class="kdot" cx="418" cy="102" r="2.5"/>
+          <circle class="kring" cx="448" cy="86" r="6"/><circle class="kdot" cx="448" cy="86" r="2.5"/>
+          <circle class="kring" cx="378" cy="132" r="6"/><circle class="kdot" cx="378" cy="132" r="2.5"/>
+          <circle class="kring" cx="418" cy="158" r="6"/><circle class="kdot" cx="418" cy="158" r="2.5"/>
+
+          <text class="cap-in" x="260" y="212">同じ空。増えたのは星ではなく、こちらの解像度</text>
+        </svg>
+        <div class="cap"><b>同じ空を、二つの道具が違う数で数える。</b><span class="r">処方＝「六つある」を聞いたら、空の話か目の話かを分け、まず道具を検定する。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">道具が、事実の範囲を決める</div>
+        <div class="wu hit"><div class="gi">数</div><div class="txt"><div class="nm">数は、目の性能の数字だった</div><div class="ex">プレアデスは<b>六つ→四十二</b>、既知の星全体で十倍を超えた。「六つ」は空の数字ではなく、目の性能の数字。<b>空は、何も変わっていない</b>。</div></div></div>
+        <div class="wu miss"><div class="gi">名</div><div class="txt"><div class="nm">名は、解像度の限界に付いていた</div><div class="ex">「天の川＝もや」「星雲＝天の濃い部分」——対象の性質と思われた名の実体は、<b>密集した無数の小さな星</b>。名は天ではなく、粗い網膜に付いていた。</div></div></div>
+        <div class="wu fix"><div class="gi">検</div><div class="txt"><div class="nm">道具を、先に検定する</div><div class="ex">紙の円を二つ、直径を<b>二十倍（＝面積四百倍）</b>で壁に貼り、片目は筒・片目は裸眼。同じ大きさに見えれば四百倍。<b>四百倍に満たない筒で「見えない」は、反証にならない</b>。</div></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">空は、変わって<br>いない</div><div class="lb">変わったのは、こちら側。数えられた星の数は、はじめから空の数ではなく、器官の性能の数だった。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>データ</em></div>
+          <p>「今期から不良品ゼロ」——工程は変えていないが、<span class="now">検査の基準と機器を新しくしていた</span>。数えられる不良は工程の性質であると同時に、検査の性質でもある。数字の中身より先に、その数字を作った道具の方を検定する。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 同じ空を裸眼と筒で数え、「事実」に道具がついていることを一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

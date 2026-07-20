@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 デュルケームDay6 — 中間集団／三つの高さから伸びる手</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .lvl{fill:var(--panel); stroke:var(--line); stroke-width:1.3;}
+  .art .lvl-key{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.6;}
+  .art .lvl-dash{fill:none; stroke:var(--faint); stroke-width:1.4; stroke-dasharray:5 4;}
+  .art .person{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.6;}
+  .art .ground{stroke:var(--line); stroke-width:2;}
+  .art .reach{fill:none; stroke:var(--faint); stroke-width:1.8; stroke-dasharray:4 4;}
+  .art .reach-key{fill:none; stroke:var(--seal); stroke-width:2.4;}
+  .art .reach-near{fill:none; stroke:var(--calm); stroke-width:2;}
+  .art .chain{fill:none; stroke:var(--heat); stroke-width:1.4;}
+  .art .xmk{stroke:var(--heat); stroke-width:2;}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:14px; text-anchor:middle; fill:var(--ink);}
+  .art .lab-key{fill:var(--seal);}
+  .art .sub{font-family:var(--sans); font-size:10.5px; text-anchor:middle; fill:var(--muted);}
+  .art .sub-heat{fill:var(--heat);}
+  .art .dbl{font-family:var(--serif); font-size:11.5px; text-anchor:middle; fill:var(--seal); font-weight:700;}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>遠すぎず、近すぎない。<br>だから、両方が届く。</h1>
+      <p class="dek">統合（Day3）と規制（Day4）を、<b>同時に、一つの器が供給できる</b>のはどこか。国家は遠すぎて個人に届かない。宗教は効くが、自由に考える権利を取り上げることでしか社会化しない。家族は縮んだ。残るのは<b>職業集団</b>——<b>高いところから枠を引けるほど遠く、同情せずにいられないほど近い</b>、その二重の性格。</p>
+      <div class="source"><span class="seal">自殺論</span><span>デュルケーム ・ Day6「中間集団」第3篇第3章</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">枠を引くには<span class="em">遠さ</span>が要り、同情するには<span class="em">近さ</span>が要る。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 300" role="img" aria-label="個人へ三つの高さから手が伸びる。国家は最も高く届かない。家族は同じ高さで近いが上から支えられない。職業集団は中間の高さから、上から枠を示す手と肩に触れる手の二本を伸ばす。宗教は破線の手で、手首に鎖＝自由の代償">
+          <!-- 国家: highest, does not reach -->
+          <rect class="lvl" x="60" y="34" width="104" height="30" rx="6"/>
+          <text class="lab" x="112" y="54">国家</text>
+          <text class="sub" x="112" y="80">遠すぎる・届かない</text>
+          <line class="reach" x1="164" y1="52" x2="300" y2="150"/>
+          <line class="xmk" x1="292" y1="142" x2="308" y2="158"/>
+          <line class="xmk" x1="308" y1="142" x2="292" y2="158"/>
+
+          <!-- 宗教: dashed, chain at wrist -->
+          <rect class="lvl-dash" x="60" y="96" width="104" height="30" rx="6"/>
+          <text class="lab" x="112" y="116">宗教</text>
+          <text class="sub sub-heat" x="112" y="142">効く・だが自由の代償</text>
+          <line class="reach" x1="164" y1="114" x2="386" y2="238"/>
+          <circle class="chain" cx="286" cy="176" r="4"/>
+          <circle class="chain" cx="296" cy="182" r="4"/>
+
+          <!-- 職業集団: middle, TWO hands (frame + shoulder) = double character -->
+          <rect class="lvl-key" x="44" y="164" width="136" height="30" rx="6"/>
+          <text class="lab lab-key" x="112" y="184">職業集団</text>
+          <line class="reach-key" x1="180" y1="176" x2="398" y2="230"/>
+          <line class="reach-key" x1="180" y1="186" x2="392" y2="252"/>
+          <text class="dbl" x="270" y="212">上から枠・近くで同情＝二重の性格</text>
+
+          <!-- 家族: lowest, near but not supported from above -->
+          <rect class="lvl" x="60" y="242" width="104" height="30" rx="6"/>
+          <text class="lab" x="112" y="262">家族</text>
+          <text class="sub" x="112" y="288">近すぎる・枠を引けない</text>
+          <line class="reach-near" x1="164" y1="257" x2="398" y2="256"/>
+
+          <!-- 個人 -->
+          <circle class="person" cx="420" cy="250" r="22"/>
+          <text class="lab" x="420" y="255">個人</text>
+          <line class="ground" x1="376" y1="278" x2="464" y2="278"/>
+        </svg>
+        <div class="cap"><b>国家は届かず、家族は上から支えられない。中間の職業集団だけが、両方の高さにいる。</b><span class="r">処方＝統合と規制を「一つの器」で供給できる中間集団を、生活動線の中に探す。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">消去法と、二重の性格</div>
+        <div class="wu miss"><div class="gi">消</div><div class="txt"><div class="nm">三つの候補は、落ちる</div><div class="ex"><b>国家</b>＝遠すぎて個人に届かない。<b>宗教</b>＝効くが、自由に考える権利を取り上げることでしか社会化しない（Day3の代償）。<b>家族</b>＝夫婦だけの単位に縮んだ。</div></div></div>
+        <div class="wu fix"><div class="gi">職</div><div class="txt"><div class="nm">残るのは、職業集団</div><div class="ex">一つの集団だから、<b>個人を十分に高いところから見下ろして欲望に限界を引ける</b>。だが、あまりに彼らの生活を生きているので、<b>その必要に同情せずにはいられない</b>。しかも、働き手がどこへ移っても付いていく。</div></div></div>
+        <div class="wu hit"><div class="gi">図</div><div class="txt"><div class="nm">6日間の使いどころ</div><div class="ex">率という物（Day1）→共変法（Day2）→統合（Day3）→アノミー（Day4）→過少と過剰の2軸（Day5）→中間集団（Day6）。<b>ただし処方箋の章にだけは、証拠が付いていない</b>——この本で唯一。</div></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">遠すぎず、<br>近すぎず</div><div class="lb">枠を引く高さと、同情する近さ。両方を一つの器が持てるのは、中間の集団だけ。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>中間集団</em></div>
+          <p>会社は遠く、家庭は近すぎて枠を引けない——<span class="now">その間で、あなたの仕事の基準と支えを同時に供給する集団はどこか</span>。職種のコミュニティ、勉強会、同業のつながり。それが薄いなら、統合も規制も供給されないまま、個人が裸で速さにさらされている。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 三つの高さから伸びる手で、中間集団の二重の性格を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 カントDay1 — 独断のまどろみ</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .box{fill:var(--panel); stroke:var(--line); stroke-width:1.4;}
+  .art .box-seal{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.4;}
+  .art .box-calm{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.4;}
+  .art .box-heat{fill:var(--heat-soft); stroke:var(--heat); stroke-width:1.6;}
+  .art .lane{fill:var(--panel-2); stroke:var(--line-soft); stroke-width:1;}
+  .art .ring{fill:none; stroke:var(--faint); stroke-width:1.4;}
+  .art .arrow{stroke:var(--heat); stroke-width:2; fill:none; stroke-dasharray:5 4;}
+  .art .arrow-h{fill:var(--heat);}
+  .art .spark{stroke:var(--heat); stroke-width:2.2; stroke-linecap:round;}
+  .art .gaze{stroke:var(--seal); stroke-width:1.8; fill:none;}
+  .art .gaze-h{fill:var(--seal);}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:14px; text-anchor:middle; fill:var(--ink);}
+  .art .lab-heat{fill:var(--heat);}
+  .art .sub{font-family:var(--sans); font-size:11.5px; text-anchor:middle; fill:var(--muted);}
+  .art .note{font-family:var(--sans); font-size:12px; text-anchor:middle; fill:var(--faint); font-weight:600;}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--heat);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .band{margin-top:clamp(18px,3vw,26px); border-radius:16px; padding:clamp(18px,3vw,26px); background:linear-gradient(180deg, color-mix(in srgb, var(--seal) 9%, var(--panel)), var(--panel)); border:1px solid var(--seal); box-shadow:var(--shadow);}
+  .band .tag{font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:var(--seal);}
+  .band .q{font-family:var(--serif); font-size:clamp(18px,3.2vw,24px); line-height:1.5; font-weight:600; text-wrap:balance; margin:9px 0 6px;}
+  .band .cite{font-family:var(--serif); color:var(--muted); font-size:13.5px;}
+  .halves{display:flex; gap:16px; flex-wrap:wrap; margin-top:16px;}
+  .halves .col{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:12px 14px;}
+  .halves .col .h{font-size:12.5px; font-weight:700; display:flex; gap:7px; align-items:center;}
+  .halves .col.bad .h{color:var(--faint);} .halves .col.good .h{color:var(--seal);}
+  .halves .col .ic{font-size:17px;}
+  .halves .col p{margin:5px 0 0; font-size:13px; color:var(--muted);} .halves .col p b{color:var(--ink);}
+  .band-foot{text-align:center; font-family:var(--serif); color:var(--seal); font-size:14px; margin-top:14px;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>眠っていたことは、<br>外から破られるまで分からない。</h1>
+      <p class="dek">理性は、足元の土台（因果＝「Aが在れば、Bが必ず来る」）を<b>一度も検めないまま</b>、その上に高い塔（形而上学）を積む。塔はきれいに立っている。塔の中の人の視線は<b>上を向いていて、土台を見ていない</b>。土台に目が行くのは、外から火花（ヒューム）が飛んできたとき——それまで、眠りは眠りだと分からない。</p>
+      <div class="source"><span class="seal">純粋理性批判</span><span>カント ・ Day1「独断のまどろみ」『プロレゴメナ』序文 1783年</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">眠りは、<span class="em">内側からは見えない</span>。外から殴られて、はじめて「眠りだった」と分かる。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 280" role="img" aria-label="検められていない土台（因果）の上に、形而上学の高い塔が積まれている。塔の中の人物の視線は上を向き土台を見ていない。外からヒュームの火花が飛んで、はじめて土台に目が行く">
+          <text class="note" x="200" y="50">視線は上——足元の土台を見ていない</text>
+
+          <!-- figure at top of tower, gazing up -->
+          <path class="gaze" d="M200 70 L200 58"/>
+          <path class="gaze-h" d="M200 55 l-4 7 l8 0 Z"/>
+          <circle class="ring" cx="200" cy="80" r="9"/>
+
+          <!-- tower of metaphysics -->
+          <rect class="box" x="145" y="94" width="110" height="30" rx="4"/>
+          <text class="lab" x="200" y="114">形而上学</text>
+          <rect class="box" x="137" y="126" width="126" height="30" rx="4"/>
+          <text class="sub" x="200" y="145">積み上げた推論</text>
+          <rect class="box" x="129" y="158" width="142" height="30" rx="4"/>
+          <text class="sub" x="200" y="177">（きれいに立っている）</text>
+
+          <!-- uninspected foundation -->
+          <rect class="box-heat" x="121" y="192" width="158" height="42" rx="5"/>
+          <text class="lab lab-heat" x="200" y="211">土台＝因果</text>
+          <text class="sub" x="200" y="227">一度も検めていない</text>
+
+          <!-- Hume's spark from the right, arrow to foundation -->
+          <text class="note" x="418" y="184">ヒュームの火花</text>
+          <line class="spark" x1="400" y1="212" x2="393" y2="200"/>
+          <line class="spark" x1="400" y1="212" x2="402" y2="197"/>
+          <line class="spark" x1="400" y1="212" x2="411" y2="202"/>
+          <path class="arrow" d="M382 213 L292 213"/>
+          <path class="arrow-h" d="M288 213 l10 -5 l0 10 Z"/>
+
+          <!-- bottom lane: the uninspected premise spelled out -->
+          <rect class="lane" x="20" y="246" width="480" height="27" rx="8"/>
+          <text class="note" x="260" y="264">検められていない土台＝「Aが在れば、Bが必ず来る」という因果の必然性</text>
+        </svg>
+        <div class="cap"><b>塔はきれいに立つ。土台だけが、一度も検められていない。</b><span class="r">処方＝平穏なときこそ「自分は今どの前提の上に立っているか」を外の火花で叩いてもらう。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">ヒュームの宿題——因果は、どこにも見えない</div>
+        <div class="wu miss"><div class="gi">因</div><div class="txt"><div class="nm">因果とは「必然性」の主張</div><div class="ex">「Aが在れば、Bが<b>必ず</b>在る」——因果は、単なる前後関係ではなく、<b>必然性</b>を言い張っている。</div></div></div>
+        <div class="wu miss"><div class="gi">見</div><div class="txt"><div class="nm">その必然性は、目に映らない</div><div class="ex">見えるのは「Aの後にBが来た」の<b>連続だけ</b>。「必ず」の部分は、一度も観察されていない。</div></div></div>
+        <div class="wu miss"><div class="gi">習</div><div class="txt"><div class="nm">確信の正体は、習慣</div><div class="ex">映っていないのに信じられるのは、繰り返しで出来た<b>習慣</b>だから、とヒュームは言った。</div></div></div>
+        <div class="wu fix"><div class="gi">癖</div><div class="txt"><div class="nm">ならば必然性は、こちらの癖</div><div class="ex">必然性が世界でなく<b>こちらの癖</b>なら、その上に建つ形而上学は成立しない——これが宿題。</div></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">平穏そのものが、<br>症状である。</div><div class="lb">まどろみは「疑って解けない」のではなく、疑うべき対象として浮かんでこない状態。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>ずっと変えていない前提</em></div>
+          <p>十年、同じ料金プランを払い続け、不満も無く明細も見ていない——<span class="now">不満の不在は、健全さの証拠ではない</span>。点検が一度も起動していない証拠かもしれない。まどろみは、他社の条件・他人の指摘・引っ越しといった外の火花でしか破れない。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 検められていない土台の上の塔で、独断のまどろみを一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

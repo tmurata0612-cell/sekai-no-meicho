@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 スミスDay6 — 見えざる手／全巻にたった一度</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .book{fill:var(--panel); stroke:var(--line); stroke-width:1.6;}
+  .art .txtline{stroke:var(--line); stroke-width:1.4; opacity:.55;}
+  .art .spot{fill:var(--heat);}
+  .art .lens{fill:none; stroke:var(--heat); stroke-width:1.8;}
+  .art .callout{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.6;}
+  .art .uline{stroke:var(--heat); stroke-width:1.8;}
+  .art .conn{stroke:var(--heat); stroke-width:1.2; stroke-dasharray:3 3;}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle;}
+  .art .quote{font-family:var(--serif); font-weight:600; font-size:13px; text-anchor:middle; fill:var(--ink);}
+  .art .adv{font-family:var(--sans); font-weight:700; font-size:12px; text-anchor:middle; fill:var(--heat);}
+  .art .lab-h{fill:var(--heat);} .art .lab-inv{fill:var(--seal);}
+  .art .sub{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--muted);}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(19px,3.6vw,26px); font-weight:600; line-height:1.22;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>「見えざる手」は、<br>全巻でたった一度。</h1>
+      <p class="dek">個人は自分の儲けだけを意図して動く。にもかかわらず、意図しなかった公益が結果として生まれることがある。だが世間が信じる「自己利益は放っておけば<b>必ず</b>公益になる」は、スミスが書いたことではない。原典では三重に条件がつく——<b>全5篇で1回しか出てこない／その1回は「国内産業か国外産業か」の限定文脈／原文は "always" ではなく "frequently"</b>。フレームの正体は「条件節を読み落とすな」。</p>
+      <div class="source"><span class="seal">国富論</span><span>スミス ・ Day6「見えざる手」第4篇第2章</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">約35,000行の中で光る点は<span class="em">ひとつ</span>。その一文にも条件がある。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 258" role="img" aria-label="左は分厚い五篇の本。無数の行の中で光っている点はたった一つ。拡大鏡がその一点を拡大すると、見えざる手の一文が現れ、その中の generally ふつう と frequently しばしば にだけ下線が引かれている。量の少なさと条件語を同時に示す">
+          <!-- book with many faint lines -->
+          <rect class="book" x="28" y="46" width="140" height="196" rx="7"/>
+          <g class="txtline"><line x1="40" y1="60" x2="156" y2="60"/><line x1="40" y1="72" x2="156" y2="72"/><line x1="40" y1="84" x2="156" y2="84"/><line x1="40" y1="96" x2="156" y2="96"/><line x1="40" y1="108" x2="156" y2="108"/><line x1="40" y1="120" x2="156" y2="120"/><line x1="40" y1="132" x2="156" y2="132"/><line x1="40" y1="162" x2="156" y2="162"/><line x1="40" y1="174" x2="156" y2="174"/><line x1="40" y1="186" x2="156" y2="186"/><line x1="40" y1="198" x2="156" y2="198"/><line x1="40" y1="210" x2="156" y2="210"/><line x1="40" y1="222" x2="156" y2="222"/><line x1="40" y1="234" x2="156" y2="234"/></g>
+          <circle class="spot" cx="98" cy="147" r="5"/>
+          <circle class="lens" cx="98" cy="147" r="15"/>
+          <text class="sub" x="98" y="36" style="fill:var(--seal); font-weight:700">全5篇＝約35,000行</text>
+          <line class="conn" x1="113" y1="147" x2="196" y2="120"/>
+          <line class="conn" x1="113" y1="152" x2="196" y2="210"/>
+
+          <!-- callout: the one sentence, condition words underlined -->
+          <rect class="callout" x="196" y="52" width="298" height="180" rx="8"/>
+          <text class="quote" x="345" y="86">見えざる手に導かれて、</text>
+          <text class="quote" x="345" y="108">自分の意図の一部では</text>
+          <text class="quote" x="345" y="130">なかった目的を促進する。</text>
+          <text class="sub" x="345" y="162">この一文の中の、原文の副詞：</text>
+          <text class="adv" x="345" y="188">generally（ふつう）</text>
+          <line class="uline" x1="285" y1="194" x2="405" y2="194"/>
+          <text class="adv" x="345" y="216">frequently（しばしば）</text>
+          <line class="uline" x1="279" y1="222" x2="411" y2="222"/>
+        </svg>
+        <div class="cap"><b>"always（常に）" ではない。"generally／frequently" と書いてある。</b><span class="r">処方＝「みんなの利益になる」と言われたら、条件節（しばしば・ふつう）を探す。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">通俗の理解と、原典の三重の条件</div>
+        <div class="wu hit"><div class="gi">一</div><div class="txt"><div class="nm">全5篇で、出現は1回</div><div class="ex">『国富論』約35,000行を機械照合。"invisible hand" は<b>文字どおり1回だけ</b>。スミス自身、さして重要と思っていなかった。</div></div></div>
+        <div class="wu fix"><div class="gi">文</div><div class="txt"><div class="nm">その1回の、文脈</div><div class="ex">直前の文は「<b>国内産業を選ぶか国外産業を選ぶか</b>」。市場一般の法則ではなく、資本をどこに置くかという限定された話。</div></div></div>
+        <div class="wu fix"><div class="gi">節</div><div class="txt"><div class="nm">原文の、条件語</div><div class="ex">generally（ふつう）・frequently（しばしば）。<b>"always（常に）" とは書いていない</b>。書けなかった、というほうが正確。</div></div></div>
+        <div class="wu miss"><div class="gi">俗</div><div class="txt"><div class="nm">通俗の理解は、原典に無い</div><div class="ex">「自己利益は常に公益になる」——これはスミスが書いたことではない。<b>条件節は、引用のときにいちばん先に落ちる</b>。</div></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">条件節は、<br>引用のとき、<br>いちばん先に落ちる。</div><div class="lb">人は、自分に都合のいい節を法則に格上げする。"しばしば" は、まっさきに読み飛ばされる。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>報奨制度</em></div>
+          <p>小売チェーンが「各店が自店の売上だけを最大化すれば全体も最大になる」と店ごとの歩合制を敷いた——<span class="now">条件を確かめずに法則として使っている</span>。自己利益が全体の利益になるのは「しばしば」であって常にではない。店間で客を奪い合う条件は現に存在する。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — たった一つの光点と条件語の下線で、読み落としを一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>

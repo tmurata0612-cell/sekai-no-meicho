@@ -715,6 +715,830 @@
           "crossover": false
         }
       ]
+    },
+    {
+      "slug": "12-sidereus",
+      "title": "星界の報告",
+      "author": "ガリレオ・ガリレイ",
+      "genre": "科学",
+      "genreKey": "science",
+      "totalDays": 4,
+      "portrait": "assets/portraits/12-sidereus.jpg",
+      "portraitCredit": "ガリレオ・ガリレイ肖像（ユストゥス・ステルス画、1636–1640年）Wikimedia Commons／パブリックドメイン（PD-Art-old-100）",
+      "titleLines": [
+        "星界の報告"
+      ],
+      "days": [
+        {
+          "id": "12-sidereus-day1",
+          "day": 1,
+          "title": "見える範囲は、道具が決める",
+          "kind": [
+            "author-intro"
+          ],
+          "kindLabel": "著者登場回",
+          "frameName": "見える範囲は、道具が決める",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "12-sidereus-day2",
+          "day": 2,
+          "title": "『別世界』の線は、近づくと消える",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "「別世界」の線は、近づくと消える",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "12-sidereus-day3",
+          "day": 3,
+          "title": "一点は語らない、系列が語る",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "一点は語らない、系列が語る",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "12-sidereus-day4",
+          "day": 4,
+          "title": "署名した男——公開質問と、三つの問い",
+          "kind": [
+            "rebuttal",
+            "practice"
+          ],
+          "kindLabel": "反論特集＋実戦適用回・卒業回",
+          "frameName": "三つの問い",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
+    },
+    {
+      "slug": "13-wealth-of-nations",
+      "title": "国富論",
+      "author": "アダム・スミス",
+      "genre": "経済・社会",
+      "genreKey": "economy",
+      "totalDays": 9,
+      "portrait": "assets/portraits/13-wealth-of-nations.jpg",
+      "portraitCredit": "アダム・スミス「ミュア肖像」（作者不詳、1800年頃）Wikimedia Commons／パブリックドメイン（PD-Art-100-expired）",
+      "titleLines": [
+        "国富論"
+      ],
+      "days": [
+        {
+          "id": "13-wealth-of-nations-day1",
+          "day": 1,
+          "title": "分業——富を生むのは、腕ではなく『工程の切り方』",
+          "kind": [
+            "author-intro"
+          ],
+          "kindLabel": "著者登場回",
+          "frameName": "分業——富を生むのは、腕ではなく「工程の切り方」",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "13-wealth-of-nations-day2",
+          "day": 2,
+          "title": "自愛心に語りかける——善意への請求書か、利益への招待状か",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "交換性向と自愛心——他人の善意ではなく、他人の得に訴える",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "13-wealth-of-nations-day3",
+          "day": 3,
+          "title": "分業の天井——専念できるかどうかは、腕ではなく、相手の人数が決める",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "分業の限界は、市場の大きさが決める",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "13-wealth-of-nations-day4",
+          "day": 4,
+          "title": "値札の裏——本当に払っているのは、金ではなく、あなたの時間",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "労働＝真の尺度",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "13-wealth-of-nations-day5",
+          "day": 5,
+          "title": "重心——誰も命じていないのに、値段は中心へ戻る",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "自然価格と市場価格",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "13-wealth-of-nations-day6",
+          "day": 6,
+          "title": "見えざる手——全巻に一度だけ、しかも『しばしば』",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "見えざる手",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "13-wealth-of-nations-day7",
+          "day": 7,
+          "title": "同業者は、集まれば共謀に終わる——手が止まる場所①",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "競争を狭める共謀",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "13-wealth-of-nations-day8",
+          "day": 8,
+          "title": "分業は、富を増やし、人を削る——スミス自身の告発",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "分業の裏面と公教育",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "13-wealth-of-nations-day9",
+          "day": 9,
+          "title": "自由貿易を説いた男は、なぜ関税の椅子で死んだのか",
+          "kind": [
+            "rebuttal",
+            "practice"
+          ],
+          "kindLabel": "反論特集回＋実戦適用回＋卒業回",
+          "frameName": "『国富論』使い分けマップ",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
+    },
+    {
+      "slug": "14-apology",
+      "title": "ソクラテスの弁明・クリトン",
+      "author": "プラトン",
+      "genre": "哲学・政治思想",
+      "genreKey": "philosophy",
+      "totalDays": 4,
+      "portrait": "assets/portraits/14-apology.jpg",
+      "portraitCredit": "プラトン（ラファエロ画「アテナイの学堂」部分、1509–1511年）Wikimedia Commons／パブリックドメイン（PD-Art、作者1520年没）",
+      "titleLines": [
+        "ソクラテスの",
+        "弁明・クリトン"
+      ],
+      "days": [
+        {
+          "id": "14-apology-day1",
+          "day": 1,
+          "title": "無知の知——『知らない』と知っている者だけが、探し始められる",
+          "kind": [
+            "author-intro"
+          ],
+          "kindLabel": "著者登場回",
+          "frameName": "無知の知——「知らない」と知っている者だけが、探し始められる",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "14-apology-day2",
+          "day": 2,
+          "title": "吟味なき人生は生きるに値しない——アブは、馬に許可を取らない",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "吟味なき人生は生きるに値しない——アブは、馬に許可を取らない",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "14-apology-day3",
+          "day": 3,
+          "title": "暗黙の合意——住み続けたことが、すでに承諾である",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "暗黙の合意／「説得するか、従うか」",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "14-apology-day4",
+          "day": 4,
+          "title": "公開質問——あなたが書いたソクラテスは、どこまで本人ですか",
+          "kind": [
+            "rebuttal",
+            "practice"
+          ],
+          "kindLabel": "反論特集＋実戦適用回・卒業回",
+          "frameName": "ソクラテス問題——「誰の言葉か」を確かめる",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
+    },
+    {
+      "slug": "15-hume",
+      "title": "人間知性研究",
+      "author": "デイヴィッド・ヒューム",
+      "genre": "科学哲学",
+      "genreKey": "sciphil",
+      "totalDays": 5,
+      "portrait": "assets/portraits/15-hume.jpg",
+      "portraitCredit": "デイヴィッド・ヒューム肖像（アラン・ラムジー画、1766年）Wikimedia Commons／パブリックドメイン（PD-Art, PD-old-100）",
+      "titleLines": [
+        "人間知性研究"
+      ],
+      "days": [
+        {
+          "id": "15-hume-day1",
+          "day": 1,
+          "title": "印象への差し戻し——その言葉は、どの経験から作ったのか",
+          "kind": [
+            "author-intro"
+          ],
+          "kindLabel": "著者登場回",
+          "frameName": "印象への差し戻し",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "15-hume-day2",
+          "day": 2,
+          "title": "帰納の問題——「これまで」から「これから」への一歩に、床は無い",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "帰納の問題",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "15-hume-day3",
+          "day": 3,
+          "title": "因果は観察できない——見えているのは、順番だけ",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "因果は観察できない",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "15-hume-day4",
+          "day": 4,
+          "title": "習慣こそが、人生の偉大な導き手",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "習慣こそが、人生の偉大な導き手",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "15-hume-day5",
+          "day": 5,
+          "title": "証言の秤——主張の異常さと、証拠の強さを釣り合わせる",
+          "kind": [
+            "rebuttal",
+            "practice"
+          ],
+          "kindLabel": "反論特集＋実戦適用回・卒業回",
+          "frameName": "証言の秤",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
+    },
+    {
+      "slug": "16-thucydides",
+      "title": "戦史",
+      "author": "トゥキュディデス",
+      "genre": "歴史・戦略",
+      "genreKey": "strategy",
+      "totalDays": 8,
+      "portrait": "assets/portraits/16-thucydides.jpg",
+      "portraitCredit": "トゥキュディデス胸像（Captmondo撮影、2005年・ロイヤルオンタリオ博物館蔵）Wikimedia Commons／パブリックドメイン（PD-self＝撮影者による献呈）",
+      "titleLines": [
+        "戦史"
+      ],
+      "days": [
+        {
+          "id": "16-thucydides-day1",
+          "day": 1,
+          "title": "人間というものがある限り——摂理を外すと、繰り返しが見える",
+          "kind": [
+            "author-intro"
+          ],
+          "kindLabel": "著者登場回",
+          "frameName": "「人間というものがある限り」——摂理を外すと、繰り返しが見える",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "16-thucydides-day2",
+          "day": 2,
+          "title": "建前の原因と、本当の原因",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "建前の原因と、本当の原因",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "16-thucydides-day3",
+          "day": 3,
+          "title": "恐怖・名誉・利益",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "恐怖・名誉・利益",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "16-thucydides-day4",
+          "day": 4,
+          "title": "言葉のうえでは／実際には",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "言葉のうえでは／実際には",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "16-thucydides-day5",
+          "day": 5,
+          "title": "言葉の意味が壊れる",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "言葉の意味が壊れる",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "16-thucydides-day6",
+          "day": 6,
+          "title": "利益の言葉で、人道を通す",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "利益の言葉で、人道を通す",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "16-thucydides-day7",
+          "day": 7,
+          "title": "強者と弱者の論理（メロス対話）",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "強者と弱者の論理",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "16-thucydides-day8",
+          "day": 8,
+          "title": "過剰拡大——反対の仕方が、推進力になる",
+          "kind": [
+            "frame",
+            "rebuttal",
+            "practice"
+          ],
+          "kindLabel": "フレーム回＋反論特集回＋実戦適用回（卒業回）",
+          "frameName": "過剰拡大——反対の仕方が、推進力になる",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
+    },
+    {
+      "slug": "17-metamorphosis",
+      "title": "変身",
+      "author": "フランツ・カフカ",
+      "genre": "文学",
+      "genreKey": "literature",
+      "totalDays": 3,
+      "portrait": "",
+      "portraitCredit": "",
+      "titleLines": [
+        "変身"
+      ],
+      "days": [
+        {
+          "id": "17-metamorphosis-day1",
+          "day": 1,
+          "title": "役割が、人間の値段を決めている",
+          "kind": [
+            "author-intro"
+          ],
+          "kindLabel": "著者登場回",
+          "frameName": "役割が、人間の値段を決めている",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "17-metamorphosis-day2",
+          "day": 2,
+          "title": "順応の速度 — 慣れは、残酷さの顔をしていない",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "順応の速度 — 慣れは、残酷さの顔をしていない",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "17-metamorphosis-day3",
+          "day": 3,
+          "title": "空席の春 — 退場した日に、家族は郊外へ行く",
+          "kind": [
+            "frame",
+            "rebuttal",
+            "practice"
+          ],
+          "kindLabel": "フレーム回＋反論特集＋実戦適用回・卒業回",
+          "frameName": "空席の春",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
+    },
+    {
+      "slug": "18-kant",
+      "title": "純粋理性批判",
+      "author": "イマヌエル・カント",
+      "genre": "科学哲学",
+      "genreKey": "sciphil",
+      "totalDays": 6,
+      "portrait": "assets/portraits/18-kant.jpg",
+      "portraitCredit": "イマヌエル・カント肖像（ヨハン・ゴットリープ・ベッカー画、1768年）Wikimedia Commons／パブリックドメイン（PD-Art、作者1782年没）",
+      "titleLines": [
+        "純粋理性批判"
+      ],
+      "days": [
+        {
+          "id": "18-kant-day1",
+          "day": 1,
+          "title": "独断のまどろみ——眠っていたことは、外から破られるまで分からない",
+          "kind": [
+            "author-intro"
+          ],
+          "kindLabel": "著者登場回",
+          "frameName": "独断のまどろみ",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "18-kant-day2",
+          "day": 2,
+          "title": "コペルニクス的転回——回っていたのは、こちらだった",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "コペルニクス的転回",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "18-kant-day3",
+          "day": 3,
+          "title": "アプリオリな総合判断——経験から来ていないのに、経験を増やす判断",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "アプリオリな総合判断",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "18-kant-day4",
+          "day": 4,
+          "title": "外せない眼鏡——空間・時間・因果は、世界の性質ではなく、こちらの装備",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "外せない眼鏡",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "18-kant-day5",
+          "day": 5,
+          "title": "答えの出ない問いは、問いの側が壊れている",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "答えの出ない問いは、問いの側が壊れている",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "18-kant-day6",
+          "day": 6,
+          "title": "通じなかった本——公開質問と、五日間の使い分けマップ",
+          "kind": [
+            "rebuttal",
+            "practice"
+          ],
+          "kindLabel": "反論特集＋実戦適用回・卒業回",
+          "frameName": "通じなかった本——五日間の道具箱と、埋まっていない穴",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
+    },
+    {
+      "slug": "19-on-liberty",
+      "title": "自由論",
+      "author": "J.S.ミル",
+      "genre": "哲学・政治思想",
+      "genreKey": "philosophy",
+      "totalDays": 5,
+      "portrait": "assets/portraits/19-on-liberty.jpg",
+      "portraitCredit": "ジョン・スチュアート・ミル（ロンドン・ステレオスコピック社撮影、1870年頃）Wikimedia Commons／パブリックドメイン（PD-old）",
+      "titleLines": [
+        "自由論"
+      ],
+      "days": [
+        {
+          "id": "19-on-liberty-day1",
+          "day": 1,
+          "title": "危害原理——『本人のため』は、強制の理由にならない",
+          "kind": [
+            "author-intro"
+          ],
+          "kindLabel": "著者登場回",
+          "frameName": "危害原理",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "19-on-liberty-day2",
+          "day": 2,
+          "title": "多数の専制——罰則が無いから、逃げ場が無い",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "多数の専制",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "19-on-liberty-day3",
+          "day": 3,
+          "title": "反対意見の効用——正しい意見も、争われなければ死んだドグマになる",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "反対意見の効用",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "19-on-liberty-day4",
+          "day": 4,
+          "title": "個性は文明の要素——人間は機械ではなく、樹木である",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "個性は文明の要素",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "19-on-liberty-day5",
+          "day": 5,
+          "title": "線引きの実務——そして、著者はどこで引き損ねたか",
+          "kind": [
+            "rebuttal",
+            "practice"
+          ],
+          "kindLabel": "反論特集＋実戦適用＋卒業",
+          "frameName": "線引きの実務",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
+    },
+    {
+      "slug": "20-suicide",
+      "title": "自殺論",
+      "author": "エミール・デュルケーム",
+      "genre": "経済・社会",
+      "genreKey": "economy",
+      "totalDays": 6,
+      "portrait": "",
+      "portraitCredit": "",
+      "titleLines": [
+        "自殺論"
+      ],
+      "days": [
+        {
+          "id": "20-suicide-day1",
+          "day": 1,
+          "title": "「誰が」をやめて、「なぜこの数か」を見る",
+          "kind": [
+            "author-intro"
+          ],
+          "kindLabel": "著者登場回",
+          "frameName": "社会的事実を「物」として扱う",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "20-suicide-day2",
+          "day": 2,
+          "title": "素朴な原因説を、データで一つずつ潰す",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "共変法",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "20-suicide-day3",
+          "day": 3,
+          "title": "統合——人を生かすのは、結びつきの強さ",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "統合",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "20-suicide-day4",
+          "day": 4,
+          "title": "アノミー——壊れるのは「貧しさ」ではなく「基準」",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "アノミー",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "20-suicide-day5",
+          "day": 5,
+          "title": "過少と過剰——両端に病がある",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "「多すぎる」側にも病がある",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "20-suicide-day6",
+          "day": 6,
+          "title": "遠すぎず、近すぎない——中間集団",
+          "kind": [
+            "rebuttal",
+            "practice"
+          ],
+          "kindLabel": "反論特集＋実戦適用回・卒業回",
+          "frameName": "中間集団",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
+    },
+    {
+      "slug": "21-poincare",
+      "title": "科学と仮説",
+      "author": "アンリ・ポアンカレ",
+      "genre": "科学哲学",
+      "genreKey": "sciphil",
+      "totalDays": 5,
+      "portrait": "",
+      "portraitCredit": "",
+      "titleLines": [
+        "科学と仮説"
+      ],
+      "days": [
+        {
+          "id": "21-poincare-day1",
+          "day": 1,
+          "title": "石の山は、家ではない",
+          "kind": [
+            "author-intro",
+            "frame"
+          ],
+          "kindLabel": "著者登場回＋フレーム回",
+          "frameName": "裸の事実は、科学ではない",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "21-poincare-day2",
+          "day": 2,
+          "title": "仮説には、種類がある",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "仮説の三分類",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "21-poincare-day3",
+          "day": 3,
+          "title": "一つの幾何学が、他より真であることはありえない",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "規約主義",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "21-poincare-day4",
+          "day": 4,
+          "title": "仮説は、早く出して、早く殺せ",
+          "kind": [
+            "frame"
+          ],
+          "kindLabel": "フレーム回",
+          "frameName": "仮説の役割——検証できる形にして、はじめて前進する",
+          "hasAudio": true,
+          "crossover": false
+        },
+        {
+          "id": "21-poincare-day5",
+          "day": 5,
+          "title": "私の仕分けは生き残った。私の予想は死んだ",
+          "kind": [
+            "rebuttal",
+            "practice"
+          ],
+          "kindLabel": "反論特集＋実戦適用回・卒業回",
+          "frameName": "仕分け表——議論が空転したら、この五手",
+          "hasAudio": true,
+          "crossover": false
+        }
+      ]
     }
   ]
 }

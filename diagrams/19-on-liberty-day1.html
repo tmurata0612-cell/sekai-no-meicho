@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>図解</title>
+<style>html{height:auto}body{margin:0;padding:0}</style>
+</head>
+<body>
+<title>図解v2 ミルDay1 — 危害原理の関所</title>
+<style>
+  :root{
+    --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC;
+    --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A;
+    --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);
+    --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Songti SC","SimSun",serif;
+    --sans:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+      --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  }
+  :root[data-theme="dark"]{ --ground:#0F1216; --panel:#181C21; --panel-2:#1E232A; --ink:#E4E7EC; --muted:#9BA1AA; --faint:#7C828B; --line:#31363E; --line-soft:#262B32;
+    --seal:#7FA8C4; --calm:#8DB08A; --heat:#CBA664; --seal-soft:#17242E; --calm-soft:#18261C; --heat-soft:#282013;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.65);}
+  :root[data-theme="light"]{ --ground:#E6E4DB; --panel:#F1EFE6; --panel-2:#E9E7DC; --ink:#1D2126; --muted:#5C6169; --faint:#82868C; --line:#C4C3B8; --line-soft:#D6D5CA;
+    --seal:#3E5C74; --calm:#5B7A5E; --heat:#A9793A; --seal-soft:#DCE3EA; --calm-soft:#DEE6DD; --heat-soft:#ECE2CE;
+    --shadow:0 1px 2px rgba(29,33,38,.06), 0 8px 24px -12px rgba(29,33,38,.20);}
+
+  .wrap{background:var(--ground); color:var(--ink); font-family:var(--sans); min-height:100%; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px); line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:900px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--seal); font-weight:700; display:flex; align-items:center; gap:10px;}
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+  h1{font-family:var(--serif); font-weight:600; text-wrap:balance; font-size:clamp(27px,5.2vw,46px); line-height:1.2; margin:.42em 0 .1em;}
+  .dek{color:var(--muted); font-size:15px; max-width:63ch;} .dek b{color:var(--ink); font-weight:600;}
+  .source{font-family:var(--serif); color:var(--calm); font-size:14px; margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;}
+  .source .seal{font-family:var(--serif); color:var(--ground); background:var(--seal); border-radius:5px; padding:2px 9px; font-size:13px; letter-spacing:.04em;}
+
+  .diagram{margin-top:clamp(26px,4.6vw,40px);}
+  .lead{font-family:var(--serif); font-size:clamp(17px,3vw,21px); font-weight:600; text-align:center; text-wrap:balance; margin-bottom:16px;}
+  .lead .em{color:var(--seal);}
+
+  .stage{border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,var(--panel-2),var(--panel)); box-shadow:var(--shadow); padding:clamp(10px,2vw,18px);}
+  .art{display:block; width:100%; height:auto; max-width:560px; margin:0 auto;}
+  .art .road{fill:var(--panel); stroke:var(--line); stroke-width:1.4;}
+  .art .qbar{fill:var(--seal-soft); stroke:var(--seal); stroke-width:1.4;}
+  .art .pillar{fill:var(--line);}
+  .art .door{fill:var(--panel-2); stroke:var(--faint); stroke-width:1.4;}
+  .art .lock{fill:none; stroke:var(--heat); stroke-width:2;}
+  .art .card{fill:var(--panel); stroke:var(--line); stroke-width:1.2;}
+  .art .grant{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.4;}
+  .art .side{fill:var(--calm-soft); stroke:var(--calm); stroke-width:1.4;}
+  .art .arw{fill:var(--calm); stroke:var(--calm); stroke-width:2;}
+  .art .lab{font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle; fill:var(--ink);}
+  .art .qtx{font-family:var(--serif); font-weight:700; font-size:13px; text-anchor:middle; fill:var(--seal);}
+  .art .ok{fill:var(--calm);} .art .no{fill:var(--heat);}
+  .art .sub{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--muted);}
+  .art .cardtx{font-family:var(--sans); font-size:11px; text-anchor:middle; fill:var(--muted);}
+  .art .x{fill:var(--heat); font-weight:700; font-size:18px; text-anchor:middle;}
+  .stage .cap{text-align:center; font-size:13px; color:var(--muted); font-family:var(--serif); padding:12px 12px 4px;} .stage .cap b{color:var(--ink);} .stage .cap .r{color:var(--seal);}
+
+  .scorecard{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; background:var(--panel);}
+  .scorecard .cap{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--seal); font-weight:700; margin:0 2px 8px;}
+  .wu{display:flex; align-items:flex-start; gap:13px; padding:9px 4px; border-top:1px solid var(--line-soft);} .wu:first-of-type{border-top:0;}
+  .wu .gi{width:32px;height:32px;flex:none;border-radius:50%;background:var(--seal-soft);color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-size:15px; font-weight:700;}
+  .wu.hit .gi{background:var(--calm-soft);color:var(--calm);} .wu.miss .gi{background:var(--seal-soft);color:var(--seal);} .wu.fix .gi{background:var(--heat-soft);color:var(--heat);}
+  .wu .txt .nm{font-family:var(--serif); font-size:14px; font-weight:600;}
+  .wu .txt .ex{font-size:12.5px; color:var(--muted); line-height:1.5;} .wu .txt .ex b{color:var(--ink); font-weight:600;}
+
+  .strip{display:grid; grid-template-columns:auto 1fr; gap:14px; margin-top:22px; align-items:stretch;}
+  @media (max-width:560px){ .strip{grid-template-columns:1fr;} }
+  .fact{background:var(--ink); color:var(--ground); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; justify-content:center; min-width:190px;}
+  .fact .big{font-family:var(--serif); font-size:clamp(18px,3.2vw,23px); font-weight:600; line-height:1.24;} .fact .lb{font-size:12px; opacity:.82; margin-top:6px;}
+  .apply{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--seal); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow);}
+  .apply .h{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:4px;} .apply .h em{font-style:normal; color:var(--seal);}
+  .apply p{margin:0; font-size:13.5px; color:var(--muted);} .apply .now{color:var(--ink); font-weight:600;}
+  .foot{margin-top:28px; color:var(--faint); font-size:12px; text-align:center; font-family:var(--serif);}
+  @media (prefers-reduced-motion:no-preference){
+    .diagram>*{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    .diagram>*:nth-child(3){animation-delay:.06s} .diagram>*:nth-child(4){animation-delay:.12s}
+    .fadein{animation:rise .6s cubic-bezier(.2,.7,.3,1) both;}
+    @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="fadein">
+      <div class="eyebrow">図解 v2 ・ 概念を直感で</div>
+      <h1>「本人のため」では、<br>門は開かない。</h1>
+      <p class="dek">一本の道に、関所がある。関所が問うのは<b>ただ一つ</b>——「他人に危害が及ぶか?」。<b>YES なら門が開き</b>、道徳と法の領域へ。<b>NO なら門は閉じたまま</b>。「本人のためになる」「本人が幸福になる」「賢明だから」——札をいくら積んでも、門は開けられない。ただし脇の通用口（忠告・説得）は、<b>常に開いている</b>。</p>
+      <div class="source"><span class="seal">自由論</span><span>ミル ・ Day1「危害原理」第1章</span></div>
+    </header>
+
+    <div class="diagram">
+
+      <div class="lead">門を開ける問いは、<span class="em">「他人に危害が及ぶか」</span>ただ一つ。「本人のため」は、いくら積んでも開かない。</div>
+
+      <div class="stage">
+        <svg class="art" viewBox="0 0 520 252" role="img" aria-label="危害原理の関所。関所は『他人に危害が及ぶか』だけを問い、YESで門が開き道徳と法の領域へ、NOで閉じたまま。『本人のため』などの札は門を開けられず積み上がる。脇の通用口（忠告・道理・説得・懇願）は常に開いている">
+          <!-- question banner -->
+          <rect class="qbar" x="150" y="6" width="220" height="28" rx="6"/>
+          <text class="qtx" x="260" y="25">問い：他人に危害が及ぶか？</text>
+
+          <!-- left: rejected reason cards -->
+          <text class="sub" x="86" y="49">門を開けられない理由</text>
+          <rect class="card" x="20" y="56" width="132" height="20" rx="3"/>
+          <text class="cardtx" x="86" y="70">「本人のためになる」</text>
+          <rect class="card" x="20" y="80" width="132" height="20" rx="3"/>
+          <text class="cardtx" x="86" y="94">「本人が幸福になる」</text>
+          <rect class="card" x="20" y="104" width="132" height="20" rx="3"/>
+          <text class="cardtx" x="86" y="118">「賢明だから」</text>
+          <rect class="card" x="20" y="128" width="132" height="20" rx="3"/>
+          <text class="cardtx" x="86" y="142">「正しいから」</text>
+          <text class="x" x="192" y="108">✕</text>
+
+          <!-- center: closed gate -->
+          <rect class="pillar" x="216" y="40" width="88" height="12"/>
+          <rect class="pillar" x="216" y="52" width="12" height="104"/>
+          <rect class="pillar" x="292" y="52" width="12" height="104"/>
+          <rect class="door" x="228" y="58" width="32" height="92"/>
+          <rect class="door" x="260" y="58" width="32" height="92"/>
+          <circle class="lock" cx="260" cy="104" r="8"/>
+          <text class="lab no" x="260" y="176">NO ＝ 閉じたまま</text>
+
+          <!-- right: grant / open on YES -->
+          <line x1="306" y1="100" x2="336" y2="100" stroke="var(--calm)" stroke-width="2"/>
+          <polygon class="arw" points="336,94 346,100 336,106"/>
+          <rect class="grant" x="352" y="70" width="148" height="64" rx="8"/>
+          <text class="lab ok" x="426" y="96">YES → 門が開く</text>
+          <text class="sub" x="426" y="116">道徳と法の領域へ</text>
+
+          <!-- bottom: side door always open -->
+          <rect class="side" x="40" y="198" width="440" height="46" rx="10"/>
+          <text class="lab ok" x="260" y="218">脇の通用口 ＝ 常に開いている</text>
+          <text class="sub" x="260" y="236">忠告 ・ 道理 ・ 説得 ・ 懇願</text>
+        </svg>
+        <div class="cap"><b>関所が問うのは、ただ一つ。</b><span class="r">処方＝「本人のため」を並べる前に、「他人に危害が及ぶか?」だけを問う。及ばないなら、できるのは忠告まで。</span></div>
+      </div>
+
+      <div class="scorecard">
+        <div class="cap">危害原理の、使ってよい手段と、いけない手段</div>
+        <div class="wu hit"><div class="gi">可</div><div class="txt"><div class="nm">使ってよい ＝ 説得の手段</div><div class="ex"><b>忠告する／道理を説く／説得する／懇願する</b>。本人だけに関わる事柄でも、これは原理が全面的に認める。「ほっとけ」ではない。</div></div></div>
+        <div class="wu miss"><div class="gi">否</div><div class="txt"><div class="nm">使ってはいけない ＝ 強制の手段</div><div class="ex"><b>強制する／罰を与える／取り上げる</b>。「本人のため」を理由にこれをやると、原理の外に出る。善意は、強制の免罪符にならない。</div></div></div>
+        <div class="wu fix"><div class="gi">主</div><div class="txt"><div class="nm">本人だけに関わる部分は、個人が主権者</div><div class="ex">「自分自身に対して、自分の身体と精神に対して、<b>個人こそが主権者</b>なのだ」（第1章）。</div></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="fact"><div class="big">「他人に危害が<br>及ぶか?」</div><div class="lb">門を開ける問いは、これ一つ。「本人のため」は、いくら積んでも門を開けない。</div></div>
+        <div class="apply">
+          <div class="h">いま、あなたの<em>関所</em></div>
+          <p>「あなたのためを思って」と、家族や部下の選択に手を出したくなる。<span class="now">忠告・説得はいくらでもしてよい。だが取り上げる・強制するのは、原理の外</span>。相手が他人に危害を及ぼしていないかぎり、最後に決めるのは本人。</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="foot">図解 v2 ・ 概念を直感で — 一つの問いで開く関所と、脇に常に開いた通用口で、危害原理を一目で。</p>
+  </div>
+</div>
+
+</body>
+</html>
